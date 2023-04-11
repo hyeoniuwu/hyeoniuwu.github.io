@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\setlength{\parindent}{0pt}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+\usepackage[colorlinks]{hyperref}
+\usepackage{footnotehyper}
+\usepackage{parskip}
+\usepackage{centernot}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Edwin P.}
+\lhead{\rightmark}
+\rfoot{Page \thepage}
+
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\renewcommand{\footnoterule}{\noindent\smash{\rule[3pt]{\textwidth}{0.4pt}}}
+\renewcommand*{\thefootnote}{(\arabic{footnote})}
+
+\newcommand{\sref}[1]{\textsuperscript{(\ref{#1})}}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[subsubsection]
+\newtheorem{defn}{Definition}[subsubsection]
+\newtheorem{rmk}{Remark}[subsubsection]
+\newtheorem{cor}{Corollary}[subsubsection]
+\newtheorem{lem}{Lemma}[subsubsection]
+\newtheorem{prop}{Proposition}[subsubsection]
+
+%bibitex options
+\nocite{*}
+\bibliographystyle{plain}
+
+\allowdisplaybreaks
+%\delimitershortfall=-1pt
+
+\setlength{\jot}{7pt}
+
+\title{Analysis}
+\author{Edwin Park}
+\date{2023}
+
+\begin{document}
+
+\clearpage\maketitle\thispagestyle{empty}
+\newpage
+\tableofcontents
+\newpage\setcounter{page}{1}
+\section{Taylor Polynomials}
+\begin{align*}
+	f(\vec x)&=f(\vec{x_0}+(\vec x-\vec{x_0}))\\
+	&\approx f(\vec{x_0})+D_f(\vec{x_0})(\vec x-\vec{x_0})+\frac{1}{2}(\vec x-\vec{x_0})^\top H_f(\vec{x_0})(\vec x-\vec{x_0})\\
+	&=f(\vec{x_0})+\begin{bmatrix}f_x(\vec{x_0})&f_y(\vec{x_0})\end{bmatrix}\begin{bmatrix}x-x_0\\y-y_0\end{bmatrix}+\frac{1}{2}\begin{bmatrix}x-x_0&y-y_0\end{bmatrix}\begin{bmatrix}f_{xx}(\vec{x_0})&f_{xy}(\vec{x_0})\\f_{yx}(\vec{x_0})&f_{yy}(\vec{x_0})\end{bmatrix}\begin{bmatrix}x-x_0\\y-y_0\end{bmatrix}
+\end{align*}
+Say we wanted to find an upper bound for the error of a first-order approximation at $\vec x$. The error then is equal to the quadratic term evaluated at some point in between the central point, $\vec{x_0}$, and the point of interest, $\vec x$. In particular, it is, for some $t\in[0,1]$,
+\begin{align*}
+	\frac{1}{2}\left[D_{\vec x-\vec{x_0}}^2f\right](t\vec x+(1-t)\vec{x_0})&=\frac{1}{2}\begin{bmatrix}x-x_0&y-y_0\end{bmatrix}\begin{bmatrix}f_{xx}(t\vec x+(1-t)\vec{x_0})&f_{xy}(t\vec x+(1-t)\vec{x_0})\\f_{yx}(t\vec x+(1-t)\vec{x_0})&f_{yy}(t\vec x+(1-t)\vec{x_0})\end{bmatrix}\begin{bmatrix}x-x_0\\y-y_0\end{bmatrix}.
+\end{align*}
+\section{Classification of Points}
+
+\end{document}

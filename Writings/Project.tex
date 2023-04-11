@@ -1,0 +1,629 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\setlength{\parindent}{0pt}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Edwin P.}
+\lhead{\rightmark}
+\rfoot{Page \thepage}
+
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+\renewcommand\({\left(}
+\renewcommand\){\right)}
+
+\allowdisplaybreaks
+\delimitershortfall=-1pt
+
+\setlength{\jot}{7pt}
+
+\title{Project}
+\author{Edwin Park}
+\date{July 2022}
+
+\begin{document}
+
+\clearpage\maketitle\thispagestyle{empty}
+\newpage
+\tableofcontents
+\newpage\setcounter{page}{1}
+\section{Discrete Calculus}
+\subsection{Differences and sums}
+Consider the sequence of square numbers. An elementary analysis technique is to look at successive differences between terms:
+\begin{align*}
+1\quad&\quad4\quad\quad9\quad\quad16\quad\quad25\quad\quad \cdots\\
+&3\quad\quad5\quad\quad7\quad\quad9\quad\quad \cdots
+\end{align*}
+Which reveals a neat property of square numbers. Generalising this method, for any sequence of terms with the $x^{th}$ term given by $f(x)$, we can define the ``difference" sequence, also called the discrete derivative of the sequence, to be \[\Delta f(x)\vcentcolon=f(x+1)-f(x)\]
+In the case of the square numbers, we can check to see that our definition matches the example above:
+\begin{align*}
+    \Delta x^2&=(x+1)^2-x^2\\
+    &=x^2+2x+1-x^2\\
+    &=2x+1
+\end{align*}
+Using this definition, we can calculate discrete derivatives of elementary functions.
+\begin{align*}
+    \Delta x^n&=(x+1)^n-x^n\\
+    &=\sum_{q=0}^n\binom{n}{q}x^q-x^n\\
+    &=\sum_{q=0}^{n-1}\binom{n}{q}x^q
+\end{align*}
+Something particularly neat happens with falling powers:
+\begin{align*}
+    \Delta x^{\underline{n}}&=(x+1)^{\underline{n}}-x^{\underline{n}}\\
+    &=(x+1)x^{\underline{n-1}}-x^{\underline{n-1}}(x-n+1)\\
+    &=nx^{\underline{n-1}}
+\end{align*}
+With exponentials:
+\begin{align*}
+    \Delta n^x&=n^{x+1}-n^x\\
+    &=(n-1)n^{x}\\
+\end{align*}
+
+\vspace{6mm}
+Also, we can check to see that the difference operator is linear:
+\begin{align*}
+    \Delta \left(f(x)+g(x)\right)&=\left(f(x+1)+g(x+1)\right)-\left(f(x)+g(x)\right)\\
+    &=\left(f(x+1)-f(x)\right)+\left(g(x+1)-g(x)\right)\\
+    &=\Delta f(x)+\Delta g(x)
+\end{align*}
+\begin{align*}
+    \Delta cf(x)&=cf(x+1)-cf(x)\\
+    &=c\left(f(x+1)-f(x)\right)\\
+    &=c\Delta f(x)
+\end{align*}
+Similarly, the sum operator is also linear.
+
+\subsection{Connection between sums and discrete derivatives}
+A remarkable result is:
+\begin{align*}
+    \sum_{x=a}^b\Delta f(x)&=\Delta f(a)+\Delta f(a+1)+\cdots+\Delta f(b-1)+\Delta f(b)\\
+    &=f(a+1)-f(a)+f(a+2)-f(a+1)+\cdots+f(b)-f(b-1)+f(b+1)-f(b)\\
+    &=f(b+1)-f(a)\
+\end{align*}
+And so, knowing a function's anti-discrete-derivative, or its antidifference, gives simple closed expressions for sums of that function. For a function $F(x)$ with $\Delta F(x)=f(x)$, we write
+\begin{align*}
+    \sum_{x}f(x)=F(x)+c
+\end{align*}
+for $c\in\mathbb{R}$, and
+\begin{align*}
+    F(x)=\sum_{q=0}^{x-1}f(q)+F(0).
+\end{align*}
+\subsection{Quotients and products}
+Consider another sequence, this time factorials. An alternative analysis is to take successive quotients:
+\begin{align*}
+1\quad&\quad2\quad\quad6\quad\quad24\quad\quad120\quad\quad \cdots\\
+&2\quad\quad3\quad\quad4\quad\quad5\quad\quad \cdots
+\end{align*}
+We can then define the ``multiplicative difference", or the quotient of a function $f(x)$ as:
+\[[Q]f(x)\vcentcolon=\frac{f(x+1)}{f(x)}\]
+Again, a connection to the product is:
+\begin{align*}
+    \prod_{x=a}^{b} [Q]f(x)&=[Q]f(a)*[Q]f(a+1)*...*[Q]f(b-1)*[Q]f(b)\\
+    &=\frac{f(a+1)}{f(a)}*\frac{f(a+2)}{f(a+1)}*...*\frac{f(b)}{f(b-1)}*\frac{f(b+1)}{f(b)}\\
+    &=\frac{f(b+1)}{f(a)}
+\end{align*}
+And so, knowing a function's anti-multiplicative difference (alternatively called indefinite product, or antiquotient), radically simplifies products of it. For a function $F(x)$ with $[Q]F(x)=f(x)$, we write
+\begin{align*}
+    \prod_{x}f(x)=cF(x)
+\end{align*}
+for $c\in\mathbb{R}$, and
+\begin{align*}
+    F(x)=F(0)\prod_{q=0}^{x-1}f(q).
+\end{align*}
+
+\vspace{6mm}
+Quotients of common functions are outlined below:
+Note however, that the quotient operator is not linear:
+\begin{align*}
+    [Q]\left(f(x)+g(x)\right)&=\frac{f(x+1)+g(x+1)}{f(x)+g(x)}\\
+    &\not=\frac{f(x+1)}{f(x)}+\frac{g(x+1)}{g(x)}\\
+\end{align*}
+It is however, ``linear" in multiplicative terms:
+\begin{align*}
+    [Q]\left(f(x)*g(x)\right)&=\frac{f(x+1)*g(x+1)}{f(x)*g(x)}\\
+    &=\frac{f(x+1)}{f(x)}\frac{g(x+1)}{g(x)}\\
+    &=[Q]f(x)*[Q]g(x)
+\end{align*}
+\begin{align*}
+    [Q]\left(f(x)^c\right)&=\frac{f(x+1)^c}{f(x)^c}\\
+    &=\left(\frac{f(x+1)}{f(x)}\right)^c\\
+    &=\left([Q]f(x)\right)^c\\
+\end{align*}
+Similar results follow for the product operator.
+\subsubsection{Connections to differences and sums (useless section?)}
+\begin{align*}
+    [Q]c^{f(x)}&=\frac{c^{f(x+1)}}{c^{f(x)}}\\
+    &=c^{f(x+1)-f(x)}\\
+    &=c^{\Delta f(x)}
+\end{align*}
+In fact, writing a function in exponential form:
+\begin{align*}
+    [Q]f(x)&=[Q]\left(e^{\ln\left(f(x)\right)}\right)\\
+    &=\frac{e^{\ln\left(f(x+1)\right)}}{e^{\ln\left(f(x)\right)}}\\
+    &=e^{\ln\left(f(x+1)\right)-\ln\left(f(x)\right)}\\
+    &=e^{\Delta \left(\ln f(x)\right)}
+\end{align*}
+Also, note that:
+\begin{align*}
+    \ln\left(\prod_{x=a}^bf(x)\right)&=\ln\left(f(a)*f(a+1)*...*f(b)\right)\\
+    &=\ln\left(f(a)\right)+\ln\left(f(a+1)\right)+...+\ln\left(f(b)\right)\\
+    &=\sum_{x=a}^b\ln\left(f(x)\right)\\
+    \Rightarrow\prod_{x=a}^bf(x)&=\exp\left({\sum_{x=a}^b\ln(f(x))}\right)
+\end{align*}
+Similarly,
+\begin{align*}
+    \exp\left(\sum_{x=a}^bf(x)\right)&=e^{f(a)+f(a+1)+...+f(b)}\\
+    &=e^{f(a)}*e^{f(a+1)}*...*e^{f(b)}\\
+    &=\prod_{x=a}^be^{f(x)}\\
+    \Rightarrow\sum_{x=a}^bf(x)&=\ln\left(\prod_{x=a}^be^{f(x)}\right)
+\end{align*}
+\subsubsection{Quotients and products of common functions}
+\begin{align*}
+    [Q](x+a)&=\frac{x+a+1}{x+a}\\
+    &=1+\frac{1}{x+a}\\
+\end{align*}
+\begin{align*}
+    [Q]\left((x+a)!\right)&=\frac{(x+a+1)!}{(x+a)!}\\
+    &=x+a+1\\
+\end{align*}
+\begin{align*}
+    [Q](n^x)&=\frac{n^{x+1}}{n^x}\\
+    &=n\\
+\end{align*}
+
+\subsection{Difference equations}
+\subsubsection{Linear, first-order, homogeneous}
+Consider the difference equation
+\[\Delta f(x)=\lambda f(x).\tag*{($\lambda\in\mathbb{R}$)}\]
+Then, by the definition of the difference operator we can write:
+\begin{align*}
+    f(x+1)=(\lambda+1)f(x)&\Rightarrow\frac{f(x+1)}{f(x)}=(\lambda+1)\\
+    &\Rightarrow [Q]f(x)=(\lambda+1)\\
+    &\;\begin{aligned}[t]
+    \Rightarrow f(x)&=f(0)\prod_{q=0}^{x-1} (\lambda+1)\\
+    &=f(0)*(\lambda+1)^x
+    \end{aligned}
+\end{align*}
+A linear algebra approach is to find the eigenvectors of the linear transformation $\Delta$. Suppose that the basis for our vector space is given by:
+\[\{x^{\underline{0}},\,x^{\underline{1}},\,x^{\underline{2}},\,...\}\]
+And so we can write
+\[f(x)=\sum_{q=0}^\infty a_q x^{\underline{q}}\]
+for $a_q\in\mathbb{R}$. From the difference equation, then:
+\[\Delta f(x)=\lambda f(x)\Rightarrow \sum_{q=0}^\infty qa_q x^{\underline{q-1}}=\lambda\sum_{q=0}^\infty a_q x^{\underline{q}}\]
+But note that the term for the $q=0$ case of the first sum is just 0 (the difference of a constant is 0). So:
+\begin{align*}
+    &\sum_{q=1}^\infty qa_q x^{\underline{q-1}}=\lambda\sum_{q=0}^\infty a_q x^{\underline{q}}\\
+    \Rightarrow&\sum_{q=0}^\infty (q+1)a_{q+1} x^{\underline{q}}=\lambda\sum_{q=0}^\infty a_q x^{\underline{q}}\\
+    \Rightarrow&(q+1)a_{q+1}=\lambda a_q\\
+    \Rightarrow&\frac{a_{q+1}}{a_q}=[Q]a_q=\frac{\lambda}{q+1} \\
+    \Rightarrow&a_q=a_0\prod_{t=0}^{q-1}\frac{\lambda}{t+1} \\
+    &\phantom{a_q}=a_0\lambda^q\prod_{t=0}^{q-1}(t+1)^{-1} \\
+    &\phantom{a_q}=a_0\lambda^q\left(\prod_{t=0}^{q-1}(t+1)\right)^{-1} \\
+    &\phantom{a_q}=a_0\lambda^q\left(\frac{q!}{0!}\right)^{-1} \\
+    &\phantom{a_q}=\frac{a_0\lambda^q}{q!} \\
+\end{align*}
+Noting that
+\[f(0)=\sum_{q=0}^\infty a_q (0)^{\underline{q}}\Rightarrow a_0=f(0),\]
+the series expression for $f(x)$ is:
+\[f(x)=f(0)\sum_{q=0}^\infty\frac{\lambda^q}{q!} x^{\underline{q}}\]
+Combining this with the previous result (meta; what to make of this?):
+\[\sum_{q=0}^\infty\frac{\lambda^q}{q!} x^{\underline{q}}=(\lambda+1)^x\]
+Note however from the binomial theorem we have:
+\[(\lambda+1)^x=\sum_{q=0}^x\frac{x^{\underline{q}}}{q!} \lambda^q\]
+And so:
+\[\sum_{q=x+1}^\infty\frac{x^{\underline{q}}}{q!} \lambda^q=0\]
+(Wait. This is obvious. I should delete this. Crap.)
+\subsubsection{Linear, $n^{th}$-order, nonhomogeneous}
+Consider 
+\[\sum_{q=0}^na_q\Delta^qf(x)=b.\tag*{($a_q,\,b\in\mathbb{R}$)}\]
+The constant on the right can be trivially eliminated. Let $g(x)=f(x)-\frac{b}{a_0}$. As $\Delta^q\frac{b}{a_0}=0$ for $q>0$ (the difference of a constant is 0), we have
+\begin{align*}
+    \sum_{q=0}^na_q\Delta^qg(x)&=\sum_{q=0}^na_q\Delta^q\left(f(x)-\frac{b}{a_0}\right)\tag*{($c\in\mathbb{R}$)}\\
+    &=-b+\sum_{q=0}^na_q\Delta^qf(x)\\
+    &=0
+\end{align*}
+And so, the problem reduces to the homogeneous case. Firstly we note the trivial solution $g(x)=0$. Otherwise, we guess the solution to be $\lambda^x$, with $\lambda\not=0$. (How do we know that this solution is unique? In general, the question of uniqueness to a difference/differential equation is non-trivial. For the case of linear difference equations however a proof is available.) Then, noting that 
+\[\Delta^q\lambda^x=(\lambda-1)^q\lambda^x,\]
+we can write
+\begin{align*}
+    &\sum_{q=0}^na_q(\lambda-1)^q\lambda^x=0\\
+    \Rightarrow&\sum_{q=0}^na_q(\lambda-1)^q=0
+\end{align*}
+So solving linear difference equations boils down to solving a n-th order polynomial. Note that there may be more than one solution for $\lambda$, in which case each solution acts as a basis vector for the space of solutions.
+Unfortunately, the solution isn't this simple, as there may be repeated roots. 
+\subsubsection{Non-linear, $1^{st}$-order, nonhomogeneous}
+Consider 
+\[\Delta f(x)+h(x)*f(x)=g(x).\]
+(Actually, it turns out that rephrasing the problem into a recurrence relation without the difference operator simplifies notation.)
+The solution is:
+\[f(x)=\prod_{q=0}^{x-1}\left(1-h(q)\right)\left(f(0)+\sum_{p=0}^{x-1}\cfrac{g(p)}{\prod_{q=0}^{p}\left(1-h(q)\right)}\right)\]
+In the case of constant coefficients, the expression is (somewhat) simplified; for \[\Delta f(x)+a*f(x)=g(x).\] we have:
+\[f(x)=\left(1-a\right)^x\left(f(0)+\sum_{p=0}^{x-1}\cfrac{g(p)}{\left(1-a\right)^{p+1}}\right)\]
+\subsubsection{Proof that exponential solutions span the solution space}
+We may rewrite, from,
+\[\sum_{q=0}^na_q\Delta^qf(x)=b.\tag*{($a_q,\,b\in\mathbb{R}$)}\]
+\subsubsection{Conversion between operator form and recurrence form}
+The recurrence
+\[asdasd\]
+may alternative be written as
+\[asd\]
+How do we convert from one form to the other? We have:
+\[\Delta^n f(x)=\sum_{q=0}^n(-1)^{n-q}\frac{n^{\underline{q}}}{q!}f(x+q)\]
+This follows easily (and somewhat magically) if we define once we define the shift operator $E$:
+\begin{align*}
+    [E]f(x)=f(x+1)&\Rightarrow\Delta f(x)=[E-1] f(x)\\
+    &\phantom{\Rightarrow\Delta f(x)}=f(x+1)-f(x)\\
+    &\Rightarrow\Delta^n f(x)=[E-1]^n f(x)\\
+    &\phantom{\Rightarrow\Delta^n f(x)}=\left[\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q}E^q\right] f(x)\\
+    &\phantom{\Rightarrow\Delta^n f(x)}=\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q}[E]^q f(x)\\
+    &\phantom{\Rightarrow\Delta^n f(x)}=\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q} f(x+q)\\
+\end{align*}
+For a clearer picture, we can represent this information in a matrix form:
+\begin{align*}
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ -1 & 1 & 0 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & 0 \\
+ -1 & 3 & -3 & 1 & 0 \\
+ 1 & -4 & 6 & -4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}f(x)\\f(x+1)\\f(x+2)\\f(x+3)\\f(x+4)\end{bmatrix}
+    =\begin{bmatrix}f(x)\\\Delta f(x)\\\Delta^2 f(x)\\\Delta^3 f(x)\\\Delta^4 f(x)\end{bmatrix}
+\end{align*}
+Leaving things in operator form also helps:
+\begin{align*}
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ -1 & 1 & 0 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & 0 \\
+ -1 & 3 & -3 & 1 & 0 \\
+ 1 & -4 & 6 & -4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}E^0\\E^1\\E^2\\E^3\\E^4\end{bmatrix}=\begin{bmatrix}(E-1)^0\\(E-1)^1\\(E-1)^2\\(E-1)^3\\(E-1)^4\end{bmatrix}
+\end{align*}
+What might the inverse of this matrix be? Consider the expansion of $(E+1)^n$ instead; from the binomial theorem we have:
+\begin{align*}
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 0 \\
+ 1 & 2 & 1 & 0 & 0 \\
+ 1 & 3 & 3 & 1 & 0 \\
+ 1 & 4 & 6 & 4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}E^0\\E^1\\E^2\\E^3\\E^4\end{bmatrix}=\begin{bmatrix}(E+1)^0\\(E+1)^1\\(E+1)^2\\(E+1)^3\\(E+1)^4\end{bmatrix}
+\end{align*}
+Then:
+\begin{align*}
+    &\begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 0 \\
+ 1 & 2 & 1 & 0 & 0 \\
+ 1 & 3 & 3 & 1 & 0 \\
+ 1 & 4 & 6 & 4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}(E-1)^0\\(E-1)^1\\(E-1)^2\\(E-1)^3\\(E-1)^4\end{bmatrix}=\begin{bmatrix}E^0\\E^1\\E^2\\E^3\\E^4\end{bmatrix}\\
+    \Rightarrow\begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 0 \\
+ 1 & 2 & 1 & 0 & 0 \\
+ 1 & 3 & 3 & 1 & 0 \\
+ 1 & 4 & 6 & 4 & 1 \\
+    \end{bmatrix}
+    &\begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ -1 & 1 & 0 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & 0 \\
+ -1 & 3 & -3 & 1 & 0 \\
+ 1 & -4 & 6 & -4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}E^0\\E^1\\E^2\\E^3\\E^4\end{bmatrix}=\begin{bmatrix}E^0\\E^1\\E^2\\E^3\\E^4\end{bmatrix}\\
+    &\Rightarrow\begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 0 \\
+ 1 & 2 & 1 & 0 & 0 \\
+ 1 & 3 & 3 & 1 & 0 \\
+ 1 & 4 & 6 & 4 & 1 \\
+    \end{bmatrix}=
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ -1 & 1 & 0 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & 0 \\
+ -1 & 3 & -3 & 1 & 0 \\
+ 1 & -4 & 6 & -4 & 1 \\
+    \end{bmatrix}^{-1}
+\end{align*}
+And so, the 
+Using this for the n-th difference of the factorial:
+\begin{align*}
+    \Delta^nx!&=\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q}(x+q)!\\
+    &=x!\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q}(x+q)^{\underline{q}}\\
+\end{align*}
+
+\subsection{Newton's Series}
+A remarkable, remarkable result is:
+\[f(x)=\sum_{k=0}^{\infty}\frac{(x-a)^{\underline{k}}}{k!}\Delta^kf(a)\]
+Noting that $[\Delta^n f](x_0)$ contains information about the values of $f(x)$ from $x=x_0$ to $x=x_0+n$, one may wonder if it's possible to extract $f(x_0+n)$ from the differences of (up to the n-th order) of $f(x)$. Consider again the matrix form of the relationship between shift operations and difference operations:
+\begin{align*}
+    \begin{bmatrix}1&0&0&0\\1&1&0&0\\1&2&1&0\\1&3&3&1\end{bmatrix}\begin{bmatrix}f(x)\\\Delta f(x)\\\Delta^2 f(x)\\\Delta^3 f(x)\end{bmatrix}=\begin{bmatrix}f(x)\\f(x+1)\\f(x+2)\\f(x+3)\end{bmatrix}
+\end{align*}
+So
+\[f(x_0+n)=\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}[\Delta^qf](x_0)\]
+Or, 
+\[f(x)=f(x_0+(x-x_0))=\sum_{q=0}^{x-x_0}\frac{(x-x_0)^{\underline{q}}}{q!}[\Delta^qf](x_0)\]
+Choosing $x_0=0$ simplifies the expression:
+\[f(x)=\sum_{q=0}^{x}\frac{x^{\underline{q}}}{q!}[\Delta^qf](0)\]
+A more intuitive explanation for this formula is discussed in \underline{ }.
+\subsubsection{Sequence transform between top row and main diagonal}
+Suppose that the top row is given by $f(n)$, and the main diagonal by $g(n)$. The function $g(n)$ gives the first element of the $n^\text{th}$ difference of $f(n)$, so, from our previous results:
+\begin{align*}
+    g(n)&=[\Delta^nf](0)\\
+    &=\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q}f(q)
+\end{align*}
+In a matrix form:
+\begin{align*}
+    \begin{bmatrix}g(0)\\g(1)\\g(2)\\g(3)\\g(4)\end{bmatrix}=
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ -1 & 1 & 0 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & 0 \\
+ -1 & 3 & -3 & 1 & 0 \\
+ 1 & -4 & 6 & -4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}f(0)\\f(1)\\f(2)\\f(3)\\f(4)\end{bmatrix}
+\end{align*}
+Or:
+\begin{align*}
+    \begin{bmatrix}f(0)\\f(1)\\f(2)\\f(3)\\f(4)\end{bmatrix}=
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 0 \\
+ 1 & 2 & 1 & 0 & 0 \\
+ 1 & 3 & 3 & 1 & 0 \\
+ 1 & 4 & 6 & 4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}g(0)\\g(1)\\g(2)\\g(3)\\g(4)\end{bmatrix}
+\end{align*}
+Suppose we are concerned with the $(k+1)^\text{th}$ diagonal, given by $g_k(n)$ (so the first diagonal is $g_0(n)$). The function $g_k(n)$ gives the $(k+1)^\text{th}$ element of the $n^\text{th}$ difference of $f(n)$, so, from our previous results:
+\begin{align*}
+    g_k(n)&=[\Delta^nf](k)\\
+    &=\sum_{q=0}^n\frac{n^{\underline{q}}}{q!}(-1)^{n-q}f(k+q)
+\end{align*}
+In a matrix form:
+\begin{align*}
+    \begin{bmatrix}g_k(0)\\g_k(1)\\g_k(2)\\g_k(3)\\g_k(4)\end{bmatrix}=
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ -1 & 1 & 0 & 0 & 0 \\
+ 1 & -2 & 1 & 0 & 0 \\
+ -1 & 3 & -3 & 1 & 0 \\
+ 1 & -4 & 6 & -4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}f(k)\\f(k+1)\\f(k+2)\\f(k+3)\\f(k+4)\end{bmatrix}
+\end{align*}
+Or:
+\begin{align*}
+    \begin{bmatrix}f(k)\\f(k+1)\\f(k+2)\\f(k+3)\\f(k+4)\end{bmatrix}=
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 1 & 1 & 0 & 0 & 0 \\
+ 1 & 2 & 1 & 0 & 0 \\
+ 1 & 3 & 3 & 1 & 0 \\
+ 1 & 4 & 6 & 4 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}g_k(0)\\g_k(1)\\g_k(2)\\g_k(3)\\g_k(4)\end{bmatrix}
+\end{align*}
+\subsubsection{Stirling}
+To express powers in terms of falling powers, we can use Newton's series. For $f(x)=x^n$,
+\begin{align*}
+    [\Delta^k f](0)&=\sum_{q=0}^k\frac{k^{\underline{q}}}{q!}(-1)^{k-q}f(q)\\
+    &=\sum_{q=0}^k\frac{k^{\underline{q}}}{q!}(-1)^{k-q}q^n
+\end{align*}
+And so, 
+\begin{align*}
+    x^n=\sum_{q=0}^{x}\left(\frac{x^{\underline{q}}}{q!}\sum_{p=0}^q\frac{q^{\underline{p}}}{p!}(-1)^{k-p}p^n\right)
+\end{align*}
+The coefficient of the falling power here is defined as the Stirling numbers of the second kind, denoted and defined as:
+\begin{align*}
+    S(n,q)\vcentcolon=\frac{1}{q!}\sum_{p=0}^q\frac{q^{\underline{p}}}{p!}(-1)^{k-p}p^n
+\end{align*}
+So
+\begin{align*}
+    x^n=\sum_{q=0}^{x}S(n,q)\,x^{\underline{q}}
+\end{align*}
+Some values of the Stirling numbers are given below in matrix form:
+\begin{align*}
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 \\
+ 0 & 1 & 1 & 0 & 0 \\
+ 0 & 1 & 3 & 1 & 0 \\
+ 0 & 1 & 7 & 6 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}x^{\underline{0}}\\x^{\underline{1}}\\x^{\underline{2}}\\x^{\underline{3}}\\x^{\underline{4}}\end{bmatrix}=\begin{bmatrix}x^0\\x^1\\x^2\\x^3\\x^4\end{bmatrix}
+\end{align*}
+A natural extension to this is the inverse matrix; how does one construct falling powers from normal powers? The coefficients of the inverse matrix are given by the Stirling numbers of the first kind:
+\begin{align*}
+    \begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 & 0 \\
+ 0 & -1 & 1 & 0 & 0 \\
+ 0 & 2 & -3 & 1 & 0 \\
+ 0 & -6 & 11 & -6 & 1 \\
+    \end{bmatrix}\begin{bmatrix}x^0\\x^1\\x^2\\x^3\\x^4\end{bmatrix}
+    =\begin{bmatrix}x^{\underline{0}}\\x^{\underline{1}}\\x^{\underline{2}}\\x^{\underline{3}}\\x^{\underline{4}}\end{bmatrix}
+\end{align*}
+It turns out that the explicit formula for Stirling numbers of the first kind is not nearly as simple as the one for the second kind...
+\subsubsection{Polynomial extrapolation}
+Suppose we want to continue the sequence:
+\[\def\arraystretch{1.3}
+\begin{array}{cccccccccc}
+    2& &3& &5& &7& &11.
+\end{array}
+\]
+Successively applying difference operators give:
+\[\def\arraystretch{1.3}
+\begin{array}{cccccccccc}
+    2& &3& &5& &7& &11\\
+     &1& &2& &2& &4&\\
+     & &1& &0& &2& &\\
+     & & &-1& &2& & &\\
+     & & & &3& & & &
+\end{array}
+\]
+No pattern is discernable, but we can assume that the bottom-most sequence will always be 3:
+\[\def\arraystretch{1.3}
+\begin{array}{ccccccccccc}
+    2& &3& &5& &7& &11& &22\\
+     &1& &2& &2& &4& &11\\
+     & &1& &0& &2& &7&\\
+     & & &-1& &2& &5& &\\
+     & & & &3& &3& & &\\
+\end{array}
+\]
+This gives 22 as the next element. What is the equation for the n-th element? Assume that the top row, $f(n)$ is given by a polynomial in the falling powers:
+\[f(n)=a_0+a_1n^{\underline{1}}+a_2n^{\underline{2}}+\cdots\]
+Then, $f(0)$, the first element of the top row (0-indexed), is equal to $a_0$, as all terms with a factor of $n$ will disappear. So $a_0=2$. Now, consider the second row, the difference of the top row. It is given by:
+\[\Delta f(n)=a_1+2a_2n^{\underline{1}}+3a_3n^{\underline{2}}+\cdots\]
+Then, $[\Delta f](0)$, the first element of the second row is equal to $a_1$ -- $a_1=1$. Now, consider the third row, the difference of the second row. It is given by:
+\[\Delta^2 f(n)=2a_2+6a_3n^{\underline{1}}+12a_4n^{\underline{2}}+\cdots\]
+Then, $[\Delta^2 f](0)$, the first element of the third row is equal to $2a_2$ -- $a_2=\frac{1}{2}$. And so, \[a_n=\frac{1}{n!}\left(\text{first element of (n+1)-th row}\right)\]
+The $n+1$ is just an artifact of 0-indexing and the English language.
+Looking back at the first elements of the rows in our sequence before:
+\[\def\arraystretch{1.3}
+\begin{array}{ccccccccccc}
+    2& &3& &5& &7& &11& &22\\
+     &1& &2& &2& &4& &11\\
+     & &1& &0& &2& &7&\\
+     & & &-1& &2& &5& &\\
+     & & & &3& &3& & &\\
+\end{array}
+\]
+We see that $a_0=2$, $a_1=1$, $a_2=\frac{1}{2}$, $a_3=-\frac{1}{6}$ and $a_4=\frac{1}{8}$. Coefficients after $a_5$ must all be $0$, as we assumed a row of $3$'s in the $5^{\text{th}}$ row. And so, the top row is given by:
+\[f(n)=2+n^{\underline{1}}+\frac{1}{2}n^{\underline{2}}-\frac{1}{6}n^{\underline{3}}+\frac{1}{8}n^{\underline{4}}\]
+Using a change of basis matrix (transpose of Stirling matrix of first kind from before) to convert this into normal powers give:
+\[\def\arraystretch{1.3}
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & -1 & 2 & -6 \\
+ 0 & 0 & 1 & -3 & 11 \\
+ 0 & 0 & 0 & 1 & -6 \\
+ 0 & 0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+ 2\\1\\\frac{1}{2}\\-\frac{1}{6}\\\frac{1}{8}
+\end{bmatrix}=
+\begin{bmatrix}
+ 2\\-\frac{7}{12}\\\frac{19}{8}\\-\frac{11}{12}\\\frac{1}{8}
+\end{bmatrix}
+\]
+
+
+\pagebreak
+\subsection{Conversion to differential operator}
+\[\frac{d^n}{dx^n}f(x)=n!\sum_{q=n}^\infty \frac{s(q,n)}{q!}\Delta^qf(x)\]
+\pagebreak
+
+\subsection{Applications}
+\subsubsection{Solution to functional equations}
+Simple functional equations containing terms $f^n(x)$ may be solved using recurrence/difference equations:
+Consider the problem of finding $f(x)$ such that
+\[f(f(x))=6f(x)-x\]
+Let $g(0)=x$ and $g(n+1)=f\left(g(n)\right)$. Then:
+\[g(2)=6g(1)-g(0)\]
+Which, using the characteristic polynomial, gives
+\subsubsection{Runtime of recursive functions}
+Suppose that the runtime of a program is given by
+\begin{align*}
+    &T(n)=T\left(\frac{n}{a}\right)+f(n)\\
+    \Rightarrow &T(n)-T\left(\frac{n}{a}\right)=f(n).
+\end{align*}
+This is common for recursive algorithms which solve sub-problems smaller by a factor $a$. The solution is to introduce a new function, $Q(n)$ such that 
+\begin{align*}
+    Q\left(\log_a(n)+1\right)&=T(n).
+\end{align*}
+This gives:
+\begin{align*}
+    T(n)-T\left(\frac{n}{a}\right)&=Q\left(\log_a(n)+1\right)-Q\left(\log_a\left(\frac{n}{a}\right)+1\right)\\
+    &=Q\left(\log_a(n)+1\right)-Q\left(\log_a\left(n\right)\right)\\
+    &=Q(x+1)-Q(x)\tag*{($x=\log_a(n)$)}\\
+    &=\Delta Q(x)
+\end{align*}
+And so (changing variables to $t$ for clarity):
+\begin{align*}
+    \Delta Q(t)=f(e^t)&\Rightarrow Q(t)=\sum_{q=1}^{t-1} f(e^q)+Q(1)\\
+    &\Rightarrow T(t)=\sum_{q=1}^{\log_a(t)} f(e^q)+T(1)
+\end{align*}
+Applying this formula to
+\begin{align*}
+    T(n)=T\left(\frac{n}{2}\right)+1,\,T(1)=1
+\end{align*}
+gives
+\begin{align*}
+    T(n)&=\sum_{q=1}^{\log_a(n)} 1+1\\
+    &=\log_a(n)+1
+\end{align*}
+
+\subsubsection{Master Theorem}
+The runtime for divide-and-conquer algorithms are given in general by:
+\begin{align*}
+    &T(n)=aT\left(\frac{n}{b}\right)+f(n)\\
+    \Rightarrow &T(n)-T\left(\frac{n}{b}\right)=(a-1)T\left(\frac{n}{b}\right)+f(n).
+\end{align*}
+Again using $x=\log_b(n)$ and $Q(x)=T(n)$:
+\begin{align*}
+    &T(n)=aT\left(\frac{n}{b}\right)+f(n)\\
+    \Rightarrow &T(n)-T\left(\frac{n}{b}\right)=(a-1)T\left(\frac{n}{b}\right)+f(n).
+\end{align*}
+While similar
+
+\section{Calculus}
+Define exp\\
+show ddx lnx =x-1\\
+show ddx x to the a\\
+\subsection{Taylor Series}
+(but when is this true?)
+Assume that:
+\[f(x)=\sum_{q=0}^\infty a_q(x-x_0)^q\]
+Then
+\begin{align*}
+    \frac{d^n}{dx^n}f(x)&=\frac{d^n}{dx^n}\sum_{q=0}^\infty a_q(x-x_0)^q\\
+    &=\sum_{q=0}^\infty \frac{d^n}{dx^n}a_q(x-x_0)^q\\
+    &=\sum_{q=0}^\infty q^{\underline{n}}a_q(x-x_0)^{q-n}
+\end{align*}
+Consider the case when $x=x_0$. All terms in the sum will reduce to 0 except when $q=n$:
+\begin{align*}
+    \frac{d^n}{dx^n}f(x_0)&=n^{\underline{n}}a_n\Rightarrow a_n=\frac{f^{(n)}(x_0)}{n!}
+\end{align*}
+And ultimately:
+\[f(x)=\sum_{q=0}^\infty \frac{f^{(n)}(x_0)}{n!}(x-x_0)^q\]
+\subsubsection{Binomial}
+From Taylor's we have:
+\begin{align*}
+    f(x)=\sum_{q=0}^\infty\frac{f^{(q)}(a)}{q!}(x-a)^q
+\end{align*}
+But 
+\begin{align*}
+    \frac{d^q}{dx^q}x^r=r^{\underline{q}}x^{r-q}
+\end{align*}
+And so:
+\begin{align}
+    x^r=\sum_{q=0}^\infty\frac{r^{\underline{q}}}{q!}a^{r-q}(x-a)^q
+\end{align}
+Making the substitution $x=(a+b)$ gives:
+\begin{align*}
+    (a+b)^r=\sum_{q=0}^\infty\frac{r^{\underline{q}}}{q!}a^{r-q}(b)^q
+\end{align*}
+Consider $(1+x)^\frac{1}{2}$. From (1) and choosing $a=1$ we have:
+\begin{align*}
+    (1+x)^\frac{1}{2}=\sum_{q=0}^\infty\frac{\left(\frac{1}{2}\right)^{\underline{q}}}{q!}x^q
+\end{align*}
+\end{document}

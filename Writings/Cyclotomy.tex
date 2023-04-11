@@ -1,0 +1,338 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\setlength{\parindent}{0pt}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Edwin P.}
+\lhead{\rightmark}
+\rfoot{Page \thepage}
+
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+\renewcommand\({\left(}
+\renewcommand\){\right)}
+
+\allowdisplaybreaks
+%\delimitershortfall=-1pt
+
+\setlength{\jot}{7pt}
+
+\title{Cyclotomy in Radicals}
+\author{Edwin Park}
+\date{2023}
+
+\begin{document}
+
+\clearpage\maketitle\thispagestyle{empty}
+\newpage
+\tableofcontents
+\newpage\setcounter{page}{1}
+\section{Vandermonde's Method}
+\subsection{Theory}
+We wish to express the $n^\text{th}$ roots of unity in radicals with index lower than $n$. The following method is due to Vandermonde and Gauss.
+
+\vspace{6mm}
+We consider a primitive $p^\text{th}$ root $\zeta$ where $p$ is prime (results for composite numbers follow from the prime numbers, as we will show later). We begin by considering the vector space $\mathbb{Q}(\zeta)$ over $\mathbb{Q}$. A natural basis is $\{\zeta^i\mid i=1,2,\ldots,p-1\}$. However, we will instead work with $\{\zeta^i\mid i=g^1,g^2,\ldots,g^{p-1}\}$ where $g$ is a primitive root modulo $p$. Although this is simply a re-ordering of the previous basis, it is helpful as automorphisms in $\text{Gal}(\mathbb{Q}(\zeta)/\mathbb{Q})$ will simply ``shift" the coefficients of a vector. 
+
+\vspace{6mm}
+To illustrate this, consider the automorphism $\phi$ in the Galois group which maps $\zeta$ to $\zeta^g$. To notate vectors we will use $[C_1,C_2,\ldots,C_n]=C_1\zeta^{g^1}+C_2\zeta^{g^2}+\cdots+C_n\zeta^{g^n}$, where $n=p-1$ is the dimension of the vector space. Noting that $\phi$ takes $\zeta^{g^i}$ to $\zeta^{g^{i+1}}$, we see that $\phi\left([C_1,C_2,\ldots,C_n]\right)=[C_n,C_1,C_2,\ldots,C_{n-1}]$. Ultimately, we want an expression for $[0,\ldots,0,1]$ (or any other vector with only one non-zero entry) by adding/multiplying/radicalising vectors whose values we already know. Vandermonde's method uses addition, which our current basis is optimised for.
+
+\vspace{6mm}
+A natural way to abuse the coefficient-shifting property of $\phi$ is by considering the vector\\ $[\,\omega^1,\omega^2,\ldots,\omega^n\,]$ where $\omega$ is a primitive $n^\text{th}$ root of unity.
+\begin{align*}
+    \phi\left([\,\omega^1,\omega^2,\ldots,\omega^n\,]\right)&=[\,\omega^n,\omega^1,\ldots,\omega^{n-1}\,]\\
+    &=\omega^{-1}[\,\omega^1,\omega^2,\ldots,\omega^n\,]
+\end{align*}
+The genius step is to consider such vectors for all $n^\text{th}$ roots of unity and notice that adding them up gives the desired $[0,\dots,0,1]$:
+\begin{align}
+    \begin{array}{cccccccccc}
+        &(\omega^1)^1\zeta^1&+&(\omega^1)^2\zeta^2&+&\cdots&+&(\omega^1)^n\zeta^n&=\vcentcolon&V_1\\
+        +\\
+        &(\omega^2)^1\zeta^1&+&(\omega^2)^2\zeta^2&+&\cdots&+&(\omega^2)^n\zeta^n&=\vcentcolon&V_2\\
+        +\\
+        &&&&&\vdots&&\\
+        +\\
+        &(\omega^n)^1\zeta^1&+&(\omega^n)^2\zeta^2&+&\cdots&+&(\omega^n)^n\zeta^n&=\vcentcolon&V_n\\
+        =\\
+        &0&+&0&+&\cdots&+&n\zeta^n&=&n\zeta^n
+    \end{array}
+\end{align}
+Each of the first $n-1$ columns add to $0$ because $\omega^i$ is a root of unity whose order divides $n$, and the columns cycles over powers of $\omega^i$ from 1 to $n$. The column is non-zero only when $\omega^i=1$.
+
+\vspace{6mm}
+Furthermore, each of the rows $V_i$ are expressible in radicals. Noting that
+\begin{align*}
+    \phi\left(V_i\right)&=\phi\left([\,(\omega^i)^1,(\omega^i)^2,\ldots,(\omega^i)^n\,]\right)\\
+    &=[\,(\omega^i)^n,(\omega^i)^1,\ldots,(\omega^i)^{n-1}\,]\\
+    &=[\,\omega^1,\omega^2,\ldots,\omega^n\,],
+\end{align*}
+it follows that
+\begin{align*}
+    \phi\left(V_i^n\right)&=\phi\left(V_i\right)^n \tag*{(automorphisms preserve products)}\\
+    &=\omega^{-in}V_i^n\\
+    &=V_i^n.
+\end{align*}
+So $V_i^n$ is invariant under $\phi$. Given $V_i^n=[C_1,C_2,\ldots,C_n]$ we have $[C_1,C_2,\ldots,C_n]=[C_n,C_1,\ldots,C_n-1]=\cdots=[C_n-1,C_n,\ldots,C_n-2]$, so $C_1=C_2=\cdots=C_n$. $[1,1,\dots,1]=-1$ so $V_i^n=-C_1$. Theoretically we've established now that expressing $\zeta$ in radicals is possible, but calculating $C_1$ in practicality is non-trivial. (write notes on this!) Suppose we want to find the coefficient of $\zeta^1$ in $[a_1,a_2,\dots,a_n][b_1,b_2,\dots,b_n]$. We want to determine entries $A_i$ and $B_j$ such that 
+\begin{align*}
+    \zeta^{g^i}\zeta^{g^j}=\zeta^1\Rightarrow g^i+g^j\equiv 1\pmod{p}
+\end{align*}
+For example, take $p=11$ and $g=2$.
+\begin{align*}
+    \begin{array}{c|c|c|c}
+        g^i&g^j&i&j\\
+        \hline
+        2&-1&1&5\\
+        3&-2&8&6\\
+        4&-3&2&3\\
+        5&-4&4&7\\
+        6&-5&9&9\\
+    \end{array}
+\end{align*}
+The problem of determining which coefficients are involved boils down to calculating discrete logarithms, for which no efficient solution is known. 
+
+\vspace{6mm}
+From (1) one may write: \[\zeta^{-1}=\frac{\sqrt[n]{V_1}+\sqrt[n]{V_2}+\cdots+\sqrt[n]{V_n}}{n}.\]
+However, this equation is not necessarily correct. While we know $V_i^n$, there are $n$ possible values for $V_i$. For example, from $x^4=1$ we are unsure wheter $x=\pm 1$ or $x=\pm i$. A way to mitigate this problem is by noting that the correct form of $V_i$ can be determined from the value of $V_1$. $\phi(V_iV_1^{n-i})=\omega^{-i}V_i\omega^{i-n}V_1^{n-i}=V_iV_1^{n-i}$, so $V_iV_1^{n-i}$ may be determined using the same method for determining $V_i^n$. Thus, we can instead write: \[\zeta=\frac{1}{n}\left(V_1+\frac{V_2V_1^{n-2}}{V_1^{n-2}}+\frac{V_3V_1^{n-3}}{V_1^{n-3}}+\cdots+\frac{V_nV_1^{n-n}}{V_1^{n-n}}\right).\]
+But which root of $V_1^n$ should we choose? It turns out that choosing any will give us some $p^\text{th}$ root $\zeta^j$ of unity. Suppose we mistake $V_1$ for $\omega^jV_1$. Then, we will mistake $V_i$ for \[\frac{V_iV_1^{n-i}}{(\omega^jV_1)^{n-i}}=\omega^{ij}V_i.\] Using the diagram from before, this has the effect of shifting all coefficients by $j$ to the left, ultimately giving us $zeta^{-j}$ instead of $zeta^{-1}$:
+\begin{align*}
+    \begin{array}{cccccccccccccc}
+        &(\omega^1)^{1+j}\zeta^1&+&(\omega^1)^{2+j}\zeta^2&+&\cdots&+&(\omega^1)^{0}\zeta^{-j}&+&\cdots&+&(\omega^1)^{n+j}\zeta^n&=\vcentcolon&\omega^{j}V_1\\
+        +\\
+        &(\omega^2)^1\zeta^1&+&(\omega^2)^2\zeta^2&+&\cdots&+&(\omega^2)^{0}\zeta^{-j}&+&\cdots&+&(\omega^2)^n\zeta^n&=\vcentcolon&\omega^{2j}V_2\\
+        +\\
+        &&&&&\vdots&&&&\vdots\\
+        +\\
+        &(\omega^n)^1\zeta^1&+&(\omega^n)^2\zeta^2&+&\cdots&+&(\omega^n)^{0}\zeta^{-j}&+&\cdots&+&(\omega^n)^n\zeta^n&=\vcentcolon&\omega^{nj}V_n\\
+        =\\
+        &0&+&0&+&\cdots&+&n\zeta^{-j}&+&\cdots&+&0&=&n\zeta^{-j}
+    \end{array}
+\end{align*}
+
+\newpage
+\subsection{$3^\text{rd}$ Roots of Unity}
+We have $\omega=-1$, $p=3$ and $n=2$. A (and also the only) primitive root for 3 is 2, so $g=2$. Noting $\zeta^3=1$, we have
+\begin{align*}
+    V_1&=(-1)\zeta^{2^2}+(1)\zeta^{2^1}\\
+    &=\zeta^2-\zeta\\
+    \Rightarrow V_1^2&=\zeta^2-2\zeta^3+\zeta^4\\
+    &=\zeta^2+\zeta-2\\
+    &=[3,3]
+\end{align*}
+So $V_1=\pm\sqrt{-3}$. Take $V_1=\sqrt{-3}$. 
+\begin{align*}
+    V_2V_1^{2-2}&=(\zeta+\zeta^2)\\
+    &=-1
+\end{align*}
+So ultimately,
+\begin{align*}
+    \zeta^{-1}&=\frac{1}{n}\left(V_1+\frac{V_2V_1^{n-2}}{V_1^{n-2}}\right)\\
+    &=\frac{1}{2}\left(\sqrt{-3}-1\right)\\
+    &=-\frac{1}{2}+\frac{\sqrt{3}}{2}i\\
+\end{align*}
+If we chose $V_1=-\sqrt{-3}$ then we would have gotten $\zeta^{-1}=-\frac{1}{2}-\frac{\sqrt{3}}{2}i$.
+
+\newpage
+\subsection{$5^\text{th}$ Roots of Unity}
+From here on we omit the details of the calculation of products of $V_i$ and only show relevant results. Calculating $V_i$ can be done with a computer algebra system.
+
+For ease of notation, we let $q$ be the number minimally satisfying $\eta^q\sqrt[k]{V_i^k}=V_i$ where $k=\frac{n}{(i,n)}$ and $\eta$ is the ``minimal'' $k^\text{th}$ primitive root (meta; why not others? what if we try the others?), and the radical evaluates to the root with minimal argument (from $0$ to $2\pi$), and $q'$ satisfy the same equation but with the radical evaluating to the ``principal'' value (meta; the default implementation in mathematica is problematic as it uses the range -pi to pi; unless this is remedied q' is more or less useless).
+
+\vspace{6mm}
+$g=2$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & -15+20 i & -15+20 i & 4 & 1 \\
+        2 & -5-10 i & 5 & 2 & 1 \\
+        3 & -5 & -15-20 i & 4 & 0 \\
+        4 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+$g=3$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & -15-20 i & -15-20 i & 4 & 0 \\
+        2 & -5+10 i & 5 & 2 & 1 \\
+        3 & -5 & -15+20 i & 4 & 1 \\
+        4 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+\newpage
+\subsection{$7^\text{th}$ Roots of Unity}
+\vspace{6mm}
+$g=3$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & \frac{1}{2} (-7) \left(71+39 i \sqrt{3}\right) & \frac{1}{2} (-7) \left(71+39 i \sqrt{3}\right) & 6 & 2 \\
+        2 & \frac{1}{2} (-7) \left(17+19 i \sqrt{3}\right) & \frac{1}{2} (-7) \left(-1+3 i \sqrt{3}\right) & 3 & 2 \\
+        3 & \frac{1}{2} (-7) \left(13+3 i \sqrt{3}\right) & -7 & 2 & 0 \\
+        4 & \frac{1}{2} (-7) i \left(\sqrt{3}+5 i\right) & \frac{1}{2} (-7) \left(-1-3 i \sqrt{3}\right) & 3 & 0 \\
+        5 & -7 & \frac{1}{2} (-7) \left(71-39 i \sqrt{3}\right) & 6 & 0 \\
+        6 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+
+$g=5$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & \frac{1}{2} (-7) \left(71-39 i \sqrt{3}\right) & \frac{1}{2} (-7) \left(71-39 i \sqrt{3}\right) & 6 & 0 \\
+        2 & \frac{1}{2} (-7) \left(17-19 i \sqrt{3}\right) & \frac{1}{2} (-7) \left(-1-3 i \sqrt{3}\right) & 3 & 0 \\
+        3 & \frac{1}{2} (-7) \left(13-3 i \sqrt{3}\right) & -7 & 2 & 0 \\
+        4 & \frac{7}{2} i \left(\sqrt{3}-5 i\right) & \frac{1}{2} (-7) \left(-1+3 i \sqrt{3}\right) & 3 & 2 \\
+        5 & -7 & \frac{1}{2} (-7) \left(71+39 i \sqrt{3}\right) & 6 & 2 \\
+        6 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+\newpage
+\begin{landscape}
+\subsection{$11^\text{th}$ Roots of Unity}
+\vspace{6mm}
+$g=2$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & \frac{1}{4} (-11) i \left(-25 \sqrt{3905050-1323310 \sqrt{5}}+i \left(12475 \sqrt{5}+30341\right)\right) & \frac{1}{4} (-11) i \left(-25 \sqrt{3905050-1323310 \sqrt{5}}+i \left(12475 \sqrt{5}+30341\right)\right) & 10 & 2 \\
+        2 & -11 \left(\frac{5627 \sqrt{5}}{4}+\frac{1}{4} i \sqrt{33331490 \sqrt{5}+74804650}+\frac{7773}{4}\right) & -11 \left(\frac{25 \sqrt{5}}{4}+\frac{5}{2} i \sqrt{\frac{1}{2} \left(205-89 \sqrt{5}\right)}+\frac{89}{4}\right) & 5 & 0 \\
+        3 & -11 \left(-180 \sqrt{5}+6 i \sqrt{9190 \sqrt{5}+21250}+919\right) & \frac{1}{8} (-11) i \left(33322 i+2410 i \sqrt{5}-50 \sqrt{3905050-1705682 \sqrt{5}}\right) & 10 & 6 \\
+        4 & -11 \left(\frac{435 \sqrt{5}}{4}-\frac{1}{4} i \sqrt{173662 \sqrt{5}+388330}-\frac{1093}{4}\right) & -11 \left(-\frac{25 \sqrt{5}}{4}+\frac{5}{2} i \sqrt{\frac{1}{2} \left(89 \sqrt{5}+205\right)}+\frac{89}{4}\right) & 5 & 0 \\
+        5 & -11 \left(-\frac{175 \sqrt{5}}{4}-\frac{25}{4} i \sqrt{50-10 \sqrt{5}}+\frac{69}{4}\right) & -11 & 2 & 0 \\
+        6 & -11 \left(-\frac{35 \sqrt{5}}{4}-\frac{1}{4} i \sqrt{5822 \sqrt{5}+13130}+\frac{5}{4}\right) & -11 \left(-\frac{25 \sqrt{5}}{4}-\frac{5}{2} i \sqrt{\frac{1}{2} \left(89 \sqrt{5}+205\right)}+\frac{89}{4}\right) & 5 & 4 \\
+        7 & -11 \left(-\frac{13 \sqrt{5}}{4}+\frac{5}{4} i \sqrt{2 \sqrt{5}+10}-\frac{35}{4}\right) & -11 \left(\frac{1205 \sqrt{5}}{4}-\frac{25}{4} i \sqrt{3905050-1705682 \sqrt{5}}-\frac{41611}{4}\right) & 10 & 8 \\
+        8 & -11 \left(-\frac{3 \sqrt{5}}{4}+\frac{1}{4} i \sqrt{50-10 \sqrt{5}}+\frac{9}{4}\right) & -11 \left(\frac{25 \sqrt{5}}{4}-\frac{5}{2} i \sqrt{\frac{1}{2} \left(205-89 \sqrt{5}\right)}+\frac{89}{4}\right) & 5 & 4 \\
+        9 & -11 & -11 \left(\frac{12475 \sqrt{5}}{4}-\frac{25}{4} i \sqrt{3905050-1323310 \sqrt{5}}-\frac{27931}{4}\right) & 10 & 2 \\
+        10 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+$g=6$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & \frac{1}{4} (-11) \left(12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-27931\right) & \frac{1}{4} (-11) \left(12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-27931\right) & 10 & 2 \\
+        2 & \frac{1}{4} (-11) \left(-5627 \sqrt{5}+i \left(768 \sqrt{5}+1495\right) \sqrt{2 \left(\sqrt{5}+5\right)}+8691\right) & \frac{1}{4} (-11) \left(25 \sqrt{5}-5 i \sqrt{410-178 \sqrt{5}}+89\right) & 5 & 4 \\
+        3 & -11 \left(-180 \sqrt{5}-6 i \sqrt{9190 \sqrt{5}+21250}+919\right) & \frac{1}{4} (-11) \left(1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-41611\right) & 10 & 8 \\
+        4 & \frac{1}{4} (-11) \left(-5 \left(87 \sqrt{5}+79\right)-i \sqrt{173662 \sqrt{5}+388330}\right) & \frac{1}{4} (-11) \left(-25 \sqrt{5}-5 i \sqrt{178 \sqrt{5}+410}+89\right) & 5 & 4 \\
+        5 & \frac{1}{4} (-11) \left(175 \sqrt{5}-25 i \sqrt{50-10 \sqrt{5}}+299\right) & -11 & 2 & 0 \\
+        6 & \frac{1}{4} (-11) \left(35 \sqrt{5}-i \sqrt{5822 \sqrt{5}+13130}-37\right) & \frac{1}{4} (-11) \left(-25 \sqrt{5}+5 i \sqrt{178 \sqrt{5}+410}+89\right) & 5 & 0 \\
+        7 & \frac{1}{4} (-11) \left(13 \left(\sqrt{5}-1\right)+5 i \sqrt{2 \left(\sqrt{5}+5\right)}\right) & \frac{1}{4} (-11) \left(-1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-16661\right) & 10 & 6 \\
+        8 & \frac{1}{4} (-11) \left(3 \sqrt{5}+i \sqrt{50-10 \sqrt{5}}+7\right) & \frac{1}{4} (-11) \left(25 \sqrt{5}+5 i \sqrt{410-178 \sqrt{5}}+89\right) & 5 & 0 \\
+        9 & -11 & \frac{1}{4} (-11) \left(-12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-30341\right) & 10 & 2 \\
+        10 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+$g=7$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & \frac{1}{4} (-11) \left(-1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-16661\right) & \frac{1}{4} (-11) \left(-1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-16661\right) & 10 & 6 \\
+        2 & \frac{1}{4} (-11) \left(-459 \sqrt{5}-i \sqrt{22283998 \sqrt{5}+74804650}+2605\right) & \frac{1}{4} (-11) \left(-25 \sqrt{5}-5 i \sqrt{178 \sqrt{5}+410}+89\right) & 5 & 4 \\
+        3 & -11 \left(180 \sqrt{5}-6 i \sqrt{21250-9190 \sqrt{5}}+919\right) & \frac{1}{4} (-11) \left(12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-27931\right) & 10 & 2 \\
+        4 & \frac{1}{4} (-11) \left(-349 \sqrt{5}+i \sqrt{103202 \sqrt{5}+388330}-1179\right) & \frac{1}{4} (-11) \left(25 \sqrt{5}+5 i \sqrt{410-178 \sqrt{5}}+89\right) & 5 & 0 \\
+        5 & \frac{1}{4} (-11) \left(-115 \sqrt{5}+25 i \sqrt{50-22 \sqrt{5}}+359\right) & -11 & 2 & 0 \\
+        6 & \frac{1}{4} (-11) \left(21 \sqrt{5}+i \sqrt{2882 \sqrt{5}+13130}+19\right) & \frac{1}{4} (-11) \left(25 \sqrt{5}-5 i \sqrt{410-178 \sqrt{5}}+89\right) & 5 & 4 \\
+        7 & \frac{1}{4} (-11) \left(-5 \sqrt{5}-i \sqrt{1450-190 \sqrt{5}}-19\right) & \frac{1}{4} (-11) \left(-12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-30341\right) & 10 & 2 \\
+        8 & \frac{1}{4} (-11) \left(\sqrt{5}-i \sqrt{50-22 \sqrt{5}}+11\right) & \frac{1}{4} (-11) \left(-25 \sqrt{5}+5 i \sqrt{178 \sqrt{5}+410}+89\right) & 5 & 0 \\
+        9 & -11 & \frac{1}{4} (-11) \left(1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-41611\right) & 10 & 8 \\
+        10 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+$g=8$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & \frac{1}{4} (-11) \left(1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-41611\right) & \frac{1}{4} (-11) \left(1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-41611\right) & 10 & 8 \\
+        2 & \frac{1}{4} (-11) \left(459 \sqrt{5}-i \sqrt{22283998 \sqrt{5}+74804650}+13859\right) & \frac{1}{4} (-11) \left(-25 \sqrt{5}+5 i \sqrt{178 \sqrt{5}+410}+89\right) & 5 & 0 \\
+        3 & -11 \left(180 \sqrt{5}+6 i \sqrt{21250-9190 \sqrt{5}}+919\right) & \frac{1}{4} (-11) \left(-12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-30341\right) & 10 & 2 \\
+        4 & \frac{1}{4} (-11) \left(349 \sqrt{5}+i \sqrt{103202 \sqrt{5}+388330}-309\right) & \frac{1}{4} (-11) \left(25 \sqrt{5}-5 i \sqrt{410-178 \sqrt{5}}+89\right) & 5 & 4 \\
+        5 & \frac{1}{4} (-11) \left(115 \sqrt{5}+25 i \sqrt{50-22 \sqrt{5}}+9\right) & -11 & 2 & 0 \\
+        6 & \frac{1}{4} (-11) i \left(\sqrt{2882 \sqrt{5}+13130}+3 i \left(7 \sqrt{5}+17\right)\right) & \frac{1}{4} (-11) \left(25 \sqrt{5}+5 i \sqrt{410-178 \sqrt{5}}+89\right) & 5 & 0 \\
+        7 & \frac{1}{4} (-11) i \left(19 i+5 i \sqrt{5}+\sqrt{1450-190 \sqrt{5}}\right) & \frac{1}{4} (-11) \left(12475 \sqrt{5}-25 i \sqrt{3905050-1323310 \sqrt{5}}-27931\right) & 10 & 2 \\
+        8 & \frac{1}{4} (-11) \left(-\sqrt{5}-i \sqrt{50-22 \sqrt{5}}+5\right) & \frac{1}{4} (-11) \left(-25 \sqrt{5}-5 i \sqrt{178 \sqrt{5}+410}+89\right) & 5 & 4 \\
+        9 & -11 & \frac{1}{4} (-11) \left(-1205 \sqrt{5}-25 i \sqrt{3905050-1705682 \sqrt{5}}-16661\right) & 10 & 6 \\
+        10 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+\newpage
+\subsection{$13^\text{th}$ Roots of Unity}
+\vspace{6mm}
+$g=2$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & -13 \left(-6210 \sqrt{3}-\frac{3}{2} i \left(10175 \sqrt{3}-93012\right)-\frac{685795}{2}\right) & -13 \left(-6210 \sqrt{3}-\frac{3}{2} i \left(10175 \sqrt{3}-93012\right)-\frac{685795}{2}\right) & 12 & 4 \\
+        2 & -13 \left(10736 \sqrt{3}+i \left(-52536 \sqrt{3}-8906\right)-43581\right) & -13 \left(\frac{337}{2}+\frac{15 i \sqrt{3}}{2}\right) & 6 & 0 \\
+        3 & -13 \left(-10746 \sqrt{3}+i \left(-2196 \sqrt{3}-20895\right)+4270\right) & 65-156 i & 4 & 1 \\
+        4 & -13 \left(2160 \sqrt{3}+i \left(4200-2142 \sqrt{3}\right)+4165\right) & -13 \left(\frac{5}{2}+\frac{3 i \sqrt{3}}{2}\right) & 3 & 0 \\
+        5 & -13 \left(-900 \sqrt{3}+\frac{15}{2} i \left(119 \sqrt{3}-8\right)-\frac{119}{2}\right) & -13 \left(6210 \sqrt{3}+\frac{3}{2} i \left(10175 \sqrt{3}+93012\right)-\frac{685795}{2}\right) & 12 & 11 \\
+        6 & -13 \left(345 \sqrt{3}-\frac{1}{2} i \left(135 \sqrt{3}-46\right)+\frac{9}{2}\right) & 13 & 2 & 0 \\
+        7 & -13 \left(90 \sqrt{3}+\frac{3}{2} i \left(25 \sqrt{3}+4\right)-\frac{5}{2}\right) & -13 \left(6210 \sqrt{3}-\frac{3}{2} i \left(10175 \sqrt{3}+93012\right)-\frac{685795}{2}\right) & 12 & 6 \\
+        8 & -13 \left(\frac{15}{2} i \left(\sqrt{3}-4\right)+18 \sqrt{3}+\frac{25}{2}\right) & -13 \left(\frac{5}{2}-\frac{3 i \sqrt{3}}{2}\right) & 3 & 2 \\
+        9 & -13 \left(\frac{9 \sqrt{3}}{2}-\frac{3}{2} i \left(2 \sqrt{3}+5\right)-5\right) & 65+156 i & 4 & 0 \\
+        10 & -13 \left(\sqrt{3}+\frac{1}{2} i \left(3 \sqrt{3}+2\right)-\frac{3}{2}\right) & -13 \left(\frac{337}{2}-\frac{15 i \sqrt{3}}{2}\right) & 6 & 5 \\
+        11 & -13 & -13 \left(-6210 \sqrt{3}+\frac{3}{2} i \left(10175 \sqrt{3}-93012\right)-\frac{685795}{2}\right) & 12 & 1 \\
+        12 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+
+\newpage
+\subsection{$17^\text{th}$ Roots of Unity}
+\vspace{6mm}
+$g=3$:
+\begin{align*}
+    \begin{array}{c|c|c|c|c|c}
+        i&V_iV_1^{n-i}&V_i^k&k&q\\
+        \hline
+        1 & -17 \left((332126703+180803848 i)+(28762800-89862184 i) \sqrt{2}\right) & -17 \left((332126703+180803848 i)+(28762800-89862184 i) \sqrt{2}\right) & 16 & 2 \\
+        2 & -17 \left((-26561768+39707967 i)+(43752888-94790412 i) \sqrt{2}\right) & (136-255 i) \left(24 \sqrt{2}+287 i\right) & 8 & 7 \\
+        3 & -17 \left((17989751-7762652 i)+(3741959-14838356 i) \sqrt{2}\right) & -17 \left((332126703-180803848 i)+(138288240-114771640 i) \sqrt{2}\right) & 16 & 4 \\
+        4 & -17 \left((-2122627+2885880 i)-(2101116+2581618 i) \sqrt{2}\right) & -255-136 i & 4 & 0 \\
+        5 & -17 \left((478225+539044 i)-(319831-225440 i) \sqrt{2}\right) & -17 \left((332126703+180803848 i)+(138288240+9649528 i) \sqrt{2}\right) & 16 & 12 \\
+        6 & -17 \left((-128548+25357 i)-(13434-265548 i) \sqrt{2}\right) & (-136-255 i) \left(24 \sqrt{2}+287 i\right) & 8 & 1 \\
+        7 & -17 \left((-17727-1716 i)-(94840-23386 i) \sqrt{2}\right) & -17 \left((332126703-180803848 i)+(28762800-77188856 i) \sqrt{2}\right) & 16 & 8 \\
+        8 & -17 \left((-3103-644 i)-(8936+4908 i) \sqrt{2}\right) & 17 & 2 & 0 \\
+        9 & -17 \left((-1393-140 i)+(668-1438 i) \sqrt{2}\right) & -17 \left((332126703+180803848 i)-(33166128-15838968 i) \sqrt{2}\right) & 16 & 15 \\
+        10 & -17 \left((532+371 i)+(654+120 i) \sqrt{2}\right) & (-136+255 i) \left(24 \sqrt{2}-287 i\right) & 8 & 6 \\
+        11 & -17 \left((175-100 i)-(117-132 i) \sqrt{2}\right) & -17 \left((332126703-180803848 i)-(133884912-40748424 i) \sqrt{2}\right) & 16 & 11 \\
+        12 & -17 \left((-3+32 i)+(12+14 i) \sqrt{2}\right) & -255+136 i & 4 & 3 \\
+        13 & -17 \left((9+12 i)-(7-4 i) \sqrt{2}\right) & -17 \left((332126703+180803848 i)-(133884912-64373688 i) \sqrt{2}\right) & 16 & 3 \\
+        14 & -17 \sqrt{8 \sqrt{2}-4 i \sqrt{\sqrt{2}+10}-1} & (136+255 i) \left(24 \sqrt{2}-287 i\right) & 8 & 0 \\
+        15 & -17 & -17 \left((332126703-180803848 i)-(116402128-92885528 i) \sqrt{2}\right) & 16 & 5 \\
+        16 & -1 & -1 & 1 & 0 \\
+    \end{array}
+\end{align*}
+\end{landscape}
+
+\newpage
+\section{Galois Theory}
+
+
+\end{document}

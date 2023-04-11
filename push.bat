@@ -1,6 +1,6 @@
 git add .
 git commit -m "update"
-git push
+git push --force
 git add .
 git commit -m "update"
-git push
+git push --force

@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\setlength{\parindent}{0pt}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\usepackage{pdflscape}
+\usepackage[colorlinks]{hyperref}
+\usepackage{footnotehyper}
+\usepackage{parskip}
+\usepackage{centernot}
+\usepackage[export]{adjustbox}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Edwin P.}
+\lhead{SCIE}
+\rfoot{Page \thepage}
+
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\renewcommand{\footnoterule}{\noindent\smash{\rule[3pt]{\textwidth}{0.4pt}}}
+\renewcommand*{\thefootnote}{(\arabic{footnote})}
+
+\newcommand{\sref}[1]{\textsuperscript{(\ref{#1})}}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[subsubsection]
+\newtheorem{defn}{Definition}[subsubsection]
+\newtheorem{rmk}{Remark}[subsubsection]
+\newtheorem{cor}{Corollary}[subsubsection]
+\newtheorem{lem}{Lemma}[subsubsection]
+\newtheorem{prop}{Proposition}[subsubsection]
+
+%bibitex options
+\nocite{*}
+\bibliographystyle{plain}
+
+\allowdisplaybreaks
+%\delimitershortfall=-1pt
+
+\setlength{\jot}{7pt}
+
+\title{Analysis}
+\author{Edwin Park}
+\date{2023}
+
+\begin{document}
+``What controls Earth's climate on timescales of millions of years? Describe similarities and differences between the controls on Earth's climate on timescales of millions of years and the controls on Earth's climate change over the last century.''
+
+In timescales of millions of years, from the most high-level perspective, Earth's climate is determined by the Sun and its place within the Solar system. However, this alone gives rise to the ``faint young Sun'' problem, which notes the discrepancy between the sun's ~30\% increase in luminosity\cite{gough}, compared to the relatively stable history of Earth's climate. The high-level mechanism within our Earth which likely explains this is the carbonate-silicate cycle, which in a nuthshell, regulates our atmosphere's $CO_2$ levels to adapt to external forces. $CO_2$ is crucial to Earth's climate, causing the greenhouse effect, which warms the Earth by trapping heat.\par
+
+The carbonate-silicate cycle starts when rocks are weathered\footnote{Weathering is the process of the dissolving/breaking-down/disintegration of rocks, minerals and earth materials on the surface of the Earth due to the weather\cite{weatheringdict}.} which under a chemical reaction with the carbon dioxide in the atmosphere forms a form of carbon which is then tranported downstream to the ocean through rivers.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth, frame]{cscycle.jpg}
+	\caption{A diagram of the carbonate-silicate cycle, from \cite{csc}.}
+\end{figure}
+The carbon transported to the oceans then gets deposited as calcium carboate $CaCO_3$, which is used by some marine creatures to build their shells.
+
+These shells of these organisms are deposited at the bottom of the ocean once they die, which compresses over time to form sedimentary rocks. The stored carbon in such rocks is re-released into the atmosphere through subduction and metamorphism of tectonic plates\cite{ash}. Subduction pushes the sedimentary rocks to melt, which then gets released through volcanic activity. Once the carbon is back into the atmosphere, it can again be used in the process of weathering rocks, starting the cycle once again. We note that this process spans over a very long time period -- millions of years.\par
+
+In summary, an external change to make the climate warmer will increase precipitation levels, in turn accelerating the weathering process, removing $CO_2$ and ultimately acting to counteract the intial change. Conversely, an external change to make the climate cooler will decrease precipitation levels, decelerating the weathering process and removal of $CO_2$, decreasing the decrease in temperature, effectively counteracting (again) the initial change.
+
+As such, the cycle demonstrates how our long-term climate is determined not only from factors external to the Earth such as the Sun, but is impacted by processes within which react to such external factors.
+
+In fact, the sheer extent of influence that this cycle has over Earth's climate is demonstrated by the theory that Earth's ice ages were both caused, and reverted due to the cycle. The Earth's Cryogenian era is believed to have been due to the breakup of the supercontinent Rodinia, which would have dramatically increased weathering due to the increase in exposed rocks/surface area, in turn cooling the Earth. In the (relatively) short term, the ice that forms reflects sunlight, in turn reducing the temperature even further, and eventually led to the Cryogenian era. However, in the longer term, the massive amounts of carbon stored inside the Earth would have slowly been released back into the atmosphere through the geological processes described previously, recovering the Earth back to its normal climate\cite{ash}.
+
+Immediately, serveral similarities to the factors impacting our climate in the short-term over the last century can be seen. In fact, the climate change concerning the world today can be viewed as a speeding-up of the said carbon cycle, where human excavation of fossil fuels accelerate the release of carbons to the atmosphere.
+
+Of course, the massive difference in timescales however mark the difference between past and present climate patterns; see the graphic below.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth, frame]{co2h.jpg}
+	\caption{Graphic from \cite{co2}.}
+\end{figure}
+We see that the carbon dioxide levels have shot up to approximately twice the average value it has been for the past 800,000 years, but this fact becomes much more alarming given that this change has occurred over a time period of less than a century; the level themselves would be concerning, but the rate in which they are changing also reach unprecedented levels.
+
+
+\newpage
+\bibliography{SCIE}
+
+
+\end{document}

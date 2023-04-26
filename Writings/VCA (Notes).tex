@@ -508,11 +508,26 @@ Before defining connectedness, it will be convenient to discuss openness and clo
 \end{cor}
 \subsection{Differentiation}
 \subsubsection{Definitions}
-Recall our definition of discrete derivatives in which we took differences in consecutive values of a sequence $f$. Extending this definition to functions from reals to reals, we find the problem that we can't find consecutive values by completeness. However, we can calculate the derivative by means of a Cauchy sequence, or a limit;
-\[\Delta f(x)=\lim\limits_{a\rightarrow0}\frac{f(x+a)-f(x)}{a}\]
-Note the introduced denominator. (Why is it needed? Notice that such a denominator is also needed in discrete cases where differences are taken in jumps of 2 or higher.)\par
+Recall our definition of discrete derivatives in which we took differences in consecutive values of a sequence $f$. Extending this definition to functions on continuous domains, we find the problem that we can't find consecutive values by completeness. However, the natural extension here is to take the Cauchy sequence of the normalised $h$-step difference:
+\begin{align*}
+	Df(x)\vcentcolon=&\left([\hat{\Delta}_hf](x)\right)_{h\rightarrow0}\\
+	=&\lim\limits_{h\rightarrow0}\frac{f(x+h)-f(x)}{h}
+\end{align*}
+The generalisation to multi-dimensional inputs is simple, once one accepts the corresponding extension of normalised $h$-step differences to vector inputs:
+\begin{align*}
+	\hat{\Delta}_{\vec h}f(\vec x)\vcentcolon=\frac{f(\vec x+\vec h)-f(\vec x)}{\lVert\vec h\rVert}.
+\end{align*}
+This generalisation preserves the meaning of the $h$-step normalised difference of $f$ at $x$ as ``the unit change in $f$ per unit distance travelled along the shortest path from $x$ to $x+h$''. 
+The Cauchy sequence extension of this is, not (what is defined as) the standard multivariable derivative, but the directional derivative;
+Then, the derivative becomes:
+\begin{align*}
+	D_{\vec a}f(\vec x)\vcentcolon=&\left(\hat{\Delta}_{h\vec a}f(\vec x)\right)_{h\rightarrow0}\\
+	=&\lim\limits_{h\rightarrow0}\frac{f(\vec x+h\vec a)-f(\vec x)}{\lVert h\vec a\rVert}.
+\end{align*}
+(wait is this right? so in the limit, the magnitude of the direction vec doesnt matter?)
+Of course, the problem arises that this limit may depend on the sequence in which $\vec h$ approaches $\vec0$ -- in such cases we say that the derivative is not defined.
 
-Before generalising this to functions from $\mathbb{R}^m$ to $\mathbb{R}^n$, let us take notes on how it is done in a discrete context. Consider the function $f:\mathbb{N}^2\rightarrow \mathbb{N}^3,\;f(m,n)=(n-m,m^2,mn)$:
+A (perhaps not too helpful) analogue in the discrete context will now be explored. Consider the function $f:\mathbb{N}^2\rightarrow \mathbb{N}^3,\;f(m,n)=(n-m,m^2,mn)$:
 \begin{align*}
 	\def\arraystretch{2.2}
 	\begin{array}{c|ccccc}
@@ -718,6 +733,192 @@ To show that the image of $U(0,r)$ under $f$ includes $U(0,(1-c)r)$, we ``clever
 	the c1 argument is better done in Tao, tho.
 \end{proof}
 
+\subsection{Integration}
+The integral aims to generalise the notion of sums to continuous domains. In the discrete case, we have seen that sums can accumulate successive differences to return values of the original function; for example, we have
+\begin{align*}
+	f(a+3)&=f(a)+(f(a+1)-f(a))+(f(a+2)-f(a+1))+(f(a+3)-f(a+2))\\
+	&=f(a)+\Delta f(a)+\Delta f(a+1)+\Delta f(a+2)\\
+	&=f(a)+\sum_{q=a}^{a+3-1}\Delta f(q).
+\end{align*}
+Thus, a characterisation of the sum is as follows:
+\begin{defn}
+	The sum, $\Sigma$, is an operator acts on a function's difference, with parameters $a$ and $a+j-1$, to give the $j$-step difference of the function at $f(a)$; that is,
+	\begin{align*}
+		\sum_{q=a}^{a+j-1}\Delta f(q)=\Delta_jf(a).
+	\end{align*}
+\end{defn}
+We want to extend this interpretation of the sum into the reals:
+\begin{defn}
+	The integral, $\int$, is an operator acts on a function's derivative, with parameters $a$ and $a+j$, to give the $j$-step difference of the function at $f(a)$; that is,
+	\begin{align*}
+		\int_{q=a}^{a+j}Df(q)=\Delta_jf(a).
+	\end{align*}
+\end{defn}
+We have given a declarative definition; we ought to give an imperative construction. There are two approaches; we can work directly with the declarative definition to work out some imperative definition, or proceed by blindly led only by intuition, and check that the declarative definition holds after. We proceed by intuition first.
+As with was the case for derivatives, we are met with the problem that by completeness, there is no ``next'' real number. So to extend our notion of sums to the reals, we take the sum to be some Cauchy sequence where the ``next'' real number becomes arbitrarily small. Then, we first have to write an expression which aims to represent $f(a+j)-f(a)$ using information about $Df$ on $[a,a+j]$. Choose an increasing sequence of points $(x_1,x_2\dots,x_n)$ with $x_1=a$ and $x_n=a+j$. Then, the intuition dictates that the expression should be:
+\begin{align*}
+	&f'(x_1)(x_2-x_1)+f'(x_2)(x_3-x_2)+\cdots+f'(x_{n-1})(x_n-x_{n-1})\\
+	=&f'(x_1)(\Delta x_1)+f'(x_2)(\Delta x_2)+\cdots+f'(x_{n-1})(\Delta x_{n-1})\\
+	=&\sum_{q\in(x_i)_1^{n-1}}f'(q)\Delta q
+\end{align*}
+Thus, our intuitive definition of the integral is:
+\begin{align*}
+	\int_{q=a}^{a+j}Df(q)=\left(\sum_{q\in(x_i)_{i=1}^{n-1}}Df(q)\Delta q\right)_{\max\{\Delta q\}\rightarrow0},
+\end{align*}
+or equivalently,
+\begin{align*}
+	\int_{q=a}^{a+j}Df(q)=\left(\sum_{i=1}^{n-1}Df(x_i)\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}.
+\end{align*}
+Note that we have dropped using square brackets to denote the equivalence class of sequences, as this probably hurts readability. From now on, sequences should be interpreted as their equivalence classes.
+Now we check that this definition is consistent with the declarative one. Intuitively this should involve expanding $Df$ into its definition:
+\begin{align}
+	\int_{q=a}^{a+j}Df(q)&=\left(\sum_{q\in(x_i)_1^{n-1}}Df(q)\Delta q\right)_{\max\{\Delta q\}\rightarrow0}\nonumber\\
+	&=\left(\sum_{i=1}^{n-1}Df(x_i)\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\nonumber\\
+	&=\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}.\label{derivexp1}
+\end{align}
+Remember, for the declarative definition to hold, we want \eqref{derivexp1} to be equal to $\Delta_jf(a)$. Working back from the answer will guide as a bit -- we can obtain an expression which looks similar to the thing we have above.
+\begin{align}
+	\Delta_jf(a)&=\sum_{q=a}^{a+j-1}\Delta f(q)\nonumber\\
+	&=\sum_{i=1}^{n-1}\Delta f(x_i)\nonumber\\
+	&=\left(\sum_{i=1}^{n-1}\Delta f(x_i)\right)_{\max\{\Delta x_i\}\rightarrow0}\label{derivexp2}
+\end{align}
+The key step in proving the equality of \eqref{derivexp1} and \eqref{derivexp2} is noting that under Cauchy sequences where the mesh tends to 0, both summands are equivalent:
+
+We notice that both $h$ and $\Delta x_i$ tend to zero -- if we could show that they were to cancel out (and they do), we see that we will immediately get the desired answer by a telescoping sum. That is, we want to be able to write
+Just to show the intuition, I write with a blatant abuse of notation:
+\begin{align*}
+	\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}&=\left(\sum_{i=1}^{n-1}\left(\frac{f(x_i+h)-f(x_i)}{h}\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\left(\frac{f(x_i+\Delta x_i)-f(x_i)}{\Delta x_i}\right)_{\Delta x_i\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)_{\max\{\Delta x_i\}\rightarrow0}
+\end{align*}
+The absue of notation is as the innermost $\Delta x_i$ should actually be indexed by a variable other than $i$. However, we show that the result still holds nonetheless by showing the respective Cauchy sequences are equivalent. To show the equivalence, we have to show that the distance between terms of the two sequences become arbitrarily small; that is, we can make
+\begin{align*}
+	d\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i,\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)
+\end{align*}
+arbitrarily small by choosing an appropriate $\Delta x_i$. Notice that both sums range over the same domain, so we may just show that the difference between each term of the sum can be arbitrarily small. We first consider their difference:
+\begin{align*}
+	\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i-(f(x_i+\Delta x_i)-f(x_i))&=\Delta x_i\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\frac{f(x_i+\Delta x_i)-f(x_i)}{\Delta x_i}\right)\\
+	&=\Delta x_i\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\hat\Delta_{\Delta x_i} f(x_i)\right)\\
+\end{align*}
+Notice that in the brackets, we have the equivalence class of a Cauchy sequence, subtracted by a term of that Cauchy sequence. We know that we can make that difference arbitrarily small, by definition of a Cauchy sequence; choosing any $\Delta x_i<\delta$ will guarantee that 
+\begin{align*}
+	\left\lvert\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\hat\Delta_{\Delta x_i} f(x_i)\right\rvert<\varepsilon.
+\end{align*}
+Putting this all together:
+\begin{align*}
+	d\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i,\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)&=\left\lvert\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\delta-\sum_{i=1}^{n-1}(f(x_i+\delta)-f(x_i))\right\rvert\\
+	&=\left\lvert\sum_{i=1}^{n-1}\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\delta-(f(x_i+\delta)-f(x_i))\right)\right\rvert\\
+	&=\left\lvert\sum_{i=1}^{n-1}\delta\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\hat\Delta_{\delta} f(x_i)\right)\right\rvert\\
+	&=\left\lvert\sum_{i=1}^{n-1}\delta\varepsilon\right\rvert\\
+	&\leq(n-1)\delta\varepsilon.
+\end{align*}
+So for any $\epsilon>0$, choose $\delta'$ such that the corresponding $\varepsilon<\frac{\epsilon}{n-1}$, then set $\delta=\delta'$ if $\delta'<1$, else set $\delta=0.9$. This gives $(n-1)\delta\varepsilon<\epsilon$.
+Now:
+\begin{align*}
+	\int_{q=a}^{a+j}Df(q)&=\left(\sum_{q\in(x_i)_1^{n-1}}Df(q)\Delta q\right)_{\max\{\Delta q\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}Df(x_i)\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}(f(x_{i+1})-f(x_i))\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=\left(f(x_{n})-f(x_1)\right)_{\max\{\Delta x_i\}\rightarrow0}\\
+	&=f(x_{n})-f(x_1).
+\end{align*}
+Comment; this roughly corresponds to riemann integration. An immediate problem is the function Q(x)=1 if x is irrational, 0 otherwise. Depending on how one chooses tags/partition, the integral evaluates to 0 or 1. we need the stiefjes integral or lebegsue, maybe even kurzweil henstock. discuss this later.
+
+
+\subsection{Line Integrals}
+As before, we extend the characterisation of the sum as an operator to integrals on scalar functions over a curve. But first, we need to define the $C$-step normalised difference of a function, for a rectifiable curve $C$:
+\begin{defn}
+	For a rectifiable curve $C$ with start-point $\vec a$ and endpoint $\vec b$, the $C$-step normalised difference of a function is defined as:
+	\begin{align*}
+		\hat{\Delta}_Cf\vcentcolon=f(\vec b)-f(\vec a).
+	\end{align*}
+\end{defn}
+A glaring problem with a naive extension, however, is that if $f:\mathbb{R}^n\rightarrow \mathbb{R}$ implies that $Df:\mathbb{R}^n\rightarrow (\mathbb{R}^n)^T$ (rough notation). To keep dimensionality in check, we thus use the directional derivative instead:
+\begin{defn}
+	The integral $\int$, as an operator on the $\vec x'$-directional derivative of a scalar function over a rectifiable curve $C=\left\{\vec x_i\mid i\in[a,b]\right\}$, is defined to give the $C$-step difference of the function; that is,
+	\begin{align*}
+		\int_{C}D_{\vec x'}f\vcentcolon=\Delta_Cf.
+	\end{align*}
+\end{defn}
+In basically the same proof as before, we can show that the imperative definition is as follows:
+\begin{align*}
+	\int_{C}D_{\vec x'}f=\left(\sum_{i=1}^{n-1}Df(\vec x_i)\Delta \vec x_i\right)_{\max\{\Delta \vec x_i\}\rightarrow0}
+\end{align*}
+As the proof is similar, I will write a hand-wavy proof:
+\begin{align*}
+	\int_{C}D_{\vec x'}f&=f(\vec b)-f(\vec a)\\
+	&=\sum_{i=1}^{n-1}\left(f(\vec x_{i+1})-f(\vec x_i)\right)\tag*{($(\vec x_i)_i$ forms a partition of the curve)}\\
+	&=\left(\sum_{i=1}^{n-1}\left(f(\vec x_{i+1})-f(\vec x_i)\right)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert\frac{f(\vec x_{i}+\Delta\vec x_i)-f(\vec x_i)}{\lVert\Delta\vec x_i\rVert}\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert[\hat{\Delta}_{\Delta\vec x_i}f](\vec x_i)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert D_{\hat{\Delta}\vec x_i}f(\vec x_i)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert D_{\vec x'}f(\vec x_i)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
+	&=\vcentcolon\int_{\vec x\in C}D_{\vec x'}f(\vec x_i)\,ds
+\end{align*}
+Perhaps a more useful version of the formula, for computational purposes, is given in the following theorem:
+\begin{thm}
+	Given a rectifiable curve $C=\left\{\vec\gamma(t)\mid t\in[a,b]\right\}$,
+	\begin{align*}
+		\int_CD_{\vec\gamma'}f=\int_{t=a}^b\lVert \vec\gamma'\rVert\left[D_{\vec\gamma'}f\right]\left(\vec\gamma (t_i)\right).
+	\end{align*}
+\end{thm}
+\begin{proof}
+	\begin{align*}
+		\int_CD_{\vec\gamma'}f&=\left(\sum_{i=1}^{n-1}\left(f(\vec x_{i+1})-f(\vec x_i)\right)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
+		&=\left(\sum_{i=1}^{n-1}\left(f(\vec\gamma(t_{i+1}))-f(\vec\gamma(t_i))\right)\right)_{\max\{\Delta t_i\}\rightarrow0}
+	\end{align*}
+	For notational convenience, let $\Delta\vec\gamma=\Delta\vec\gamma(t_i)$. Note that in the limit,
+	\begin{align*}
+		\Delta\vec\gamma&=\Delta t_i\hat{\Delta}_{\Delta t_i}\vec\gamma\\
+		&\sim\Delta t_iD\vec\gamma\\
+		&=\Delta t_i\vec\gamma'
+	\end{align*}
+	and similarly
+	\begin{align*}
+		\hat{\Delta}\vec\gamma&=\hat{\Delta}_{\Delta t_i}\vec\gamma\\
+		&\sim D\vec\gamma\\
+		&=\vec\gamma'.
+	\end{align*}
+	Continuing from where we left off:
+	\begin{align*}
+		\left(\sum_{i=1}^{n-1}\left(f(\vec\gamma(t_{i+1}))-f(\vec\gamma(t_i))\right)\right)_{\max\{\Delta t_i\}\rightarrow0}&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec\gamma\rVert\frac{f(\vec\gamma(t_i)+\Delta\vec\gamma)-f(\vec\gamma(t_i))}{\lVert\Delta\vec\gamma\rVert}\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+		&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec\gamma\rVert\left[\hat{\Delta}_{\Delta\vec\gamma}f\right]\left(\vec\gamma (t_i)\right)\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+		&=\left(\sum_{i=1}^{n-1}\lVert\Delta t_i\vec\gamma'\rVert\left[D_{\hat{\Delta}\vec\gamma}f\right]\left(\vec\gamma (t_i)\right)\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+		&=\left(\sum_{i=1}^{n-1}\lVert \vec\gamma'\rVert\left[D_{\hat{\Delta}\vec\gamma}f\right]\left(\vec\gamma (t_i)\right)\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+		&=\int_{t=a}^b\lVert \vec\gamma'\rVert\left[D_{\vec\gamma'}f\right]\left(\vec\gamma (t_i)\right).
+	\end{align*}
+\end{proof}
+\subsubsection{Path Integral on Vector Fields}
+I am unsure how to generalise my previous operator notion to path integrals on vector fields, so give the somewhat unsatisfactory standard definition instead.
+(actually, a way to generalise sort of is as follows.)
+We note that $[D_{\vec a}f](\vec x)=[Df](\vec x)\vec a=[\nabla f](\vec x)\cdot\vec a$. So, we can write
+\begin{align}
+	\int_CD_{\vec\gamma'}f=\int_C\nabla f\cdot\vec\gamma'.\label{vecinteg}
+\end{align}
+Furthermore, from the working above, we have
+\begin{align*}
+	\int_CD_{\vec\gamma'}f&=\left(\sum_{i=1}^{n-1}\lVert \vec\gamma'\rVert\left[D_{\hat{\Delta\vec\gamma}}f\right]\left(\vec\gamma (t_i)\right)\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\left[\nabla f\right]\left(\vec\gamma (t_i)\right)\cdot\lVert \vec\gamma'\rVert\hat{\Delta\vec\gamma}\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\left[\nabla f\right]\left(\vec\gamma (t_i)\right)\cdot\lVert \vec\gamma'\rVert\hat{\vec\gamma'}\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+	&=\left(\sum_{i=1}^{n-1}\left[\nabla f\right]\left(\vec\gamma (t_i)\right)\cdot\vec\gamma'\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
+	&=\int_{t=a}^b\nabla f\circ\vec\gamma \cdot\vec\gamma'.
+\end{align*}
+Thus, from \eqref{vecinteg}, we have:
+\begin{align*}
+	\int_C\nabla f\cdot\vec\gamma'&=\int_{t=a}^b\nabla f\circ\vec\gamma \cdot\vec\gamma'\\
+	&=\int_CD_{\vec\gamma'}f\\
+	&=\Delta_Cf\\
+	&=f(\vec\gamma(b))-f(\vec\gamma(a)).
+\end{align*}
+Noting that $\nabla f$ is a vector field 
+\begin{defn}
+	Given a vector field $F:\mathbb{R}^n\rightarrow \mathbb{R}^n$, and a rectifiable curve $C=\left\{\vec\gamma(t)\mid t\in[a,b]\right\}$, we define:
+	\begin{align*}
+		\int_C\vec F\cdot d\gamma\vcentcolon&=\int_{t=a}^b\vec F(\gamma(t))\cdot\vec \gamma'(t)\\
+		&=\int_C\vec F\cdot\vec T
+	\end{align*}
+\end{defn}
 \newpage
 \section{Applications}
 \subsection{Taylor Series}

@@ -106,6 +106,13 @@ In turn we define the upper and lower Riemann-Stieltjis integrals:
 	\overline{\int_a^b} f\,d\mu\vc=&\inf_PU(f,\mu,P)\,;\\
 	\underline{\int_a^b} f\,d\mu\vc=&\sup_PL(f,\mu,P)\,.
 \end{align*}
+(Is it okay to take the inf/sup over partitions? Aren't there ``more'' partitions than there are real numbers? Maybe not, by the requirement that the partition be finite?)
+The crucial property is that refining the partition non-strictly increases the lower sum and non-strictly decreases the upper sum. Also, we note that by the definition of inf/sup we can get arbitrarily close to the lower and upper integrals by some partition (say $P_L$ for the lower and $P_U$ for the upper). Then we can combine these two to get a partition which is arbitrarily close to both.
+
+Now, we define the R-S integral as:
+\begin{align*}
+	\overline{\int_a^b} f\,d\mu=\underline{\int_a^b} f\,d\mu\Rightarrow \int_a^b f\,d\mu\vc=\overline{\int_a^b} f\,d\mu\,.
+\end{align*}
 
 \appendix
 \section{Appendix}

@@ -1175,6 +1175,21 @@ There are a few (equivalent) interpretations of what is going on; that summing t
 	\item a of $j$-step difference of a line in the $x$ and $y$ directions.
 \end{itemize}
 
+God I hate this subject, I'm just going to write whatever.
+
+\begin{align*}
+	\sum_D\Delta f&=\sum_{(x,y)\in[a,b]\times[c,d]}\left[\Delta_xf,\Delta_yf\right]\\
+	&=\left[\sum_{y=c}^d\left(f(b+1,y)-f(a,y)\right),\sum_{x=a}^b\left(f(x,d+1)-f(x,c)\right)\right]
+\end{align*}
+To get the standard orientation, we instead need $\sum_{x=a}^b\left(f(x,d+1)-f(x,c)\right)$; the sum across the bottom row ($\sum_{x=a}^bf(x,c)$) should be positive, and the top negative. So we have:
+\begin{align*}
+	\sum_D\Delta f\cdot\begin{bmatrix}1&-1\end{bmatrix}=\vc\sum_{\partial D}f.
+\end{align*}
+We could generalise $Df$ to just be $\begin{bmatrix}\Delta_xQ&\Delta_yP\end{bmatrix}$ in which case we get:
+\begin{align*}
+	\sum_D\begin{bmatrix}\Delta_xQ&\Delta_yP\end{bmatrix}\cdot\begin{bmatrix}1&-1\end{bmatrix}=\sum_{\partial D}\begin{bmatrix}P\\Q\end{bmatrix}\cdot ds.
+\end{align*}
+
 
 
 

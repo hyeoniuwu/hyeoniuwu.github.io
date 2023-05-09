@@ -114,6 +114,89 @@ Now, we define the R-S integral as:
 	\overline{\int_a^b} f\,d\mu=\underline{\int_a^b} f\,d\mu\Rightarrow \int_a^b f\,d\mu\vc=\overline{\int_a^b} f\,d\mu\,.
 \end{align*}
 
+\section{Surfaces}
+We may specify a surface by
+\begin{align*}
+	z=\Phi(x,y).
+\end{align*}
+\begin{thm}
+	\begin{align*}
+		\iint_{\Phi(D)}f\,dS=\iint_Df(\Phi(x,y))\,\lVert\Phi_x\times\Phi_y\rVert\,dx\,dy
+	\end{align*}
+\end{thm}
+\begin{defn}[Flux]
+	We define the flux as, where $\Sigma$ is an oriented surface,
+	\begin{align*}
+		\iint_\Sigma\vec F\cdot d\vec S\vc=\iint_\Sigma\vec F\cdot\hat{n}\,dS.
+	\end{align*}
+	A unit normal is
+	\begin{align*}
+		\frac{\Phi_x\times\Phi_y}{\lVert\Phi_x\times\Phi_y\rVert}.
+	\end{align*}
+	Using this, we get the formula (where $\Phi:D\rightarrow\Sigma$)
+	\begin{align*}
+		\iint_\Sigma\vec F\cdot d\vec S=\iint_D\vec F\cdot(\Phi_x\times\Phi_y)\,dx\,dy.
+	\end{align*}
+	But which normal to take?
+\end{defn}
+
+\begin{thm}[Green's Theorem]
+	\begin{align*}
+		\int_D\partial_xQ-\partial_yP\,dx\,dy=\int_{\partial D}\begin{bmatrix}P\\Q\end{bmatrix}\cdot d\vec r
+	\end{align*}
+\end{thm}
+\begin{proof}
+	We prove the result for ``horizontally and/or vertically simple'' regions; a region is said to be vertically simple if it can be characterised by $a<x<b$ and $g_1(x)<y<g_2(x)$. Parametrising the boundary with $\partial D=(t,g_1(t))$ and $(t,g_2(t))$ where $a<t<b$, we have $dx=dt$ and $dy=g_1'(t)$ or $g_2'(t)$. Then:
+	\begin{align*}
+		\int_{\partial D}\begin{bmatrix}P\\Q\end{bmatrix}\cdot d\vec r&=\int_a^bP\left(\begin{bmatrix}t\\g_1(t)\end{bmatrix}\right)\,dt+Q\left(\begin{bmatrix}t\\g_1(t)\end{bmatrix}\right)g_1'(t)\,dt\\
+		&-\int_a^bP\left(\begin{bmatrix}t\\g_2(t)\end{bmatrix}\right)\,dt+Q\left(\begin{bmatrix}t\\g_2(t)\end{bmatrix}\right)g_2'(t)\,dt\\
+	\end{align*}
+	Just looking at the $P$ parts (why?)
+	\begin{align*}
+		\int_a^b\left(P\left(\begin{bmatrix}t\\g_1(t)\end{bmatrix}\right)-P\left(\begin{bmatrix}t\\g_2(t)\end{bmatrix}\right)\right)\,dt&=-\int_a^b\int_{g_1(t)}^{g_2(t)}\partial_yP\,dy\,dt\\
+		&=-\int_D\partial_yP\,dt.
+	\end{align*}
+	So $\int_{\partial D}P\,dx=-\int_D\partial_yP\,dt.$, and similarly for horizontally simple regions $\int_{\partial D}Q\,dy=\int_D\partial_xQ\,dt$. Thus for regions which are both we can combine our two expressions to get:
+	\begin{align*}
+		\int_D\partial_xQ-\partial_yP\,dx\,dy=\int_{\partial D}\begin{bmatrix}P\\Q\end{bmatrix}\cdot d\vec r.
+	\end{align*}
+\end{proof}
+Though the regions for which the above theorem applies seems restrictive, we can ``slice'' up regions in a way such that we can apply to a broader range.
+
+\begin{thm}[Divergence Theorem (2D)]
+	\begin{align*}
+		\int_C\vec F\cdot\hat{n}\,ds=\iint_D\nabla\cdot\vec F\,dx\,dy;
+	\end{align*}
+	This is equivalent to Green's theorem.
+\end{thm}
+\begin{proof}
+	Parametrise the boundary with $\gamma(t)=\left(x(t),y(t)\right)$. Then the outward-pointing normal vector is
+	\begin{align*}
+		\hat{n}=\frac{1}{\lVert\gamma'(t)\rVert}(y'(t),-x'(t)).
+	\end{align*}
+	Now using $F=(P,Q)$, one can evaluate
+	\begin{align*}
+		\int_C\vec F\cdot\hat{n}\,ds&=\int_C-Q\,dx+P\,dy\\
+		&=\iint_D\nabla\cdot\vec F\,dx\,dy.
+	\end{align*}
+\end{proof}
+
+\begin{thm}[Stokes']
+	\begin{align*}
+		\iint_\Sigma(\nabla\times\vec F)\cdot d\vec S=\int_{\partial\Sigma}\vec F\cdot ds
+	\end{align*}
+\end{thm}
+\begin{proof}
+	Notice Stokes' theorem becomes Green's if surface is in the $x-y$ plane. 
+	Anyways, let $\Sigma$ be parametrised by $\Phi(x,y)=(x,y,f(x,y))$, and let $\vec F=(u,v,w)$.
+	Then
+	\begin{align*}
+		\int_{\partial \Sigma}\vec F\cdot ds=\int_{\partial \Sigma}\vec F\cdot ds=
+	\end{align*}
+	But on our surface, $z=f$ so $\frac{dz}{dt}=[Df]\begin{bmatrix}x'\\y'\end{bmatrix}=f_x\frac{dx}{dt}+f_y\frac{dy}{dt}$, giving $dz=f_xdx+f_ydy$. Substituting, using Green's, and bashing equations gives $\iint_D(\nabla\times\vec F)\cdot(\Phi_x\times\Phi_y)\,dx\,dy$, which gives the proof.
+\end{proof}
+
+\newpage
 \appendix
 \section{Appendix}
 

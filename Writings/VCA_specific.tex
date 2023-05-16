@@ -202,7 +202,24 @@ Though the regions for which the above theorem applies seems restrictive, we can
 	\end{align*}
 \end{thm}
 
-
+\section{Curvilinear coordinates}
+We work in 3 dimensions because generalisations are easy. Recall that 3-dimensions means that any point in space can be uniquely specified by a 3-tuple. The system by which those tuples are interpreted is called a coordinate system. A familiar example is the standard basis, where a tuple $(a,b,c)_S$ is interpreted as $a\vec{e_1}+b\vec{e_2}+c\vec{e_3}$. Consider another coordinate system $P$, represented using the associated function $\Phi$:
+\begin{align*}
+	(a,b,c)_X=(\Phi(a,b,c))_S
+\end{align*}
+A natural way to think about coordinate axes in $P$ is to note that in standard coordinates, what we do is make two of the coordinates 0 and vary the other; or at a point, keep two of them constant and vary the other. We do the same for arbitrary coordinate systems. However, what's interesting with this is that the basis vectors are \emph{not} constant for arbitrary coordinate systems; they change directions and magnitudes for different points in space. The natural basis vectors for a point $P$ is:
+\begin{align*}
+	\vec h_1=[\partial_1\Phi]P,\quad\vec h_2=[\partial_2\Phi]P,\quad\vec h_3=[\partial_3\Phi]P.
+\end{align*}
+OK, I've lied. coordinate axes aren't actually what you get from keeping two coordinates fixed; coordinate axes are the the local axes that are tangent to that curved axes.
+By the local property of these bases, they are called \emph{local bases}. Global bases are only possible for linear/affine coordinate systems. If the bases are mutually orthogonal, we define the Lamé coefficients
+\begin{align*}
+	h_i=\lvert\vec h_i\rvert
+\end{align*}
+and orthonormal basis
+\begin{align*}
+	\vec b_i=\hat{h_i}.
+\end{align*}
 
 \newpage
 \appendix

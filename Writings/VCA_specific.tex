@@ -124,6 +124,19 @@ We may specify a surface by
 		\iint_{\Phi(D)}f\,dS=\iint_Df(\Phi(x,y))\,\lVert\Phi_x\times\Phi_y\rVert\,dx\,dy
 	\end{align*}
 \end{thm}
+More generally one has the multivariable change of variables formula:
+\begin{align*}
+	\int_{\Phi(D)}f(\vec r)\,d\vec r=\int_Df(\Phi(\vec r))\det D\Phi\,d\vec r
+\end{align*}
+\begin{proof}
+	I don't give a proof but intuition. For proof one can see Schwarz's proof.
+	We may just use substitution but have to take account the deformation of space
+	The formula would be
+	\begin{align*}
+		\int_{\Phi(D)}Df(\vec r)\,d\vec r=\int_DDf(\Phi(\vec r))D\Phi\,d\vec r
+	\end{align*}
+	as a direct generalisation from the single variable case, but if one makes $Df$ a single variable output somehow the $D\Phi$ becomes a determinant. Haven't really figured out why.
+\end{proof}
 \begin{defn}[Flux]
 	We define the flux as, where $\Sigma$ is an oriented surface,
 	\begin{align*}
@@ -219,6 +232,11 @@ By the local property of these bases, they are called \emph{local bases}. Global
 and orthonormal basis
 \begin{align*}
 	\vec b_i=\hat{h_i}.
+\end{align*}
+\subsubsection{Differentials under curvilinear coordinates}
+The total differential (the $D$ we have been working with, called total as opposed to partial), or to be more precise its transpose, the gradient, when expressed in standard coordinates is:
+\begin{align*}
+	\nabla f=\sum_{i}\partial_if
 \end{align*}
 
 \newpage

@@ -216,14 +216,16 @@ Though the regions for which the above theorem applies seems restrictive, we can
 \end{thm}
 
 \section{Curvilinear coordinates}
-We work in 3 dimensions because generalisations are easy. Recall that 3-dimensions means that any point in space can be uniquely specified by a 3-tuple. The system by which those tuples are interpreted is called a coordinate system. A familiar example is the standard basis, where a tuple $(a,b,c)_S$ is interpreted as $a\vec{e_1}+b\vec{e_2}+c\vec{e_3}$. Consider another coordinate system $P$, represented using the associated function $\Phi$:
+We work in 3 dimensions because generalisations are easy. Recall that 3-dimensions means that any point in space can be uniquely specified by a 3-tuple. The system by which those tuples are interpreted is called a coordinate system. A familiar example is the standard basis, where a tuple $(a,b,c)$ is interpreted as $a\vec{e_1}+b\vec{e_2}+c\vec{e_3}$. Consider another coordinate system $P$, represented using the associated invertible function $\Phi$:
 \begin{align*}
-	(a,b,c)_X=(\Phi(a,b,c))_S
+	\Phi(p^1,p^2,p^3)=(x^1,x^2,x^3)
 \end{align*}
+Then, we say that $(p^1,p^2,p^3)$ in the $P$-coordinate system is equal to $(x^1,x^2,x^3)$ in the standard coordinates.
 A natural way to think about coordinate axes in $P$ is to note that in standard coordinates, what we do is make two of the coordinates 0 and vary the other; or at a point, keep two of them constant and vary the other. We do the same for arbitrary coordinate systems. However, what's interesting with this is that the basis vectors are \emph{not} constant for arbitrary coordinate systems; they change directions and magnitudes for different points in space. The natural basis vectors for a point $P$ is:
 \begin{align*}
 	\vec h_1=[\partial_1\Phi]P,\quad\vec h_2=[\partial_2\Phi]P,\quad\vec h_3=[\partial_3\Phi]P.
 \end{align*}
+Note that $\vec h_i$ are to be interpreted in the standard basis.
 OK, I've lied. coordinate axes aren't actually what you get from keeping two coordinates fixed; coordinate axes are the the local axes that are tangent to that curved axes.
 By the local property of these bases, they are called \emph{local bases}. Global bases are only possible for linear/affine coordinate systems. If the bases are mutually orthogonal, we define the Lamé coefficients
 \begin{align*}
@@ -234,10 +236,38 @@ and orthonormal basis
 	\vec b_i=\hat{h_i}.
 \end{align*}
 \subsubsection{Differentials under curvilinear coordinates}
-The total differential (the $D$ we have been working with, called total as opposed to partial), or to be more precise its transpose, the gradient, when expressed in standard coordinates is:
+The total differential (the $D$ we have been working with, called total as opposed to partial), can be written as, with use of the chain rule:
 \begin{align*}
-	\nabla f=\sum_{i}\partial_if
+	D\left(f\circ \begin{pmatrix}\mid\\x_i\\\mid\end{pmatrix}\right)=\begin{pmatrix}\text{---}&\partial_if(\vec x)&\text{---}\end{pmatrix}\begin{pmatrix}\mid\\Dx_i\\\mid\end{pmatrix}
 \end{align*}
+
+Alright, fuck this, adopting Peter's notation. We let $\vec e_i=\hat{\partial_i\Phi}$. and $h_i=\left\lVert\partial_i\Phi\right\rVert$, with $\vec p_i=h_i\vec e_i$. To derive an expression for $\nabla f$ the trick is to take a dot product with the orthogonal components $\vec p_i$:
+\begin{align*}
+	\nabla f\cdot \vec p_i&=\begin{bmatrix}\mid\\\partial_jf\\\mid\end{bmatrix}\cdot\begin{bmatrix}\mid\\\partial_i\Phi_j\\\mid\end{bmatrix}\\
+	&=\sum_j(\partial_jf)(\partial_i\Phi_j)
+\end{align*}
+But
+\begin{align*}
+	\text{``}\frac{\partial f}{\partial u_i}\text{''}&=\partial_i(f\circ\Phi)\\
+	&=[Df](\Phi)\begin{bmatrix}\mid\\\partial_i\Phi_j\\\mid\end{bmatrix}\\
+	&=\begin{bmatrix}\text{---}&[\partial_jf](\Phi)&\text{---}\end{bmatrix}\begin{bmatrix}\mid\\\partial_i\Phi_j\\\mid\end{bmatrix}\\
+	&=\sum_j[\partial_jf](\Phi)\partial_i\Phi_j,
+\end{align*}
+equivalent to what we had before. This thus gives
+\begin{align*}
+	\nabla f=\sum_i\left(\frac{1}{h_i}\partial_i(f\circ\Phi)\right)\vec e_i
+\end{align*}
+
+or to be more precise its transpose, the gradient, when expressed in standard coordinates is:
+\begin{align*}
+	\nabla f=\sum_{i}(\partial_if)\vec e_i
+\end{align*}
+The gradient may be expressed in arbitrary curvilinear coordinates as:
+\begin{align*}
+	\nabla f=\sum_i\frac{1}{h_i}(\partial_if)\vec b_i\quad(?)\\
+	\nabla f=\sum_i\frac{1}{h_i}(\partial_{u_i}f)\vec e_i
+\end{align*}
+For the proof (unintuitively), evaluate the $\vec b_i$ component of $\nabla f$ by using the dot product, then use the chain rule.
 
 \newpage
 \appendix

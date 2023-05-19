@@ -69,5 +69,16 @@ Say we wanted to find an upper bound for the error of a first-order approximatio
 	\frac{1}{2}\left[D_{\vec x-\vec{x_0}}^2f\right](t\vec x+(1-t)\vec{x_0})&=\frac{1}{2}\begin{bmatrix}x-x_0&y-y_0\end{bmatrix}\begin{bmatrix}f_{xx}(t\vec x+(1-t)\vec{x_0})&f_{xy}(t\vec x+(1-t)\vec{x_0})\\f_{yx}(t\vec x+(1-t)\vec{x_0})&f_{yy}(t\vec x+(1-t)\vec{x_0})\end{bmatrix}\begin{bmatrix}x-x_0\\y-y_0\end{bmatrix}.
 \end{align*}
 \section{Classification of Points}
-
+\section{Spherical}
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{spherical.png}
+\end{center}
+\begin{align*}
+	x&=r\sin(\phi)\cos(\theta)\\
+	y&=r\sin(\phi)\sin(\theta)\\
+	z&=r\cos(\phi)\\
+	\det D\Phi&=r^2\sin(\phi)\\
+	\theta&\in[0,2\pi)\\
+	\phi&\in[0,\pi)
+\end{align*}
 \end{document}

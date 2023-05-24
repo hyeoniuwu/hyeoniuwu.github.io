@@ -45,7 +45,11 @@
 \renewcommand*{\thefootnote}{(\arabic{footnote})}
 
 \newcommand{\sref}[1]{\textsuperscript{(\ref{#1})}}
+
+%macros
 \newcommand{\vc}{\vcentcolon}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\Lra}{\Leftrightarrow}
 
 \setlength{\parindent}{0pt} % "sets the length of the paragraph indentation to zero"
 
@@ -766,15 +770,20 @@ Thus, we see that a differentiable function has defined partial derivatives but 
 \subsubsection{Inverse Function Theorem}
 Apparently, this theorem is important. (reflect later)
 \begin{defn}
-	Where $f$ maps a metric space to itself, it is a \emph{contraction} if $d(f(x),f(y))\leq cd(x,y)$ with $0<c\leq1$, and a strict contraction if $0<c<1$.
+	Where $f$ maps a metric space to itself, it is a \emph{contraction} if $d(f(x),f(y))\leq c(x\lra y)$ with $0<c\leq1$, and a strict contraction if $0<c<1$.
 \end{defn}
 \begin{thm}[Banach Fixed-Point Theorem]
 	Strict contractions have at most one fixed point, and exactly one if $X$ is non-empty and complete.
 \end{thm}
 \begin{proof}
-	If $f$ were to have two fixed points $x$ and $y$, $d(f(x),f(y))\leq cd(x,y)\Rightarrow d(x,y)\leq cd(x,y)$, a contradiction.\par
-	Now suppose that the metric space $X$ is non-empty and complete. Choose a $x_0\in X$ and consider the sequence $x_n=[f]^n(x_0)$. That this sequence is Cauchy can be established by noting that $d(x_{n+1},x_n)\leq cd(x_n,x_{n-1})\Rightarrow d(x_{n+1},x_n)\leq c^nd(x_1,x_0)$. Then, one can use the triangle inequality to expand $d(x_m,x_n)$ and use the geometric series formula. We propose that the limit of the sequence, $x^*$ (which exists by completeness), is the fixed point of $f$.
-	\[x^*=\lim\limits_{n\rightarrow\infty}x_n=\lim\limits_{n\rightarrow\infty}f(x_{n-1})=f(\lim\limits_{n\rightarrow\infty}x_{n-1})=f(x^*).\] The penultimate equality is justified by continuity of $f$. (Why is $f$ continuous?)
+	If $f$ were to have two fixed points $x$ and $y$, then
+	\begin{align*}
+		f(x)\lra f(y)&<x\lra y\\
+		\Rightarrow x\lra y&<x\lra y,
+	\end{align*}
+	a contradiction.\par
+	Now suppose that the metric space $X$ is non-empty and complete. Choose a $x_0\in X$ and consider the sequence $x_n=[f]^n(x_0)$. That this sequence is Cauchy can be established by noting that $x_{n+1}\lra x_n\leq c(x_n\lra x_{n-1})\Rightarrow x_{n+1}\lra x_n\leq c^n(x_1\lra x_0)$. Then, one can use the triangle inequality to expand $x_m\lra x_n$ and use the geometric series formula. We propose that the limit of the sequence, $x^*$ (which exists by completeness), is the fixed point of $f$.
+	\[x^*=\langle x_n\rangle=\langle f(x_{n-1})\rangle=f(\langle x_{n-1}\rangle)=f(x^*).\] The penultimate equality is justified by continuity of $f$. (Why is $f$ continuous?)
 \end{proof}
 \begin{thm}[Inverse Function Theorem]\label{ift}
 	Where $f$ with an open domain is $C^1$ with an invertible derivative on $x_0$, there is an open subset $U$ of the domain containing $x_0$ on which $f$ is bijective. Also, $f^-$ (on this restriction) satisfies

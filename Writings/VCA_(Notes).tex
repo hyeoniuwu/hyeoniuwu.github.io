@@ -786,8 +786,8 @@ Apparently, this theorem is important. (reflect later)
 	\[x^*=\langle x_n\rangle=\langle f(x_{n-1})\rangle=f(\langle x_{n-1}\rangle)=f(x^*).\] The penultimate equality is justified by continuity of $f$. (Why is $f$ continuous?)
 \end{proof}
 \begin{thm}[Inverse Function Theorem]\label{ift}
-	Where $f$ with an open domain is $C^1$ with an invertible derivative on $x_0$, there is an open subset $U$ of the domain containing $x_0$ on which $f$ is bijective. Also, $f^-$ (on this restriction) satisfies
-	\[D_{f^-}(f(x_0))=(D_{f^-}(x_0))^-.\]
+	Where $f$ is $C^1$ on an open domain with an invertible derivative at $x_0$, there is an open subset $U$ of the domain containing $x_0$ on which $f$ is bijective. Also, $f^-$ (on this restriction) satisfies
+	\[[Df^-](f(x_0))=([Df^-](x_0))^-.\]
 \end{thm}
 The main part of the proof, as presented by Tao, is not exactly intuitive. It hinges on a corollary of the fixed-point theorem that states that if $g$ is strictly contractive on $U(0,r)$, $f=g+I$ is injective on that neighbourhood and $U(0,(1-c)r)\subset f(U(0,r))\subset U(0,(1+c)r)$. The proof is as follows.\par
 If $g(x)=g(y)$, then as $g$ is a contraction, this implies that $x=y$.\par

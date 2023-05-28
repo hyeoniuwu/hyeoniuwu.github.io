@@ -1578,6 +1578,78 @@ We can isolate the $\tau$ term in the coefficient of $\vec B_t$ by taking a dot 
 	\Rightarrow(\vec r\,'\times\vec r\,'')\cdot\vec r\,'''&=((s')^3\kappa)^2\tau\\
 	\Rightarrow\tau&=\frac{(\vec r\,'\times\vec r\,'')\cdot\vec r\,'''}{\left\lVert\vec r\,'\times\vec r\,''\right\rVert^2}.
 \end{align*}
+
+\newpage
+\subsubsection{Divergence and Curl}
+\begin{defn}
+	The \emph{divergence} of a vector field $\mathbf{F}:\mathbb{R}^n\rightarrow\mathbb{R}^n$ at $\mathbf{v}$ is
+	\begin{align*}
+		\text{div}\,\mathbf{F}(\mathbf{v})\vc=\left\langle\frac{1}{\lvert U_{\mathbf{v}}(r)\rvert}\int\limits_{\partial U_{\mathbf{v}}(r)}\mathbf{F}\cdot\hat{\mathbf{n}}\right\rangle_{r\rightarrow0},
+	\end{align*}
+	The definition is the same if $U_{\mathbf{v}}(r)$ were to be replaced with any other region containing $\mathbf{v}$ which approaches 0. Actually I'm not sure but probably.
+\end{defn}
+\begin{prop}
+	\begin{align*}
+		\text{div}\,\mathbf{F}=\nabla\cdot\mathbf{F}.
+	\end{align*}
+\end{prop}
+\begin{proof}
+	The trick is to consider the volumes V as hypercubes with sidelength, say, $h$.
+	Now, consider one of the faces $S_i$ of the hypercube, say the one with the normal whose only non-zero component is the $i^\text{th}$ one. As we are taking the dot product with the normal, we are only concerned with the $i^\text{th}$ component of $\mathbf{F}$. The flux from this face would be:
+	\begin{align*}
+		\int\limits_{\mathbf{x}\in S_i}F_i(\mathbf{v+\mathbf{x}})=\int\limits_{t_n=-h/2}^{h/2}\cdots\int\limits_{t_1=-h/2}^{h/2}F_i(v_1+t_1,\dots,v_i+h/2,\dots,v_n+t_n)
+	\end{align*}
+	From this it is clear that
+	\begin{align*}
+		\left\langle\int\limits_{\mathbf{x}\in S_i}F_i(\mathbf{v+\mathbf{x}})\right\rangle_{h\rightarrow0}=\left\langle h^{n-1}F_i(\mathbf{v}+\frac{h}{2}\mathbf{x}_i)\right\rangle_{h\rightarrow0}.
+	\end{align*}
+	So, we shall just consider the flux of a face with the RHS. Noting that a hypercube has two faces in any given axis, we can write a term in the sequence from the definition of divergence as:
+	\begin{align*}
+		\frac{1}{h^n}\sum_{i=1}^{n}h^{n-1}\left(F_i(\mathbf{v}+\frac{h}{2}\mathbf{x}_i)-F_i(\mathbf{v}-\frac{h}{2}\mathbf{x}_i)\right)=\sum_{i=1}^{n}\frac{F_i(\mathbf{v}+\frac{h}{2}\mathbf{x}_i)-F_i(\mathbf{v}-\frac{h}{2}\mathbf{x}_i)}{h}
+	\end{align*}
+	But as $V\rightarrow0\iff h\rightarrow0$, the summand becomes the partial derivative of $F_i$ in the $i^\text{th}$ component, and so the expression becomes:
+	\begin{align*}
+		\sum_{i=1}^{n}[\partial_iF_i](\mathbf{v})=\nabla\cdot\mathbf{F}.
+	\end{align*}
+	To help visualisation, here is part of a 2-dimensional example:
+	\begin{center}
+	\begin{tikzpicture}
+		\draw[fill=black] (0,0) circle (0.2pt) node[anchor=west]{$\mathbf{v}$};
+		\draw (-1,-1) rectangle (1,1);
+		\draw [blue] (1,-1) -- (1,1);
+		\draw [stealth-stealth] (-1.2,-1) -- (-1.2,1) node[pos=0.5, anchor=east]{$h$};
+		\draw [-stealth] (0,1) -- (0,2) node[anchor=south]{$\hat{\mathbf{n}}=\begin{bmatrix}0\\1\end{bmatrix}$};
+		\draw [-stealth] (1,0) -- (2,0) node[anchor=west]{$\hat{\mathbf{n}}=\begin{bmatrix}1\\0\end{bmatrix}$};
+	\end{tikzpicture}
+	\end{center}
+	The flux across the blue face is given by:
+	\begin{align*}
+		\int\limits_{t=-h/2}^{h/2}F_1(v_1+\frac{h}{2},v_2+t)\approx hF_1(\mathbf{v}+\frac{h}{2}\mathbf{x}_1).
+	\end{align*}
+\end{proof}
+
+\begin{thm}[Gauss' Divergence Theorem]
+	Where $\mathbf{F}:\mathbb{R}^n\rightarrow\mathbb{R}^n$ is sufficiently differentiable and $V$ is a compact volume with a piecewise smooth boundary,
+	\begin{align*}
+		\int_V\text{div}\,\mathbf{F}=\int_{\partial V}\mathbf{F}\cdot\hat{\mathbf{n}}.
+	\end{align*}
+\end{thm}
+\begin{proof}
+	The key idea of the proof is that the flux of a volume, $\Phi_F(V)$, is additive; that is, if $V=V_1+V_2$, we have $\Phi_F(V)=\Phi_F(V_1)+\Phi_F(V_2)$. See Wikipedia for a good visualisation.
+	Anyhow, this gives us
+	\begin{align*}
+		\int_{\partial V}\mathbf{F}\cdot\hat{\mathbf{n}}&=\sum_{V_i\in\text{Slice}(V)}\int_{\partial V_i}\mathbf{F}\cdot\hat{\mathbf{n}}\\
+		&=\sum_{V_i\in\text{Slice}(V)}\frac{1}{\lvert V_i\rvert}\int_{\partial V_i}\mathbf{F}\cdot\hat{\mathbf{n}}\,\lvert V_i\rvert.
+	\end{align*}
+	Now, taking $V_i\rightarrow0$:
+	\begin{align*}
+		\left\langle\sum_{V_i\in\text{Slice}(V)}\frac{1}{\lvert V_i\rvert}\int_{\partial V_i}\mathbf{F}\cdot\hat{\mathbf{n}}\,\lvert V_i\rvert\right\rangle_{V_i\rightarrow0}&=\left\langle\sum_{V_i\in\text{Slice}(V)}\text{div}\,\mathbf{F}\,\lvert V_i\rvert\right\rangle_{V_i\rightarrow0}\\
+		&=\int_V\text{div}\,\mathbf{F}.
+	\end{align*}
+	Note that the continuity of $\mathbf{F}$ guarantees that the sequence is unchanged in the limit.
+\end{proof}
+
+\newpage
 \section{Linear Algebra}
 \subsection{Linear Operators}
 

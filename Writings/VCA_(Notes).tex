@@ -51,7 +51,7 @@
 \newcommand{\llv}[1]{\left\lvert #1\right\rvert}
 \newcommand{\lV}[1]{\lVert #1\rVert}
 \newcommand{\llV}[1]{\left\lVert #1\right\rVert}
-\newcommand{\l}[1]{\left(#1\right)}
+\newcommand{\lp}[1]{\left(#1\right)}
 \newcommand{\lc}[1]{\left\{#1\right\}}
 \newcommand{\ls}[1]{\left[#1\right]}
 \newcommand{\lan}[1]{\langle #1\rangle}
@@ -61,11 +61,9 @@
 \newcommand{\lfl}[1]{\lfloor #1\rfloor}
 \newcommand{\llfl}[1]{\left\lfloor #1\right\rfloor}
 
+% \newcommand{\seq}[2]{\underset{\left(#2\right)}{\left\langle #1\right\rangle}}
+\newcommand{\seq}[2]{\underset{#2}{\left\langle #1\right\rangle}}
 
-
-\newcommand{\seq}[2]{\underset{\left(#2\right)}{\left\langle #1\right\rangle}}
-
-\newcommand
 \newcommand{\vc}{\vcentcolon}
 \newcommand{\lra}{\leftrightarrow}
 \newcommand{\Lra}{\Leftrightarrow}
@@ -105,7 +103,6 @@
 \newpage
 \tableofcontents
 \newpage\setcounter{page}{1}
-
 \section{Set Theory}
 ... Thus, we see that $\left\{0,1\right\}^X$ denotes the power set of $X$; it is standard to abbreviate this to $2^X$, with the interpretation of $2$ as a set with 2 elements and not the number 2, but with the potential confusion this may cause with notation such as ``$\mathbb{R}^2$'',
 we instead choose to use the (fancier) notation of $\mathscr{P}(X)$ to denote the power set of $X$.
@@ -843,21 +840,21 @@ We want to extend this interpretation of the sum into the reals:
 \end{defn}
 We have given a declarative definition; we ought to give an imperative construction. 
 Actually, the following imperative definition is also declarative in a sense. As we did with the difference/derivative, we will reframe the sum where the gap between each term becomes arbitrary, and take a seqeunce where that gap approaches 0.
-To make this gap arbitrary, we introduce the notion of partitions. Let $I$ be the interval we are working with (with endpoints $a$ and $b$), and $P$ be a partition operator. $p_i^*$ is a point in the interval $p_i$.
+To make this gap arbitrary, we introduce the notion of partitions. Let $I$ be the interval we are working with (with endpoints $a$ and $b$), and $P$ be a partition operator. $p_i^*$ is the lower bound of the interval $p_i$. (Later on, it will be fine for $p_i^*$ to be any point in the interval.)
 \begin{align*}
 	\sum_{p_i\in P(I)}\Delta_{\lvert p_i\rvert}f(p_i^*)=\Delta_{\lvert I\rvert}f(a).
 \end{align*}
-Noting that the above equality holds for any partition at all, it follows that the sequence of the LHS as $\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0$ is constant, and so converges to the RHS:
+Noting that the above equality holds for any partition at all, it follows that the sequence of the LHS as $\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0$ is constant, and so converges to the RHS. Let us define $\text{mesh}\,P(I)\vc=\max_{p_i\in P(I)}\lvert p_i\rvert$. Then,
 \begin{align*}
-	\seq{\sum_{p_i\in P(I)}\Delta_{\lvert p_i\rvert}f(p_i^*)}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}=\Delta_{\lvert I\rvert}f(a).
+	\seq{\sum_{p_i\in P(I)}\Delta_{\lvert p_i\rvert}f(p_i^*)}{\text{mesh}\,P(I)\rightarrow0}=\Delta_{\lvert I\rvert}f(a).
 \end{align*}
 The summand looks somewhat like the derivative, which we can make more explicit by:
 \begin{align*}
-	\seq{\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}=\Delta_{\lvert I\rvert}f(a).
+	\seq{\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert}{\text{mesh}\,P(I)\rightarrow0}=\Delta_{\lvert I\rvert}f(a).
 \end{align*}
 It seems reasonable to replace the normalised difference with the derivative as the gap is approaching is 0, and indeed, I will show that 
 \begin{align*}
-	\seq{\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}=\seq{\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}.
+	\seq{\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert}{\text{mesh}\,P(I)\rightarrow0}=\seq{\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert}{\text{mesh}\,P(I)\rightarrow0}.
 \end{align*}
 The equivalence follows exactly due to the intuition; the summands become arbitrarily close as one is the convergent value of the other. To make this explicit, let us subtract two terms from the sequence (where each sequence has the same domain/partition structure):
 \begin{align*}
@@ -870,112 +867,45 @@ The equivalence follows exactly due to the intuition; the summands become arbitr
 The second line can be justified by choosing an partition small enough so that $Df$ and $\hat\Delta_{\lvert p_i\rvert}f$ are arbitrarily close.
 Thus, our imperative definition of the integral is:
 \begin{align*}
-	\int_IDf=\seq{\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}.
+	\int_IDf=\seq{\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert}{\text{mesh}\,P(I)\rightarrow0}.
 \end{align*}
 
 Comment; this roughly corresponds to riemann integration. An immediate problem is the function Q(x)=1 if x is irrational, 0 otherwise. Depending on how one chooses tags/partition, the integral evaluates to 0 or 1. we need the stiefjes integral or lebegsue, maybe even kurzweil henstock. discuss this later.
 
-\subsubsection{Alternative}
-An alternative characterisation which will help with the change-of-variables theorem is the following:
+
+\newpage
+\subsubsection{Line Integrals}
+Everything becomes much simpler when interpreting a curve $\vec\gamma$ as a coordinate transform/change-of-variables, which is discussed elsewhere (actually a bit different because $\gamma$ changes dimensions; so we need to show that $\seq{\frac{\lv{\vec\gamma(p_i)}}{\lv{p_i}}}{\lv{p_i}\rightarrow0}=\lV{D\vec\gamma}$). Then, we have
 \begin{align*}
-	Df(x_0)\vc=\seq{\frac{\lvert f(L)\rvert}{\lvert L\rvert}}{\lvert L\rvert\rightarrow0},
+	\int\limits_{\vec\gamma(I)}f=\int\limits_If\circ\vec\gamma\,\lV{D\vec\gamma}
 \end{align*}
-where each $L$ is a line/interval containing $x_0$. We are guaranteed to have a simple notion of $L$ as continuous maps preserve intervals, so we need not delve into measure theory.
+We can show that this definition satisifes a fundamental-theorem-of-calculus of sorts; let $\mathbf{T}=\text{unit}(\vec\gamma'\circ t)$; $\mathbf{T}$ is a function only accepting vectors mapped to by $\gamma$, and gives the derivative of $\gamma$ at that point. This is set up so that $\mathbf{T\circ\vec\gamma=\gamma'}$. Then,
+\begin{align*}
+	\int\limits_{\vec\gamma(I)}D_{\mathbf{T}}f=\Delta_{\lv{\vec\gamma}}f(\mathbf{a})
+\end{align*}
+(Where we define $\lv{\vec\gamma}=\text{end point}-\text{start point}$)
+This follows easily:
+\begin{align*}
+	\int\limits_{\vec\gamma(I)}D_{\mathbf{T}}f&=\int\limits_{\vec\gamma(I)}(Df)\mathbf{T}\\
+	&=\int\limits_I[Df\circ\vec\gamma]\mathbf{T}\circ\vec\gamma\,\lV{D\vec\gamma}\\
+	&=\int\limits_I[Df\circ\vec\gamma]D\vec\gamma\\
+	&=[f\circ\vec\gamma](\mathbf{b})-[f\circ\vec\gamma](\mathbf{a})\\
+	&=\Delta_{\lv{\vec\gamma}}f(\mathbf{a}).
+\end{align*}
 
 
-\subsection{Line Integrals}
-As before, we extend the characterisation of the sum as an operator to integrals on scalar functions over a curve. But first, we need to define the $C$-step normalised difference of a function, for a rectifiable curve $C$:
-\begin{defn}
-	For a rectifiable curve $C$ with start-point $\vec a$ and endpoint $\vec b$, the $C$-step normalised difference of a function is defined as:
-	\begin{align*}
-		\hat{\Delta}_Cf\vc=f(\vec b)-f(\vec a).
-	\end{align*}
-\end{defn}
-A glaring problem with a naive extension, however, is that if $f:\mathbb{R}^n\rightarrow \mathbb{R}$ implies that $Df:\mathbb{R}^n\rightarrow (\mathbb{R}^n)^T$ (rough notation). To keep dimensionality in check, we thus use the directional derivative instead:
-\begin{defn}
-	The integral $\int$, as an operator on the $\vec x'$-directional derivative of a scalar function over a rectifiable curve $C=\left\{\vec x_i\mid i\in[a,b]\right\}$, is defined to give the $C$-step difference of the function; that is,
-	\begin{align*}
-		\int_{C}D_{\vec x'}f\vc=\Delta_Cf.
-	\end{align*}
-\end{defn}
-In basically the same proof as before, we can show that the imperative definition is as follows:
-\begin{align*}
-	\int_{C}D_{\vec x'}f=\left(\sum_{i=1}^{n-1}Df(\vec x_i)\Delta \vec x_i\right)_{\max\{\Delta \vec x_i\}\rightarrow0}
-\end{align*}
-As the proof is similar, I will write a hand-wavy proof:
-\begin{align*}
-	\int_{C}D_{\vec x'}f&=f(\vec b)-f(\vec a)\\
-	&=\sum_{i=1}^{n-1}\left(f(\vec x_{i+1})-f(\vec x_i)\right)\tag*{($(\vec x_i)_i$ forms a partition of the curve)}\\
-	&=\left(\sum_{i=1}^{n-1}\left(f(\vec x_{i+1})-f(\vec x_i)\right)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert\frac{f(\vec x_{i}+\Delta\vec x_i)-f(\vec x_i)}{\lVert\Delta\vec x_i\rVert}\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert[\hat{\Delta}_{\Delta\vec x_i}f](\vec x_i)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert D_{\hat{\Delta}\vec x_i}f(\vec x_i)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec x_i\rVert D_{\vec x'}f(\vec x_i)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
-	&=\vc\int_{\vec x\in C}D_{\vec x'}f(\vec x_i)\,ds
-\end{align*}
-Perhaps a more useful version of the formula, for computational purposes, is given in the following theorem:
-\begin{thm}
-	Given a rectifiable curve $C=\left\{\vec\gamma(t)\mid t\in[a,b]\right\}$,
-	\begin{align*}
-		\int_CD_{\vec\gamma'}f=\int_{t=a}^b\lVert \vec\gamma'\rVert\left[D_{\vec\gamma'}f\right]\left(\vec\gamma (t_i)\right).
-	\end{align*}
-\end{thm}
-\begin{proof}
-	\begin{align*}
-		\int_CD_{\vec\gamma'}f&=\left(\sum_{i=1}^{n-1}\left(f(\vec x_{i+1})-f(\vec x_i)\right)\right)_{\max\{\left\lVert\Delta\vec x\right\rVert\}\rightarrow0}\\
-		&=\left(\sum_{i=1}^{n-1}\left(f(\vec\gamma(t_{i+1}))-f(\vec\gamma(t_i))\right)\right)_{\max\{\Delta t_i\}\rightarrow0}
-	\end{align*}
-	For notational convenience, let $\Delta\vec\gamma=\Delta\vec\gamma(t_i)$. Note that in the limit,
-	\begin{align*}
-		\Delta\vec\gamma&=\Delta t_i\hat{\Delta}_{\Delta t_i}\vec\gamma\\
-		&\sim\Delta t_iD\vec\gamma\\
-		&=\Delta t_i\vec\gamma'
-	\end{align*}
-	and similarly
-	\begin{align*}
-		\hat{\Delta}\vec\gamma&=\hat{\Delta}_{\Delta t_i}\vec\gamma\\
-		&\sim D\vec\gamma\\
-		&=\vec\gamma'.
-	\end{align*}
-	Continuing from where we left off:
-	\begin{align*}
-		\left(\sum_{i=1}^{n-1}\left(f(\vec\gamma(t_{i+1}))-f(\vec\gamma(t_i))\right)\right)_{\max\{\Delta t_i\}\rightarrow0}&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec\gamma\rVert\frac{f(\vec\gamma(t_i)+\Delta\vec\gamma)-f(\vec\gamma(t_i))}{\lVert\Delta\vec\gamma\rVert}\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-		&=\left(\sum_{i=1}^{n-1}\lVert\Delta\vec\gamma\rVert\left[\hat{\Delta}_{\Delta\vec\gamma}f\right]\left(\vec\gamma (t_i)\right)\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-		&=\left(\sum_{i=1}^{n-1}\lVert\Delta t_i\vec\gamma'\rVert\left[D_{\hat{\Delta}\vec\gamma}f\right]\left(\vec\gamma (t_i)\right)\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-		&=\left(\sum_{i=1}^{n-1}\lVert \vec\gamma'\rVert\left[D_{\hat{\Delta}\vec\gamma}f\right]\left(\vec\gamma (t_i)\right)\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-		&=\int_{t=a}^b\lVert \vec\gamma'\rVert\left[D_{\vec\gamma'}f\right]\left(\vec\gamma (t_i)\right).
-	\end{align*}
-\end{proof}
 \subsubsection{Path Integral on Vector Fields}
-I am unsure how to generalise my previous operator notion to path integrals on vector fields, so give the somewhat unsatisfactory standard definition instead.
-(actually, a way to generalise sort of is as follows.)
-We note that $[D_{\vec a}f](\vec x)=[Df](\vec x)\vec a=[\nabla f](\vec x)\cdot\vec a$. So, we can write
-\begin{align}
-	\int_CD_{\vec\gamma'}f=\int_C\nabla f\cdot\vec\gamma'.\label{vecinteg}
-\end{align}
-Furthermore, from the working above, we have
+Mathematicians (or some other people) thought it would be good notation to write
 \begin{align*}
-	\int_CD_{\vec\gamma'}f&=\left(\sum_{i=1}^{n-1}\lVert \vec\gamma'\rVert\left[D_{\hat{\Delta\vec\gamma}}f\right]\left(\vec\gamma (t_i)\right)\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\left[\nabla f\right]\left(\vec\gamma (t_i)\right)\cdot\lVert \vec\gamma'\rVert\hat{\Delta\vec\gamma}\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\left[\nabla f\right]\left(\vec\gamma (t_i)\right)\cdot\lVert \vec\gamma'\rVert\hat{\vec\gamma'}\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\left[\nabla f\right]\left(\vec\gamma (t_i)\right)\cdot\vec\gamma'\Delta t_i\right)_{\max\{\Delta t_i\}\rightarrow0}\\
-	&=\int_{t=a}^b\nabla f\circ\vec\gamma \cdot\vec\gamma'.
+	\int\limits_{\vec\gamma}\mathbf{F}\cdot ds\vc=\int\limits_{\vec\gamma}\mathbf{F}\cdot\mathbf{T}.
 \end{align*}
-Thus, from \eqref{vecinteg}, we have:
+This is because it gives a neat form of a pseudo-fundamental-theorem-of-calculus:
 \begin{align*}
-	\int_C\nabla f\cdot\vec\gamma'&=\int_{t=a}^b\nabla f\circ\vec\gamma \cdot\vec\gamma'\\
-	&=\int_CD_{\vec\gamma'}f\\
-	&=\Delta_Cf\\
-	&=f(\vec\gamma(b))-f(\vec\gamma(a)).
+	\int\limits_{\vec\gamma}\nabla f\cdot ds&=\int\limits_{\vec\gamma}\nabla f\cdot\mathbf{T}\\
+	&=\int\limits_{\vec\gamma}D_{\mathbf{T}}f\\
+	&=\Delta_{\lv{\vec\gamma}}f(\mathbf{a})
 \end{align*}
-Noting that (given $f:\mathbb{R}\rightarrow \mathbb{R}$) $\nabla f$ is a vector field from $\mathbb{R}^n$ to $\mathbb{R}^n$, we have that 
-\begin{defn}
-	Given a vector field $F:\mathbb{R}^n\rightarrow \mathbb{R}^n$, and a rectifiable curve $C=\left\{\vec\gamma(t)\mid t\in[a,b]\right\}$, we define:
-	\begin{align*}
-		\int_C\vec F\cdot d\gamma\vc&=\int_{t=a}^b\vec F(\gamma(t))\cdot\vec \gamma'(t)\\
-		&=\int_C\vec F\cdot\vec T
-	\end{align*}
-\end{defn}
+and call this the ``line integral of a vector field''. We will just use $\int\limits_{\vec\gamma}\mathbf{F}\cdot\mathbf{T}$ instead of unnecessarily introducing new notation.
 
 \newpage
 \subsection{Multivariable Integration}
@@ -1469,6 +1399,7 @@ Suppose we wanted to identify the extrema of $f$ , not on its domain but on $\ve
 To avoid headaches, I skip any proof of Lagrange multipliers.
 
 \subsection{Vector Calculus}
+\subsubsection{TNB}
 \begin{defn}
 	A scalar/vector field is a function from vectors to scalars/vectors.
 \end{defn}
@@ -1499,7 +1430,6 @@ We define the tangent vector $\vec T_t$ to be the unit vector pointing in the di
 	&=\vc\vec T_s\circ s.
 \end{align*}
 Note that we need $\vec r\,'\not=\vec0$.
-
 We quantify how much the direction of the curve is changing by analysing the change in the tangent vector i.e change in the direction of the curve. Thus, the direction of $\vec T_s\,'$ signifies the direction of where the direction of the curve is heading, while the magnitude quantifies how fast the direction is changing. (Note that by using arclength, we quantify the change in direction per change in unit arclength, instead of change in direction per change in distance travelled in 1 unit of time.) This magnitude is assigned the ``curvature'', symbolised by $\kappa$. The normal vector $\vec N_s$ is defined to be the unit vector pointing in the direction of $\vec T_s\,'$; that is,
 \begin{align*}
 	\kappa&\vc=\left\lVert\vec T_s\,'\right\rVert;\\
@@ -1622,7 +1552,7 @@ We can isolate the $\tau$ term in the coefficient of $\vec B_t$ by taking a dot 
 \begin{thm}[Gauss' Divergence Theorem]
 	Where $\mathbf{F}:\mathbb{R}^n\rightarrow\mathbb{R}^n$ is sufficiently differentiable and $V$ is a compact volume with a piecewise smooth boundary,
 	\begin{align*}
-		\int_V\text{div}\,\mathbf{F}=\int_{\partial V}\mathbf{F}\cdot\hat{\mathbf{n}}.
+		\int_V\text{div}\,\mathbf{F}=\oint_{\partial V}\mathbf{F}\cdot\hat{\mathbf{n}}.
 	\end{align*}
 \end{thm}
 \begin{proof}
@@ -1639,8 +1569,76 @@ We can isolate the $\tau$ term in the coefficient of $\vec B_t$ by taking a dot 
 	\end{align*}
 	Note that the continuity of $\mathbf{F}$ guarantees that the sequence is unchanged in the limit.
 \end{proof}
+\begin{thm}[Stokes' Theorem]
+	Where $\mathbf{F}:\mathbb{R}^n\rightarrow\mathbb{R}^n$ is sufficiently differentiable and $V$ is a compact volume with a piecewise smooth boundary,
+	\begin{align*}
+		\int_S\text{curl}\,\mathbf{F}=\oint_{\partial S}\mathbf{F}\cdot\hat{\mathbf{t}}.
+	\end{align*}
+\end{thm}
+\begin{proof}
+	The proof is extremely similar. The key idea (again) is that the circulation of a surface, $C_F(S)$, is additive; that is, if $S=S_1+S_2$, we have $C_F(S)=C_F(S_1)+C_F(S_2)$. See Wikipedia for a good visualisation.
+	Anyhow, this gives us
+	\begin{align*}
+		\oint_{\partial S}\mathbf{F}\cdot\hat{\mathbf{t}}&=\sum_{S_i\in\text{Slice}(S)}\oint_{\partial S_i}\mathbf{F}\cdot\hat{\mathbf{t}}\\
+		&=\sum_{S_i\in\text{Slice}(S)}\frac{1}{\lvert S_i\rvert}\oint_{\partial S_i}\mathbf{F}\cdot\hat{\mathbf{t}}\,\lvert S_i\rvert.
+	\end{align*}
+	Now, taking $S_i\rightarrow0$:
+	\begin{align*}
+		\left\langle\sum_{S_i\in\text{Slice}(S)}\frac{1}{\lvert S_i\rvert}\oint_{\partial S_i}\mathbf{F}\cdot\hat{\mathbf{t}}\,\lvert S_i\rvert\right\rangle_{S_i\rightarrow0}&=\left\langle\sum_{S_i\in\text{Slice}(S)}\text{curl}\,\mathbf{F}\,\lvert S_i\rvert\right\rangle_{S_i\rightarrow0}\\
+		&=\int_S\text{curl}\,\mathbf{F}.
+	\end{align*}
+	Note that the continuity of $\mathbf{F}$ guarantees that the sequence is unchanged in the limit.
+\end{proof}
 
 \newpage
+\subsubsection{Change of variables formula}
+\begin{thm}
+	Under appropriate circumstances,
+	\begin{align*}
+		\int\limits_{\Phi(V)}f=\int\limits_Vf\circ\Phi\det(D\Phi).
+	\end{align*}
+\end{thm}
+\begin{proof}
+	An alternative characterisation which will help with the change-of-variables theorem is the following:
+	\begin{align*}
+		Df(x_0)\vc=\seq{\frac{\lvert f(L)\rvert}{\lvert L\rvert}}{\lvert L\rvert\rightarrow0},
+	\end{align*}
+	where each $L$ is a line/interval containing $x_0$. We are guaranteed to have a simple notion of $L$ as continuous maps preserve intervals, so we need not delve into measure theory. So we can write
+	\begin{align*}
+		\lv{f(L)}=\max_{x\in L}f(x)-\min_{x\in L}f(x).
+	\end{align*}
+	The proof of equivalence is as follows. Consider a sequence for
+	\begin{align*}
+		\seq{\hat\Delta_hf(x_0)}{h\rightarrow0}.
+	\end{align*}
+	Now construct a sequence with the effectively the same domain, but expressed in terms of lines, and consider
+	\begin{align*}
+		\seq{\frac{\lvert f(L)\rvert}{\lvert L\rvert}}{\lvert L\rvert\rightarrow0}.
+	\end{align*}
+	Here is a weird proof that I thought of. I will show that for any $\delta>0$ we can find $\lvert f(L)\rvert=\lv{f(x_0+h)-f(x_0)}$ with $0<\lv{L}<\delta$, where $L=[x_0,x_0+h]$. Suppose otherwise; that for all $0<\delta$, the maximum value of $f$ on $[x_0,x_0+\delta]$ is not on the endpoints but somewhere in between e.g. on $x+\xi$. But then, the maximum of $f$ on $[x_0,x_0+\xi]$ must be on an endpoint, a contradiction. Anyhow, this shows us that, by choosing a subseqence such that the maximum and minimum values coincide with the endpoints, we can write 
+	\begin{align*}
+		\seq{\frac{\lvert f(L)\rvert}{\lvert L\rvert}}{\lvert L\rvert\rightarrow0}&=\seq{\frac{\max_{x\in L}f(x)-\min_{x\in L}f(x)}{\lvert L\rvert}}{\lvert L\rvert\rightarrow0}\\
+		&=\seq{\frac{\lv{f(x_0+h)-f(x)}}{h}}{h\rightarrow0}\\
+		&=Df(x_0).
+	\end{align*}
+	The existence of the limit at all is guaranteed by differentiability (how?).
+	Actually, I'm not too sure how to generalise this into $n$ dimensions, but I think the following is true:
+	Where $f:\mathbb{R}^n\rightarrow\mathbb{R}^n$, 
+	\begin{align*}
+		\seq{\frac{\lv{f(V)}}{\lv{V}}}{\lv{V}\rightarrow0}=\det Df.
+	\end{align*}
+	This can be used to prove the change-of-variable formula:
+	\begin{align*}
+		\int\limits_{\Phi(V)}f&=\seq{\sum_{p_i\in P(\Phi(V))}f(p_i^*)\lv{p_i}}{\text{mesh}\,P(\Phi(V))\rightarrow0}\\
+		&=\seq{\sum_{p_i\in P(V)}f(\Phi(p_i^*))\lv{\Phi(p_i)}}{\text{mesh}\,P(V)\rightarrow0}\\
+		&=\seq{\sum_{p_i\in P(V)}f(\Phi(p_i^*))\det(D\Phi)\lv{p_i}}{\text{mesh}\,P(V)\rightarrow0}\\
+		&=\seq{\sum_{p_i\in P(V)}f(\Phi(p_i^*))\det(D\Phi)\lv{p_i}}{\text{mesh}\,P(V)\rightarrow0}\\
+		&=\int\limits_Vf\circ\Phi\det(D\Phi).
+	\end{align*}
+	The third equality can be justified using the trick used in the definition of the integral -- just take the difference of terms in the sequence and one will see that it can be made arbitrarily small. Also, note that the exact sequence of partitions have to be chosen carefully for the equalities to hold; we want $\Phi(P(V))=P(\Phi(V)).$
+\end{proof}
+
+
 \section{Linear Algebra}
 \subsection{Linear Operators}
 

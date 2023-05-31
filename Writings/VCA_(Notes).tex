@@ -47,10 +47,30 @@
 \newcommand{\sref}[1]{\textsuperscript{(\ref{#1})}}
 
 %macros
+\newcommand{\lv}[1]{\lvert #1\rvert}
+\newcommand{\llv}[1]{\left\lvert #1\right\rvert}
+\newcommand{\lV}[1]{\lVert #1\rVert}
+\newcommand{\llV}[1]{\left\lVert #1\right\rVert}
+\newcommand{\l}[1]{\left(#1\right)}
+\newcommand{\lc}[1]{\left\{#1\right\}}
+\newcommand{\ls}[1]{\left[#1\right]}
+\newcommand{\lan}[1]{\langle #1\rangle}
+\newcommand{\llan}[1]{\left\langle #1\right\rangle}
+\newcommand{\lcl}[1]{\lceil #1\rceil}
+\newcommand{\llcl}[1]{\left\lceil #1\right\rceil}
+\newcommand{\lfl}[1]{\lfloor #1\rfloor}
+\newcommand{\llfl}[1]{\left\lfloor #1\right\rfloor}
+
+
+
+\newcommand{\seq}[2]{\underset{\left(#2\right)}{\left\langle #1\right\rangle}}
+
+\newcommand
 \newcommand{\vc}{\vcentcolon}
 \newcommand{\lra}{\leftrightarrow}
 \newcommand{\Lra}{\Leftrightarrow}
 
+%geometry
 \setlength{\parindent}{0pt} % "sets the length of the paragraph indentation to zero"
 
 % Textbook Sections
@@ -799,6 +819,7 @@ To show that the image of $U(0,r)$ under $f$ includes $U(0,(1-c)r)$, we ``clever
 	the c1 argument is better done in Tao, tho.
 \end{proof}
 
+\newpage
 \subsection{Integration}
 The integral aims to generalise the notion of sums to continuous domains. In the discrete case, we have seen that sums can accumulate successive differences to return values of the original function; for example, we have
 \begin{align*}
@@ -820,76 +841,46 @@ We want to extend this interpretation of the sum into the reals:
 		\int_{q=a}^{a+j}Df(q)=\Delta_jf(a).
 	\end{align*}
 \end{defn}
-We have given a declarative definition; we ought to give an imperative construction. There are two approaches; we can work directly with the declarative definition to work out some imperative definition, or proceed by blindly led only by intuition, and check that the declarative definition holds after. We proceed by intuition first.
-As with was the case for derivatives, we are met with the problem that by completeness, there is no ``next'' real number. So to extend our notion of sums to the reals, we take the sum to be some Cauchy sequence where the ``next'' real number becomes arbitrarily small. Then, we first have to write an expression which aims to represent $f(a+j)-f(a)$ using information about $Df$ on $[a,a+j]$. Choose an increasing sequence of points $(x_1,x_2\dots,x_n)$ with $x_1=a$ and $x_n=a+j$. Then, the intuition dictates that the expression should be:
+We have given a declarative definition; we ought to give an imperative construction. 
+Actually, the following imperative definition is also declarative in a sense. As we did with the difference/derivative, we will reframe the sum where the gap between each term becomes arbitrary, and take a seqeunce where that gap approaches 0.
+To make this gap arbitrary, we introduce the notion of partitions. Let $I$ be the interval we are working with (with endpoints $a$ and $b$), and $P$ be a partition operator. $p_i^*$ is a point in the interval $p_i$.
 \begin{align*}
-	&f'(x_1)(x_2-x_1)+f'(x_2)(x_3-x_2)+\cdots+f'(x_{n-1})(x_n-x_{n-1})\\
-	=&f'(x_1)(\Delta x_1)+f'(x_2)(\Delta x_2)+\cdots+f'(x_{n-1})(\Delta x_{n-1})\\
-	=&\sum_{q\in(x_i)_1^{n-1}}f'(q)\Delta q
+	\sum_{p_i\in P(I)}\Delta_{\lvert p_i\rvert}f(p_i^*)=\Delta_{\lvert I\rvert}f(a).
 \end{align*}
-Thus, our intuitive definition of the integral is:
+Noting that the above equality holds for any partition at all, it follows that the sequence of the LHS as $\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0$ is constant, and so converges to the RHS:
 \begin{align*}
-	\int_{q=a}^{a+j}Df(q)=\left(\sum_{q\in(x_i)_{i=1}^{n-1}}Df(q)\Delta q\right)_{\max\{\Delta q\}\rightarrow0},
+	\seq{\sum_{p_i\in P(I)}\Delta_{\lvert p_i\rvert}f(p_i^*)}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}=\Delta_{\lvert I\rvert}f(a).
 \end{align*}
-or equivalently,
+The summand looks somewhat like the derivative, which we can make more explicit by:
 \begin{align*}
-	\int_{q=a}^{a+j}Df(q)=\left(\sum_{i=1}^{n-1}Df(x_i)\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}.
+	\seq{\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}=\Delta_{\lvert I\rvert}f(a).
 \end{align*}
-Note that we have dropped using square brackets to denote the equivalence class of sequences, as this probably hurts readability. From now on, sequences should be interpreted as their equivalence classes.
-Now we check that this definition is consistent with the declarative one. Intuitively this should involve expanding $Df$ into its definition:
-\begin{align}
-	\int_{q=a}^{a+j}Df(q)&=\left(\sum_{q\in(x_i)_1^{n-1}}Df(q)\Delta q\right)_{\max\{\Delta q\}\rightarrow0}\nonumber\\
-	&=\left(\sum_{i=1}^{n-1}Df(x_i)\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\nonumber\\
-	&=\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}.\label{derivexp1}
-\end{align}
-Remember, for the declarative definition to hold, we want \eqref{derivexp1} to be equal to $\Delta_jf(a)$. Working back from the answer will guide as a bit -- we can obtain an expression which looks similar to the thing we have above.
-\begin{align}
-	\Delta_jf(a)&=\sum_{q=a}^{a+j-1}\Delta f(q)\nonumber\\
-	&=\sum_{i=1}^{n-1}\Delta f(x_i)\nonumber\\
-	&=\left(\sum_{i=1}^{n-1}\Delta f(x_i)\right)_{\max\{\Delta x_i\}\rightarrow0}\label{derivexp2}
-\end{align}
-The key step in proving the equality of \eqref{derivexp1} and \eqref{derivexp2} is noting that under Cauchy sequences where the mesh tends to 0, both summands are equivalent:
+It seems reasonable to replace the normalised difference with the derivative as the gap is approaching is 0, and indeed, I will show that 
+\begin{align*}
+	\seq{\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}=\seq{\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}.
+\end{align*}
+The equivalence follows exactly due to the intuition; the summands become arbitrarily close as one is the convergent value of the other. To make this explicit, let us subtract two terms from the sequence (where each sequence has the same domain/partition structure):
+\begin{align*}
+	\sum_{p_i\in P(I)}\hat\Delta_{\lvert p_i\rvert}f(p_i^*)\lvert p_i\rvert-\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert&=\sum_{p_i\in P(I)}\left[\hat\Delta_{\lvert p_i\rvert}f-Df\right](p_i^*)\lvert p_i\rvert\\
+	&=\sum_{p_i\in P(I)}\frac{\varepsilon}{\lvert I\rvert}\lvert p_i\rvert\\
+	&=\frac{\varepsilon}{\lvert I\rvert}\sum_{p_i\in P(I)}\lvert p_i\rvert\\
+	&=\frac{\varepsilon}{\lvert I\rvert}\lvert I\rvert\\
+	&=\varepsilon.
+\end{align*}
+The second line can be justified by choosing an partition small enough so that $Df$ and $\hat\Delta_{\lvert p_i\rvert}f$ are arbitrarily close.
+Thus, our imperative definition of the integral is:
+\begin{align*}
+	\int_IDf=\seq{\sum_{p_i\in P(I)}Df(p_i^*)\lvert p_i\rvert}{\max_{p_i\in P(I)}\lvert p_i\rvert\rightarrow0}.
+\end{align*}
 
-We notice that both $h$ and $\Delta x_i$ tend to zero -- if we could show that they were to cancel out (and they do), we see that we will immediately get the desired answer by a telescoping sum. That is, we want to be able to write
-Just to show the intuition, I write with a blatant abuse of notation:
-\begin{align*}
-	\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}&=\left(\sum_{i=1}^{n-1}\left(\frac{f(x_i+h)-f(x_i)}{h}\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\left(\frac{f(x_i+\Delta x_i)-f(x_i)}{\Delta x_i}\right)_{\Delta x_i\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)_{\max\{\Delta x_i\}\rightarrow0}
-\end{align*}
-The absue of notation is as the innermost $\Delta x_i$ should actually be indexed by a variable other than $i$. However, we show that the result still holds nonetheless by showing the respective Cauchy sequences are equivalent. To show the equivalence, we have to show that the distance between terms of the two sequences become arbitrarily small; that is, we can make
-\begin{align*}
-	d\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i,\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)
-\end{align*}
-arbitrarily small by choosing an appropriate $\Delta x_i$. Notice that both sums range over the same domain, so we may just show that the difference between each term of the sum can be arbitrarily small. We first consider their difference:
-\begin{align*}
-	\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i-(f(x_i+\Delta x_i)-f(x_i))&=\Delta x_i\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\frac{f(x_i+\Delta x_i)-f(x_i)}{\Delta x_i}\right)\\
-	&=\Delta x_i\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\hat\Delta_{\Delta x_i} f(x_i)\right)\\
-\end{align*}
-Notice that in the brackets, we have the equivalence class of a Cauchy sequence, subtracted by a term of that Cauchy sequence. We know that we can make that difference arbitrarily small, by definition of a Cauchy sequence; choosing any $\Delta x_i<\delta$ will guarantee that 
-\begin{align*}
-	\left\lvert\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\hat\Delta_{\Delta x_i} f(x_i)\right\rvert<\varepsilon.
-\end{align*}
-Putting this all together:
-\begin{align*}
-	d\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i,\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)&=\left\lvert\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\delta-\sum_{i=1}^{n-1}(f(x_i+\delta)-f(x_i))\right\rvert\\
-	&=\left\lvert\sum_{i=1}^{n-1}\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\delta-(f(x_i+\delta)-f(x_i))\right)\right\rvert\\
-	&=\left\lvert\sum_{i=1}^{n-1}\delta\left(\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}-\hat\Delta_{\delta} f(x_i)\right)\right\rvert\\
-	&=\left\lvert\sum_{i=1}^{n-1}\delta\varepsilon\right\rvert\\
-	&\leq(n-1)\delta\varepsilon.
-\end{align*}
-So for any $\epsilon>0$, choose $\delta'$ such that the corresponding $\varepsilon<\frac{\epsilon}{n-1}$, then set $\delta=\delta'$ if $\delta'<1$, else set $\delta=0.9$. This gives $(n-1)\delta\varepsilon<\epsilon$.
-Now:
-\begin{align*}
-	\int_{q=a}^{a+j}Df(q)&=\left(\sum_{q\in(x_i)_1^{n-1}}Df(q)\Delta q\right)_{\max\{\Delta q\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}Df(x_i)\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}\left(\hat\Delta_h f(x_i)\right)_{h\rightarrow0}\Delta x_i\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}(f(x_i+\Delta x_i)-f(x_i))\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=\left(\sum_{i=1}^{n-1}(f(x_{i+1})-f(x_i))\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=\left(f(x_{n})-f(x_1)\right)_{\max\{\Delta x_i\}\rightarrow0}\\
-	&=f(x_{n})-f(x_1).
-\end{align*}
 Comment; this roughly corresponds to riemann integration. An immediate problem is the function Q(x)=1 if x is irrational, 0 otherwise. Depending on how one chooses tags/partition, the integral evaluates to 0 or 1. we need the stiefjes integral or lebegsue, maybe even kurzweil henstock. discuss this later.
+
+\subsubsection{Alternative}
+An alternative characterisation which will help with the change-of-variables theorem is the following:
+\begin{align*}
+	Df(x_0)\vc=\seq{\frac{\lvert f(L)\rvert}{\lvert L\rvert}}{\lvert L\rvert\rightarrow0},
+\end{align*}
+where each $L$ is a line/interval containing $x_0$. We are guaranteed to have a simple notion of $L$ as continuous maps preserve intervals, so we need not delve into measure theory.
 
 
 \subsection{Line Integrals}

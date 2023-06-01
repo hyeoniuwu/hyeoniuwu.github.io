@@ -1,0 +1,198 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\setlength{\parindent}{0pt}
+\usepackage{titling}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Edwin P.}
+\lhead{\rightmark}
+\rfoot{Page \thepage}
+
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+\renewcommand\({\left(}
+\renewcommand\){\right)}
+
+\allowdisplaybreaks
+%\delimitershortfall=-0.5pt
+
+\setlength{\jot}{7pt}
+
+\title{Project}
+\author{Edwin Park}
+\date{July 2022}
+
+\begin{document}
+
+\clearpage\maketitle\thispagestyle{empty}
+\newpage
+\tableofcontents
+\newpage\setcounter{page}{1}
+
+\section{Integers}
+\subsection{Divisors}
+\subsection{Primes}
+\subsection{Congruences}
+\underline{\textbf{Theorem.}} (Chinese Remainder Theorem)
+\\
+\vspace{2mm}
+\\
+Given:
+\begin{align*}
+    x\equiv a\pmod{n}\\
+    x\equiv b\pmod{m}\\
+    \textnormal{gcd}(m,n)=1,
+\end{align*}
+a solution is given by
+\begin{align*}
+    x=arm+bsn,
+\end{align*}
+where $rm+sn=1$.
+
+\vspace{24mm}
+\subsection{Integers Modulo N}
+\underline{\textbf{Definition.}} Euler's totient functions is defined as:
+\begin{align*}
+    \varphi(n)=\#k\,|\,(k<n\land (n,k)=1).
+\end{align*}
+For any $n\in\mathbb{N}$:
+\begin{align*}
+    \varphi(n)=\prod_{i}{\left(1-\frac{1}{p_i}\right)}
+\end{align*}
+\underline{\textbf{Theorem.}} (Euler)
+\begin{align*}
+    (a,n)=1\Rightarrow a^{\varphi(n)}\equiv 1\pmod{n}
+\end{align*}
+\newpage
+
+\section{Functions}
+\subsection{Functions}
+\subsection{Equivalence Relations}
+\underline{\textbf{Notation.}} The collection of equivalence classes of S under relation $\sim$ is denoted by $S/\sim$.
+
+\vspace{24mm}
+\subsection{Permutations}
+\underline{\textbf{Definition.}} A permutation of a set S is a bijection $\sigma: S\rightarrow S$. A cycle of length $k$ is a permutation satisfying:
+\begin{align*}
+    \sigma(a_i)&=a_{(i+1)\%k}\\
+    \sigma(x)&=x, \textnormal{   otherwise}
+\end{align*}
+where $a_1, \dots, a_k\in S$. Two cycles are disjoint if their respective $\{a_i\}$ have no overlaps.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Every cycle in $S_n$ may be written as a unique product of disjoint cycles.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Transposition-decompositions of permutations always have the same parity.
+\newpage
+
+\section{Groups}
+\subsection{Definition of a Group}
+\underline{\textbf{Definition.}} A set $G$ is a group under an operation $*$ if $*$ is an associative binary operation on $G$, $G$ contains an identity element, and $G$ is closed under inversion.
+\subsection{Subgroups}
+\underline{\textbf{Theorem.}} (Lagrange) 
+\begin{align*}
+    H\leq G\Rightarrow|H|\mid|G|
+\end{align*}
+\subsection{Constructing Examples}
+\underline{\textbf{Property.}} 
+\begin{align*}
+    H, K\leq G\land h^{-1}kh\in K\Rightarrow HK\leq G
+\end{align*}
+\subsection{Isomorphisms}
+\subsection{Cyclic Groups}
+\underline{\textbf{Theorem.}} Every subgroup of a cyclic group is cyclic.
+\subsection{Permutation Groups}
+\underline{\textbf{Theorem.}} (Cayley) Every group is isomorphic to a permutation group (subgroup of $S_n$).
+\subsection{Homomorphisms}
+\underline{\textbf{Definition.}} A subgroup H of G is normal iff $ghg^{-1}\in H$.
+\subsection{Cosets, Normal Subgroups, and Factor Groups}
+\underline{\textbf{Definition.}} A coset takes the form $aH$ where $H\leq G$. The index is the number of cosets; \[[G:H]\vcentcolon=\frac{|G|}{|H|}.\] 
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} The set of cosets of a normal subgroup form a group under multiplication. The group of cosets of a normal subgroup is called the factor group of $G$ determined by $N$, denoted by $G/N$. Note that left and right cosets of a normal subgroup are always equivalent.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Where $N$ is a normal subgroup of G, there is a bijection between subgroups of $G/N$ and subgroups of $G$ containting $N$. 
+
+\vspace{3mm}
+\emph{Proof.} First we note that homomorphisms preserve subgroups, and normality if surjective. Furthermore, the pseudo-inverse operation of the homomorphism $\phi: G_1\rightarrow G_2$, \[\phi^{-1}(H_2\leq G_2)=\{x\in G_1\mid \phi(x)\in H_2\},\] preserves subgroups and normality.\\
+The bijection is given by the natural projection $\pi: G\rightarrow G/N,\quad \pi(x)=xN$. Note that the actual bijection, using a slight abuse of notation, is: 
+\begin{align*}
+    \pi(H\leq G)=\bigcup_{x\in H} \{xN\}.
+\end{align*}
+Note that in the pseudo-inverse function, $\pi^{-1}(K\leq G/N)=\{x\in G\mid xN\in K\}$, the output always contains $N$ as it is the identity in $G/N$ (and in turn $K$ contains it). To show bijectivity, ... cbf
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} (Fundamental Homomorphism Theorem) 
+\begin{align*}
+    G/\text{ker}(\phi)\cong\phi(G),
+\end{align*}
+where $\phi:G\rightarrow H$ is a homomorphism, $G$ and $H$ are groups. 
+\newpage
+
+\section{Polynomials}
+\subsection{Fields; Roots of Polynomials}
+\underline{\textbf{Definition.}} A field is a set F which is a group under two binary operations $+$ and $*$, which also satisfy distributivity.
+
+\vspace{6mm}
+Multiplication of polynomial coefficients:
+\begin{align*}
+    \left(\sum_{i=0}^{m}a_ix^i\right)\left(\sum_{i=0}^{n}b_ix^i\right)=\sum_{i=0}^{m+n}\left(\sum_{j=0}^{i}a_jb_{i-j}\right)x^i
+\end{align*}
+\subsection{Factors}
+\subsection{Existence of Roots}
+$\langle p(x)\rangle$ denotes the set of all polynomials divisible by $p(x)$. 
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Given that $p(x)$ is non-constant, $F[x]/\langle p(x)\rangle$ is a field iff. $p(x)$ is irreducible over $F$.
+
+\vspace{6mm}
+The congruence class $[x]$ in $F[x]/\langle p(x)\rangle$ satisfies $p([x])=[0]$.
+\subsection{Polynomials over Z, Q, R and C}
+
+\newpage
+\section{Commutative Rings}
+\subsection{Commutative Rings; Integral Domains}
+\underline{\textbf{Definition.}} A commutative ring is a field without the requirement that inversion is closed with respect to $*$.
+
+\vspace{6mm}
+A subring must share identities with its parent.
+
+\vspace{6mm}
+\underline{\textbf{Definition.}} An integral domain is a commutative ring where $1\not=0$ and the product of non-zero elements is always non-zero.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Any subring of a field is an integral domain.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Any finite integral domain is a field.
+\subsection{Ring Homomorphisms}
+\underline{\textbf{Definition.}} The characteristic of a commutative ring is the minimal natural number satisfying $n*1=0$; if no such number exists, then the characteristic is zero.
+
+\vspace{6mm}
+\underline{\textbf{Definition.}} A ring homomorphism preserves sums, products and the identity.
+\subsection{Ideals and Factor Rings}
+\underline{\textbf{Definition.}} An ideal $I$ is a non-empty subset of a commutative ring $R$ closed under addition, subtraction and multiplication by any element in $R$.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} $R/I$ is a commutative ring, called the factor ring of $R$ modulo $I$.
+
+\vspace{6mm}
+\underline{\textbf{Theorem.}} Given that $I$ is a proper ideal of the commutative ring $R$,
+\begin{align*}
+    R/I\text{ is a field}&\iff I\text{ is maximal}\\
+    R/I\text{ is an integral domain}&\iff I\text{ is prime}.\\
+\end{align*}
+\subsection{Quotient Fields}
+
+
+\end{document}

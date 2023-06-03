@@ -1335,13 +1335,17 @@ If at a point $\vec x$, $D_f(\vec x)$ is the zero matrix, and the the second dir
 So, we want to know when $\left[D_{\vec a}f\right]^2(\vec x)$ is positive or negative. The problem becomes simple when the second directional derivative is re-expressed:
 \begin{align*}
 	\left[D_{\vec a}\right]^2f&=D_{\vec a}(D_{\vec a}f)\\
-	&=D_{\vec a}(D_f\vec a)\\
-	&=D_{\vec a}(\begin{bmatrix}f_{x_1}&f_{x_2}&\cdots&f_{x_n}\end{bmatrix}\vec a)\\
-	&=D_{\vec a}(\begin{bmatrix}a_1f_{x_1}+a_2f_{x_2}+\cdots+a_nf_{x_n}\end{bmatrix})\\
-	&=D(\begin{bmatrix}a_1f_{x_1}+a_2f_{x_2}+\cdots+a_nf_{x_n}\end{bmatrix})\vec a\\
-	&=\begin{bmatrix}a_1f_{x_1x_1}+\cdots+a_nf_{x_nx_1}&a_1f_{x_1x_2}+\cdots+a_nf_{x_nx_2}&\cdots&a_1f_{x_1x_n}+\cdots+a_nf_{x_nx_n}\end{bmatrix}\vec a\\
-	&=\begin{bmatrix}a_1&a_2&\cdots&a_n\end{bmatrix}\begin{bmatrix}f_{x_1x_1}&f_{x_1x_2}&\cdots&f_{x_1x_n}\\f_{x_2x_1}&f_{x_2x_2}&&f_{x_2x_n}\\\vdots&&\ddots&\vdots\\f_{x_nx_1}&f_{x_nx_2}&\cdots&f_{x_nx_n}\end{bmatrix}\vec a\\
-	&=\vec a^T H_f\vec a
+	&=D(Df\vec a)\vec a\\
+	&=D((Df\vec a)^T)\vec a\tag*{(because $Df\vec a$ is 1-by-1)}\\
+	&=D(\vec a^T\nabla f)\vec a\\
+	&=\vec a^TD(\nabla f)\vec a\\
+	&=\vec a^TH_f\vec a.
+\end{align*}
+To see why $D(\nabla f)=H_f$,
+\begin{align*}
+	D(\nabla f)&=D\lp{\begin{bmatrix}f_{x_1}\\f_{x_2}\\\vdots\\f_{x_n}\end{bmatrix}}\\
+	&=\begin{bmatrix}f_{x_1x_1}&f_{x_1x_2}&\cdots&f_{x_1x_n}\\f_{x_2x_1}&f_{x_2x_2}&&f_{x_2x_n}\\\vdots&&\ddots&\vdots\\f_{x_nx_1}&f_{x_nx_2}&\cdots&f_{x_nx_n}\end{bmatrix}\\
+	&=H_f.
 \end{align*}
 Thus, the problem reduces to knowing when $\vec a^T H_f\vec a$ is positive or negative when applied to a point $\vec x$. Note however, that $H_f$ is a symmetric matrix, and so there exists a matrix $P$ such that $P^-DP=H_f$, where $D$ is diagonal. See \ref{spec} for a proof. (Note that the eigenvalues are functions, as we have left $H_f$ as an operator.)
 \begin{thm}

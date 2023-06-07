@@ -1,9 +1,12 @@
 \documentclass{article}
 
+%FORMATTING
 \usepackage{titling}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage[utf8]{inputenc} % "tells the compiler to use the UTF-8 encoding for input files"
 % "Without this package, you may encounter errors or unexpected behavior if you use non-ASCII characters in your LaTeX document"
+\usepackage{titlesec}  % For adding a dot after section numbers in section headings
+\usepackage{mdwlist} % for temporarily escaping out of an enum env
 
 %MATH
 \usepackage{amsmath}
@@ -35,6 +38,11 @@
 \rhead{Edwin P.}
 \lhead{\rightmark}
 \rfoot{Page \thepage}
+
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{1em}{} % add a dot after section number
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{1em}{}  % same for the subsection 
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{1em}{}  % and subsub
+ 
 
 % Create title page
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}

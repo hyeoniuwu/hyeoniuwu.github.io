@@ -75,12 +75,14 @@
 \newcommand{\lra}{\leftrightarrow}
 \newcommand{\Lra}{\Leftrightarrow}
 
+\newcommand{\aln}{\aleph_0}
+
 %geometry
 \setlength{\parindent}{0pt} % "sets the length of the paragraph indentation to zero"
 
 % Textbook Sections
 \theoremstyle{definition}
-\newtheorem{thm}{Theorem}[subsubsection]
+\newtheorem{thm}{Theorem}[section]
 \newtheorem{defn}{Definition}[subsubsection]
 \newtheorem{rmk}{Remark}[subsubsection]
 \newtheorem{cor}{Corollary}[subsubsection]
@@ -113,6 +115,25 @@
 \newpage\setcounter{page}{1}
 
 \section{Recursive Functions}
+\subsection{The Informal Notion of Algorithm}
+Rogers sets out by listing what exactly we are trying to capture with our notion of recursiveness. He lists informally a few criteria for which we characterise algorithms, with criteria 6 to 10 being contentious, leading to different notions. Criteria 1 to 5 are universally agreed upon.
+\begin{enumerate}
+	\item An algorithm is a set of instructions of finite size.
+	\item An agent who acts on those instructions exists.
+	\item There are facilities for storing intermediate computations.
+	\item The computation process carried about the agent is done in a discrete fashion, without the use of continuous/analogue devices.
+	\item The computation process is deterministic; there is no randomness involved.
+	\item Can the size of inputs become arbitrarily large?
+	\item Can the size of instructions become arbitrarily large?
+	\item Can the memory (RAM/storage) available become arbitrarily large?
+	\item Can the computing agent's abilities become arbitrarily large?
+	\item Can the time available/number of steps carried out in computation become arbitrarily large?
+\end{enumerate}
+An anaylsis into criteria 6 to 10 is appropriate. It seems absurd that an algorithm should not be applicable to due to a size of its input, so ``most'' mathematicians answer positively to 6. Similarly, arbitrarily large instructions may still be carried out in a consistent matter, so most answer positively to 7. Rogers states that ``most mathematicians... would assert that a general theory of algorithms should concern computations which are possible \emph{in principle}, wihout regard to practical limitations'' to justfiy the positive answers to 6 and 7.\par
+Criteria 8 has a caveat, with memory meaning the ``storage space which is necessary over and above the space neeeded to store instructions, input, and output.'' For example, $\lambda x[2x]$ can be calculated for arbitrary $x$ with bounded memory, but not for $\lambda x[x^2]$. Mathematicians consider this restriction too narrowing and so reject this bound, but it's interesting what sort of functions may arise from this restriction. Apprently, the classes of such functions are called \emph{functions computable by a finite-state  machine}, but is dependent on the choice of symbolism.\par
+We answer positively to 9 as an agent may transfer the arbitrary complexity of an input by use of the arbitrary memory available.\par
+10 is attempting to answer whether we should ``have some idea, ahead of time, of how long the computation will take''. We leave no answer at this stage.
+\subsection{Primitive Recursive Functions}
 The comment on the footnote of $\S1.2$, that intuitionists reject the claim that the function
 \begin{align*}
 	h(x)=\begin{cases}
@@ -120,8 +141,20 @@ The comment on the footnote of $\S1.2$, that intuitionists reject the claim that
 		0,&\text{otherwise;}
 	\end{cases}
 \end{align*}
-is primitive recursive from the reasoning that it must either be true or false, is actually trivial. One just needs to understand that intuitionists have a different notion of ``true'' and ``false''. If one asks me in the midst of a chess game whether I've won, I would answer no, because the game is still going, but that does not mean I have lost; similarly, a statement to an intuitionist is true, false, or contingent/neither, with the latter being due to a non-existence of an explicit construction. The idea behind intuitionism is to define truth/existence/reality to hinge on (somewhat circularly) existence/reality/explicit construction. (Perhaps this is saying even consistent constructions are not ``real'' if not realised in the universe?)
+is primitive recursive from the reasoning that it must either be true or false, is actually trivial. One just needs to understand that intuitionists have a different notion of ``true'' and ``false''. If one asks me in the midst of a chess game whether I've won, I would answer no, because the game is still going, but that does not mean I have lost; similarly, a statement to an intuitionist is true, false, or contingent/neither, with the latter being due to a non-existence of an explicit construction. The idea behind intuitionism is to define truth/existence/reality to hinge on (somewhat circularly) existence/reality/explicit construction. (Perhaps this is saying even consistent constructions are not ``real'' if not realised in the universe? Or, that ``consistent'' is should be defined as such?)
+\setcounter{subsection}{4}
+\subsection{Formal Characterisation}
+Rogers raises the interesting point how, from the diagonal argument it seems impossible to formally capture the notion of algorithms, in an algorithmic way. Indeed for any formalism relying solely on total functions it can be applied ``to any case where the sets of insutrction in the $P$-symbolism can be effectively (i.e., algorithmically) listed.'' The solution to this is by allowing non-totality, by which $\varphi_x(x)=\varphi_x(x)+1$ need not be false as $\varphi_x(x)$ may not be defined. The acceptance of non-totality here is analogous (actually equal) to introducing minimalisation to the generators in the primitive recursive scheme.
+\setcounter{subsection}{7}
+\subsection{G\"odel Numbers}
+In the previous section Rogers discusses universality/Church's Thesis as ``the Basic Result'', noting the equivalence of different formalisms, giving Turing's and Kleene's as examples. Rogers now lists without proof a few theorems regarding codings of recursive functions. We fix some enumeration $P$ of algorithms with $P_x$ denoting the $x^\text{th}$ algorithm (personally I prefer the PRIM+minimalisation scheme), and $\varphi_x^{(k)}$ refers to the partial function of $k$-variables determined by $P_x$.
+\begin{thm}
+	There are exactly $\aln$ recursive functions.
+\end{thm}
+
+\newpage
 \section{Unsolvable Problems}
+\subsection{Exercises}
 \begin{prob}
 	Show that the function
 	\begin{align*}
@@ -135,11 +168,11 @@ is primitive recursive from the reasoning that it must either be true or false, 
 \begin{soln}
 	We just need to find an algorithm for $\pi$ that is primitive recursive; the BBP-formula trivially solves this. (Actually, I think the question wants you to explicitly develop a primitve parsing algorithm, supposing that $\pi$ is already given. But whatever.)
 \end{soln}
-\begin{prob}
+\begin{prob}\label{2.2}
 	Define $f$ by
 	\begin{align*}
 		f(x)=\begin{cases}
-			1,&\text{if $\varphi_x(x)=1$ $\pi$;}\\
+			1,&\text{if $\varphi_x(x)=1$;}\\
 			0,&\text{otherwise.}
 		\end{cases}
 	\end{align*}
@@ -152,7 +185,19 @@ is primitive recursive from the reasoning that it must either be true or false, 
 	Consider the list of primitive recursive derivations decribed in $\S 1.4$. Let $f_x$ be the primitive recursive function determined by the $(x+1)$st derivation in this list $x=0,1,2,\dots$. Define $g=\lambda xy[f_x(y)]$. Is $g$ recursive? Is $g$ primitive recursive?
 \end{prob}
 \begin{soln}
-	$g$ is primitive recursive, as it is effectively the concatenation of two primitive recursive operations; finding $f_x$ and computing $f_x$. $f_x$ may be found easily by iterating through the method by which the enumeration was generated (e.g iterating through symbols).
+	This question has already been answered in $\S1.4$. Again like in \ref{2.2} we abuse the self-referring capability that $g$ possesses. Let $h(x)=f_x(x)+1$. Suppose $h$ is recursive, i.e. $h=\varphi_y$. Then,
+	\begin{align*}
+		h(y)&=g(y,y)+1\\
+		&=\varphi_y(y)+1\\
+		&=h(y)+1.
+	\end{align*}
 \end{soln}
-
+\setcounter{prob}{7-1}
+\begin{prob}
+	Give a more formal proof for Theorem I-VIII analogous to the more formal proof for Theorem I-VII.
+\end{prob}
+\begin{soln}
+	The problem wants us to show that determining whether an arbitrary Turing machine is total is recursively unsolvable. I CBF doing this formally, I will outline a solution.\par
+	For any $\varphi_x$, one can construct a new Turing machine that computes $\lambda xy[\varphi_x(y)]$. Construct a one-variable function $f_{xy}(z)=\varphi_x(y)$, and the totality question becomes equivalent to the halting problem.
+\end{soln}
 \end{document}

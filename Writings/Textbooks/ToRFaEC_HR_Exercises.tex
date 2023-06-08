@@ -22,6 +22,22 @@
 \usepackage[colorlinks]{hyperref}
 \usepackage{footnotehyper}
 \usepackage{parskip} % "inserts a vertical space between paragraphs"
+\usepackage{listings} %typset code
+% Define the settings for Python code formatting
+\lstset{
+  language=Python,
+  tabsize=4,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue},
+  stringstyle=\color{orange},
+  commentstyle=\color{green!60!black},
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true,
+  frame=lines,
+  captionpos=b
+}
 
 %GRAPHICS
 \usepackage{tikz} %for diagrams
@@ -40,7 +56,7 @@
 \rfoot{Page \thepage}
 
 \titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{1em}{} % add a dot after section number
-\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{1em}{}  % same for the subsection 
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{1em}{}  % same for the subsection
 \titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{1em}{}  % and subsub
 
 % Create title page
@@ -151,6 +167,36 @@ In the previous section Rogers discusses universality/Church's Thesis as ``the B
 \begin{thm}
 	There are exactly $\aln$ recursive functions.
 \end{thm}
+\begin{proof}
+	The constant functions $\lambda x[k]$ are recursive, and there are $\aln$ of them. But by enumeration, there are at most $\aln$ recrusive functions, so $|R|=\aln$.
+\end{proof}
+\begin{thm}
+	There exist non-recursive functions.
+\end{thm}
+\begin{proof}
+	The set of all functions from $\mathbb{N}\rightarrow\mathbb{N}$ has cardinality $\aln$. The theorem follows.
+\end{proof}
+\begin{thm}
+	Each recursive function has $\aln$ distinct indices.
+\end{thm}
+\begin{proof}
+	See problem 2.8.
+\end{proof}
+\begin{thm}
+	\begin{align*}
+		\exists\,z,\quad[z](x,y)=[x](y).
+	\end{align*}
+	Equality with undefined values is to be interpreted as follows: if $[x](y)$ is undefined, $[z](x,y)$ is undefined.
+\end{thm}
+\begin{proof}
+	I would like to give a cool explicit construction but I might get lost in the details in this stage. Instead I show a python implementation (which is more for demonstrative purposes).
+	\begin{lstlisting}[caption={Example Python code}, label={lst:python}]
+#We may use a simple coding such as translating a python program into an integer.
+def universal(index, x):
+	eval(index_to_function_definition(index)) #index_to_function_definition returns the corresponding function definition from the given index
+	return f(x)
+	\end{lstlisting}
+\end{proof}
 
 \newpage
 \section{Unsolvable Problems}

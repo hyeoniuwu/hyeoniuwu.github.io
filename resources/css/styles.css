@@ -1,0 +1,261 @@
+*
+{
+	word-wrap: break-word;
+	/* font-family: 'UnifontExMono'; font-size: 16px; */
+	/* font-family: 'Consolas'; font-size: 14px;	 */
+	/* font-family: 'CozetteVector'; font-size: 14px; */
+	/* font-family: 'GohuFont'; font-size: 11px; */
+	/* font-family: 'IBM VGA 8x16'; */
+	
+	tab-size: 4;
+	/* background-color: black; */
+	/* color: #AAAAAA; */
+	color: #555;
+	/* color: #666; */
+	/* color: #999; */
+}
+
+body
+{
+	background-color: #ddd;
+	
+	font-family: 'UnifontExMono';
+	/* font-size: 24px; */
+	/* font-size: 1cm; */
+	font-size: 16px;
+	/* font-family: monospace; font-size: 16px; */
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+
+}
+pre
+{
+	font-family: 'UnifontExMono';
+	display: inline;
+}
+li pre
+{
+	font-family: 'UnifontExMono';
+}
+div.body
+{
+	background-color: #fdfdfd;
+	/* background-color: #222; */
+	margin: auto;
+	min-height:100vh;
+	/* max-width: min(1300px,85vw); */
+	max-width: min(1000px,80vw);
+}
+
+
+@font-face
+{
+	font-family: 'IBM VGA 8x16';
+	src: url("../fonts/WebPlus_IBM_VGA_8x16.woff") format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'Consolas';
+	src: url("../fonts/consola.ttf") format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'CozetteVector';
+	src: url("../fonts/CozetteVector.woff2") format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'UnifontExMono';
+	src: url("../fonts/UnifontExMono.woff") format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'gohufont';
+	src: url("../fonts/gohufont-uni-14.ttf") format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'NanumGothic';
+	src: url("../fonts/NanumGothic-Regular.ttf") format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'Gourier';
+	src: url("../fonts/OGCourier.ttf") format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+ul {
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
+	/* padding: 1em; */
+	}
+sup {
+	vertical-align: super;
+	/* font-size: 11px; */
+	font-size: smaller;
+  }
+h1
+{
+	font-size: 16px;
+	text-align: center;
+	width: 40%;
+	margin: auto;
+	font-weight: normal;
+	margin-top: 1em;
+}
+h2
+{
+	font-size: 16px;
+	text-align: center;
+	width: 40%;
+	margin: auto;
+	font-weight: normal;
+	margin-top: 1em;
+}
+h3
+{
+	font-size: 16px;
+	text-align: center;
+	width: 40%;
+	margin: auto;
+	font-weight: normal;
+	margin-top: 1em;
+}
+pre
+{
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	word-wrap: break-word;
+	display: inline-block;
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+div
+{
+	/* outline: 1px solid red; */
+}
+div.container
+{
+	text-align: center;
+	/* width: 40%; */
+	width: min(60vw, 800px);
+	margin: auto;
+}
+div.container pre
+{
+	font-family: 'UnifontExMono'; font-size: 16px;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	/* word-wrap: break-word; */
+	display: inline-block;
+}
+
+div.box
+{
+	width: min(60vw, 800px);
+	margin: auto;
+	padding: 20px;
+	border: 1px outset grey;
+}
+div.bottombox
+{
+	width: min(60vw, 800px);
+	margin: auto;
+	/* padding: 20px; */
+	border-width: 1px;
+	border-style: none none solid none;
+	border-color: grey;
+}
+div.writing_right
+{
+	text-align: right;
+	/* width: 40%; */
+	width: min(60vw, 800px);
+	margin: auto;
+}
+div.writing
+{
+	text-align: left;
+	/* width: 40%; */
+	/* width: min(60vw, 800px); */
+	margin: auto;
+}
+div.writing pre
+{
+	font-family: 'UnifontExMono'; font-size: 16px;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	word-wrap: break-word;
+	display: inline-block;
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+
+
+div.code
+{
+	text-align: center;
+	/* border: 1px outset grey; */
+	/* margin: auto; */
+}
+
+
+pre code
+{
+	text-align: left;
+	display: inline-block;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+
+	position: relative;
+	
+	border: 1px outset grey;
+	font-family: 'UnifontExMono'; font-size: 16px;
+	width: calc(min(1000px,80vw)*0.75);
+	margin: auto;
+}
+
+label
+{
+	/* display: inline-block; */
+	/* margin: 0; */
+	position: absolute;
+	font-family: monospace;
+	/* margin: -1em; */
+	/* margin-left: -1em;
+	margin-top: -1.2em; */
+	/* right: 0; */
+	right: 4px;
+	top: 2px;
+	/* margin-top: 100px; */
+	/* text-align: right; */
+	font-size: 9px;
+}
+img.ctfimage
+{
+	/* width: 50%; */
+	width: calc(min(1000px,80vw)*0.8);
+	object-fit: contain;
+	margin: auto;
+	display: block;
+	/* object-fit: scale-down; */
+}
+
+/* hide scrollbar */
+body::-webkit-scrollbar {display: none;}

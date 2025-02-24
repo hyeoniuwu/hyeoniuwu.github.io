@@ -1,0 +1,37 @@
+div.ascii pre
+{
+	text-align: left;
+	/* font-family: 'UnifontExMono'; */
+	font-family: 'IBM VGA 8x16';
+	font-size: 16px;
+	/* width: 40%; */
+	/* width: 150px; */
+	/* width: min(60vw, 800px); */
+	/* width: min(60vw, 300px); */
+	margin: auto;
+	/* margin-top: 0em; */
+	margin-bottom: 0em;
+	margin-left: 1em;
+}
+div.aacoz
+{
+	/* display: inline-block; */
+	display: block;
+	width: fit-content;
+	margin: auto;
+}
+div.aacoz pre
+{
+	font-family: 'UnifontExMono';
+	font-size: 16px;
+	line-height: 0.95;
+	letter-spacing: -0.5px;
+	color:black;
+	/* margin: auto; */
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+    width: fit-content;
+	margin: auto;
+}

@@ -1,0 +1,34 @@
+div.frontpage-title
+{
+	text-align: left;
+	/* font-family: 'UnifontExMono'; */
+	font-family: 'IBM VGA 8x16';
+	font-size: 16px;
+	/* width: 40%; */
+	/* width: 150px; */
+	width: min(60vw, 800px);
+	/* width: min(60vw, 300px); */
+	margin: auto;
+	/* margin-top: 0em; */
+	margin-bottom: 0em;
+	/* margin-left: 1em; */
+	/* color: #A59BBE; */
+	/* color: #999; */
+	/* color: #000; */
+	color: #888;
+}
+div.frontpage-column
+{
+	text-align: left;
+	/* width: 40%; */
+	/* width: 150px; */
+	width: min(60vw, 800px);
+	/* width: min(60vw, 300px); */
+	margin: auto;
+	margin-top: 0em;
+	/* margin-bottom: 3em; */
+}
+div.frontpage-column ul
+{
+	padding-inline-start: 22px;
+}

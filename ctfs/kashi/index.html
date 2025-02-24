@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>kashi 2025 - hy</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../resources/css/styles.css">
+	<link rel="icon" href="../../resources/hyr.ico">
+	<link rel="stylesheet" href="../../resources/css/statusbar.css">
+
+	<!-- <link rel="stylesheet" href="../../resources/highlight/styles/ascetic.css"> -->
+	<link rel="stylesheet" href="../../resources/highlight/styles/base16/atelier-cave-light.min.css">
+	<script src="../../resources/highlight/highlight.js"></script>
+
+
+	<script>
+		hljs.highlightAll();
+	</script>
+</head>
+<body>
+
+<div class="body">
+<div class='container'><br><pre><a href=..>hys.dev</a>/ctfs/kashi</pre></div>
+
+<div class="bottombox">
+	<p>Playing with numbers</p>
+	<p>A google search gives <a href=http://sites.isdschools.org/bjones/useruploads/geometry/Matrix%20Decoding.pdf target=_blank>http://sites.isdschools.org/bjones/useruploads/geometry/Matrix%20Decoding.pdf</a>.</p>
+<p><div class="code"><pre><code>m = {{-103.08333333, -131.25, -81.41666667, -91.58333333, -25.25, \
+-63.5, -60.33333333, -12.75, -151.08333333}, {-40.5, -52.5, -34.5, \
+-36.5, -10.5, -28., -25., -4.5, -62.5}, {42.58333333, 54.75,
+   34.91666667, 39.08333333, 11.75, 26.5, 26.33333333, 7.25,
+   63.58333333}}
+m // MatrixForm;
+v = {2, 4, -1, 3, -6, 1, 8, 4, -1}
+v // MatrixForm;
+mt = Transpose@m
+mt // MatrixForm;
+vt = Transpose@v
+vt // MatrixForm;
+vtf = {{2, 4, -1}, {3, -6, 1}, {8, 4, -1}};
+vtf // MatrixForm;
+Grid[Round[(mt . vtf)]]
+Grid[FromLetterNumber[Flatten@Round[(mt . vtf)]]]</code></pre></div></p>
+</div>
+<div class="bottombox">
+	<p>leap_of_faith</p>
+	<p>
+judging from the problem description, maybe you have to jump around. the simplest way to jump more than once would be to jump back into scanf.
+i mess around, jumping to 0x401269, then skip to 0x4011b4, in the midst of the win() function. somehow it works.
+	</p>
+</div>
+
+<div class="bottombox">
+	<p>Do Not Redeem #1</p>
+	<p><div class="code"><pre><code class="language-shell">hy@xl0:/$ cd data/data/com.google.android.apps.messaging/databases/
+
+hy@xl0:/data/data/com.google.android.apps.messaging/databases$ l
+total 2468
+-rwxr-x--- 1 hy hy    4096 Feb 22 20:38 bugle_backup_db*
+-rwxr-x--- 1 hy hy   32768 Feb 23 11:41 bugle_backup_db-shm*
+-rwxr-x--- 1 hy hy  156592 Feb 22 20:38 bugle_backup_db-wal*
+-rwxr-x--- 1 hy hy 1380352 Feb 23 08:50 bugle_db*
+-rwxr-x--- 1 hy hy   32768 Feb 23 17:34 bugle_db-shm*
+-rwxr-x--- 1 hy hy  524288 Feb 23 11:43 bugle_db-wal*
+-rwxr-x--- 1 hy hy   40960 Feb 22 20:38 business_info*
+-rwxr-x--- 1 hy hy       0 Feb 22 20:38 business_info-journal*
+-rwxr-x--- 1 hy hy   53248 Feb 23 08:25 cobalt_db*
+-rwxr-x--- 1 hy hy    4096 Feb 23 05:26 gnp_database*
+-rwxr-x--- 1 hy hy   32768 Feb 23 05:45 gnp_database-shm*
+-rwxr-x--- 1 hy hy   37112 Feb 23 05:26 gnp_database-wal*
+-rwxr-x--- 1 hy hy    4096 Feb 23 06:13 gnp_fcm_database*
+-rwxr-x--- 1 hy hy   32768 Feb 23 11:41 gnp_fcm_database-shm*
+-rwxr-x--- 1 hy hy   70072 Feb 23 11:41 gnp_fcm_database-wal*
+-rwxr-x--- 1 hy hy  110592 Feb 23 11:42 growthkit.db*
+
+hy@xl0:/data/data/com.google.android.apps.messaging/databases$ sqlitebrowser bugle_db</code></pre></div></p>
+	<p><a href="rsc/sql.png" target=_blank><img src="rsc/sql.png" class="ctfimage"></a></p>
+</div>
+<div class="bottombox">
+	<p>Do Not Redeem #2</p>
+	<p><div class="code"><pre><code class="language-shell">hy@xl0:/$ cd data/data
+
+hy@xl0:/data/data$ l
+total 96
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 android/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 android.auto_generated_characteristics_rro/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 android.auto_generated_rro_product__/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 android.auto_generated_rro_vendor__/
+drwxr-x--- 1 hy hy    0 Feb 23 06:20 com.amazon.mShop.android.shopping/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.backupconfirm/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.bips/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.bips.auto_generated_rro_product__/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.bluetooth/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.bluetoothmidiservice/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.bookmarkprovider/
+drwxr-x--- 1 hy hy    0 Feb 22 20:37 com.android.calllogbackup/
+...</code></pre></div></p>
+	<p>There's a lot. Can we get any user activity logs? Checking artifacts listed in <a href=https://belkasoft.com/android-system-artifacts-device target=_blank>https://belkasoft.com/android-system-artifacts-device</a>, we get a hit with /data/data/com.google.android.apps.wellbeing/databases/. The most recently used applications were:</p>
+	<p><a href="rsc/sql.png" target=_blank><img src="rsc/sql2.png" class="ctfimage"></a></p>
+	<p>I just guessed every single one, and it turned out to be com.google.calendar.android.</p>
+</div>
+<div class="bottombox">
+	<p>Do Not Redeem #3</p>
+	<p>
+		From the previous challenge we know which apps we should be checking. We start with discord.
+
+		Exploring /data/data/com.discord/ with gdu, we deduce that messages will be stored in /data/data/com.discord/cache/http-cache/.
+
+
+	</p>
+<p><div class="code"><pre><code class="language-shell">hy@xl0:Q/Documents/ctfs/kashi/donotredeem/chall/extracted/data/data/com.discord/cache/http-cache$ l
+total 8359
+-rwxr-x--- 1 hy hy    4255 Feb 23 05:57 0107bbd2209ebd95bf4500d051f1169c.0*
+-rwxr-x--- 1 hy hy  111008 Feb 23 05:57 0107bbd2209ebd95bf4500d051f1169c.1*
+-rwxr-x--- 1 hy hy    4249 Feb 23 05:57 04e55ce4f5271f1035c0eea45b0d331a.0*
+-rwxr-x--- 1 hy hy   28596 Feb 23 05:57 04e55ce4f5271f1035c0eea45b0d331a.1*
+-rwxr-x--- 1 hy hy    4257 Feb 23 05:57 090dab298a018f9a1c2fc83c8f93ff66.0*
+-rwxr-x--- 1 hy hy   34756 Feb 23 05:57 090dab298a018f9a1c2fc83c8f93ff66.1*
+-rwxr-x--- 1 hy hy    4166 Feb 23 05:58 0a66f4d6c75df6360cf73b099cce2819.0*
+-rwxr-x--- 1 hy hy    2409 Feb 23 05:58 0a66f4d6c75df6360cf73b099cce2819.1*
+-rwxr-x--- 1 hy hy    4251 Feb 23 05:57 0d00a50693dd79dc9f0a651d82d3453e.0*
+-rwxr-x--- 1 hy hy   66182 Feb 23 05:57 0d00a50693dd79dc9f0a651d82d3453e.1*
+-rwxr-x--- 1 hy hy    4600 Feb 23 05:48 0d671db98b6474d72ac28ec58c4956c3.0*
+-rwxr-x--- 1 hy hy     274 Feb 23 05:48 0d671db98b6474d72ac28ec58c4956c3.1*
+-rwxr-x--- 1 hy hy    4405 Feb 23 05:48 114ea45a21ab67ca585cee503f2ebe9b.0*
+-rwxr-x--- 1 hy hy    3064 Feb 23 05:48 114ea45a21ab67ca585cee503f2ebe9b.1*
+-rwxr-x--- 1 hy hy    4109 Feb 23 05:48 116799f7d931e88514d4e5545b05e0ea.0*
+-rwxr-x--- 1 hy hy    1627 Feb 23 05:48 116799f7d931e88514d4e5545b05e0ea.1*
+-rwxr-x--- 1 hy hy    4197 Feb 23 05:57 12fe809d48df7834c120625b6ae5be64.0*
+...</code></pre></div></p>
+<p>Inspecting the .0 files show:</p>
+	<div class="code"><pre><code class="language-shell">hy@xl0:Q/Documents/ctfs/kashi/donotredeem/chall/extracted/data/data/com.discord/cache/http-cache$ cat 0a66f4d6c75df6360cf73b099cce2819.0
+https://discord.com/api/v9/channels/1337667633327243330/messages?before=1342912270644023328&limit=25
+GET
+1
+Accept-Encoding: gzip
+HTTP/1.1 200
+17
+date: Sat, 22 Feb 2025 18:58:10 GMT
+content-type: application/json
+strict-transport-security: max-age=31536000; includeSubDomains; preload
+content-encoding: gzip
+vary: Accept-Encoding
+via: 1.1 google
+alt-svc: h3=":443"; ma=86400
+cf-cache-status: BYPASS
+report-to: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=y1zq9Iou1uYGsAWkhGZoynfaPfP4A0uovGguAI2Jkfzqtm6Lc5iqtD1X7XJBhBLetcNhXz7p3BFfGNLBV7CRGTFbirPysTiEc0Oj9X5AVkgRCru6NKyoZwbzB%2F1Q"}],"group":"cf-nel","max_age":604800}
+nel: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+x-content-type-options: nosniff
+reporting-endpoints: csp-sentry="https://o64374.ingest.sentry.io/api/5441894/security/?sentry_key=8fbbce30bf5244ec9429546beef21870&sentry_environment=stable"
+content-security-policy: frame-ancestors 'none'; default-src https://o64374.ingest.sentry.io; report-to csp-sentry; report-uri https://o64374.ingest.sentry.io/api/5441894/security/?sentry_key=8fbbce30bf5244ec9429546beef21870&sentry_environment=stable
+server: cloudflare
+cf-ray: 916134bcfe694bfb-BOM
+OkHttp-Sent-Millis: 1740250689821
+OkHttp-Received-Millis: 1740250690302
+
+TLS_CHACHA20_POLY1305_SHA256
+3
+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
+0
+TLSv1.3</code></pre></div>
+<p>While the .1 files seem to be binary; probably the payload, gzipped. Creating a copy and unzipping them:</p>
+<p><div class="code"><pre><code class="language-bash">rm -- *.0
+for f in *; do mv -- "$f" "$f.gz"; done
+gzip -d -- *.gz
+</code></pre></div></p>
+<p>We search for links with</p>
+<p><div class="code"><pre><code class="plaintext">https:\/\/(?!cdn\.discord|discord)[^\/\s]+</code></pre></div></p>
+<p>and find one suspicious link.</p>
+<p><a href="rsc/search.png" target=_blank><img src="rsc/search.png" class="ctfimage"></a></p>
+<p>With beautification we see the sender is savsch.</p>
+<p><div class="code"><pre><code class="language-json">{
+	"type": 0,
+	"content": "Here, download it: https://we.tl/t-Ku8Le7js",
+	"mentions": [],
+	"mention_roles": [],
+	"attachments": [],
+	"embeds": [],
+	"timestamp": "2025-02-22T11:06:07.127000+00:00",
+	"edited_timestamp": null,
+	"flags": 0,
+	"components": [],
+	"id": "1342814676328906853",
+	"channel_id": "1342810059608162336",
+	"author": {
+		"id": "521311401785163787",
+		"username": "savsch",
+		"avatar": null,
+		"discriminator": "0",
+		"public_flags": 0,
+		"flags": 0,
+		"banner": null,
+		"accent_color": null,
+		"global_name": "savsch",
+		"avatar_decoration_data": null,
+		"banner_color": null,
+		"clan": null,
+		"primary_guild": null
+	},
+	"pinned": false,
+	"mention_everyone": false,
+	"tts": false
+}</code></pre></div></p>
+</div>
+<div class="bottombox">
+	<p>Do Not Redeem #4</p>
+	<p>
+		Beautifying the conversation found previously:
+<p><div class="code"><pre><code class="language-plaintext">Well I can turn my effect into a nethergames transfer voucher, and send it to you
+For free
+?
+yes
+I can't believe
+Try it out yourself
+How so?
+Just download the official nethergames voucher app and redeem it. It takes a while for their admins to confirm it as non-spam, so you might have to wait.
+Can't find the app
+Here, download it: https://we.tl/t-Ku8Le7js
+Done. What's the code?
+It's the same as my pen name
+Pen Name??
+bruh
+It's the name I signed that poem with, the one I kept at my room in your beacon tower
+Oh that one
+Got it
+It shows awaiting confirmation
+Yup you'll have to wait
+See you later, I'm a bit busy
+Cya
+cya
+Hey
+The admins haven't approved that yet
+chill</code></pre></div></p>
+	So we need to find the scammer's pen name in Minecraft.
+	</p>
+	<p>Exploring /data/data/com.mojang.minecraftpe/ with gdu, we see the data we want will be under /data/data/com.mojang.minecraftpe/games/com.mojang/minecraftWorlds/0RjavQ==/db/. Skimming through the log file, we see poem in question. In fact, we see multiple instances of it, each logged for different types of interactions, presumably. The pen name is included in the latter instances:</p>
+<p><div class="code"><pre><code class="language-plaintext"> book Count Damage   Name minecraft:written_book WasPickedUp 
+	 tag author KedA5hKr0f7
+	 generation    	 pages
+	   	 photoname   text� In halls where echoes fail to bloom,
+	Repeating tests, a mindless loom.
+	Questions stale, no spark, no light,
+	As strangers strike, in dead of night. 	 photoname   text� Hostels crush, food's bitter twist,
+	No campus but a public slum, full of literal dog shit
+	IIT BHU, a hollow crown,
+	Where dreams decay, and hopes drown.  title MyPrestigiousUni xuid     hasBook id Lectern	 isMovable page    
+	 totalPages    x�   yH    z�   </code></pre></div></p>
+</div>
+
+<div class="bottombox"><p>a</p></div>
+
+<div id="status-bar">
+	<div class="left">
+		<span id="char-count"><a href=.>hy</a>/</span>
+		<span id="char-count">c:2257</span>
+	</div>
+	<div class="right">
+		<span id="mark">r:1738527408</a></span>
+		<span id="mark"><a href=mailto:x@k-0.cc>x@k-0.cc</a></span>
+	</div>
+</div>
+
+<script>
+	addEventListener('load', function() {
+	var blocks = document.querySelectorAll('pre code.hljs');
+	Array.prototype.forEach.call(blocks, function(block) {
+		var language = block.result.language;
+		var twoParentsUpId = block.parentElement;
+		block.insertAdjacentHTML("afterbegin",`<label>${language}</label>`)
+		// block.style.padding="1px";
+		// twoParentsUpId.insertAdjacentHTML("beforebegin",`<label>${language}</label>`)
+	});
+	})
+</script>
+
+</body>
+</html>
+
